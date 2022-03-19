@@ -20,5 +20,10 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.on('/').render('index').as('home')
+
 Route.get('admin', 'AppController.showAdmin')
 Route.post('admin', 'AppController.storeAdmin')
+
+Route.on('login').render('auth/login').as('login')
+Route.post('login', 'AuthController.login')
