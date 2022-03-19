@@ -8,6 +8,7 @@ export default class AuthController {
       await auth.attempt(email, password)
     } catch (error) {
       session.flash('error', 'Un problème est survenu')
+      return response.redirect().back()
     }
 
     session.flash('succes', 'Vous êtes connecté')
