@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  @if(description)
+    <meta name="description" content="{{ description }}">
+  @endif
+  @if(robots)
+    <meta name="robots" content="{{ robots }}">
+  @endif
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body class="min-h-screen bg-gray-100 flex p-5 font-inter">
+  <main class="max-w-screen-sm w-full m-auto flex flex-col items-center">
+    <a href="">
+      <img src="logo-2.png" alt="Logo Hypnos" class="h-16 mb-5">
+    </a>
+    @!section('content')
+  </main>
+</body>
+</html>
