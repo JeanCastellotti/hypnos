@@ -39,5 +39,8 @@ export default class LoginValidator {
    * }
    *
    */
-  public messages = {}
+  public messages = {
+    'email.required': "L'adresse email est obligatoire",
+    'password.required': 'Le mot de passe est obligatoire',
+  }
 }
