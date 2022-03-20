@@ -41,4 +41,11 @@ export default class DashboardController {
     session.flash('success', 'Le gérant a bien été modifié')
     return response.redirect().toRoute('dashboard.managers')
   }
+
+  public async destroyManager({ params, response, session }: HttpContextContract) {
+    const manager = await User.find(params.id)
+    await manager?.delete()
+    session.flash('success', 'Le gérant a bien été supprimé')
+    return response.redirect().toRoute('dashboard.managers')
+  }
 }
