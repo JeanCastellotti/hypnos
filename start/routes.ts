@@ -39,6 +39,7 @@ Route.group(() => {
     Route.post('/create', 'DashboardController.storeManager')
     Route.get('/update/:id', 'DashboardController.showManager').as('dashboard.showManager')
     Route.post('/update/:id', 'DashboardController.updateManager')
+    Route.delete('/delete/:id', 'DashboardController.destroyManager').as('dashboard.destroyManager')
   }).prefix('/managers')
 })
   .prefix('/dashboard')
