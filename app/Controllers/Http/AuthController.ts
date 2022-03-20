@@ -11,7 +11,7 @@ export default class AuthController {
       return response.redirect().back()
     }
 
-    session.flash('succes', 'Vous êtes connecté')
-    return response.redirect('/dasboard')
+    session.flash('success', 'Vous êtes connecté')
+    return response.redirect().toRoute('dashboard.index')
   }
 }
