@@ -12,7 +12,7 @@
           <label for="lastname" class="text-gray-800">Nom</label>
           @if(flashMessages.has('errors.lastname'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!component('components/icons/exclamation')
+              @!icons.exclamation({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.lastname') }}</span>
             </div>
           @endif
@@ -24,7 +24,7 @@
           <label for="firstname" class="text-gray-800">Prénom</label>
           @if(flashMessages.has('errors.firstname'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!component('components/icons/exclamation')
+              @!icons.exclamation({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.firstname') }}</span>
             </div>
           @endif
@@ -36,7 +36,7 @@
           <label for="email" class="text-gray-800">Adresse email</label>
           @if(flashMessages.has('errors.email'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!component('components/icons/exclamation')
+              @!icons.exclamation({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.email') }}</span>
             </div>
           @endif
@@ -48,7 +48,7 @@
           <label for="password" class="text-gray-800">Mot de passe</label>
           @if(flashMessages.has('errors.password'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!component('components/icons/exclamation')
+              @!icons.exclamation({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.password') }}</span>
             </div>
           @endif
@@ -60,7 +60,7 @@
           <label for="password_confirmation" class="text-gray-800">Confirmation mot de passe</label>
           @if(flashMessages.has('errors.password_confirmation'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!component('components/icons/exclamation')
+              @!icons.exclamation({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.password_confirmation') }}</span>
             </div>
           @endif
