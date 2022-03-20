@@ -7,7 +7,7 @@ export default class AuthController {
     try {
       await auth.attempt(email, password)
     } catch (error) {
-      session.flash('error', 'Un problème est survenu')
+      session.flash('error', 'Email ou mot de passe incorrect')
       return response.redirect().back()
     }
 
