@@ -1,0 +1,80 @@
+@layout('layouts/main')
+
+@set('title', 'Créer un gérant - Hypnos')
+
+@section('content')
+  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+    <span class="py-3 border-b border-gray-800 relative translate-y-px">Créer un gérant</span>
+  </div>
+
+  <form method="POST" autocomplete="off" novalidate class="flex flex-col">
+    <div class="flex items-center gap-5 mb-5">
+      <div class="flex-1">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="lastname" class="text-gray-800">Nom</label>
+          @if(flashMessages.has('errors.lastname'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.lastname') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="text" id="lastname" name="lastname" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ flashMessages.get('lastname') || '' }}">
+      </div>
+      <div class="flex-1">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="firstname" class="text-gray-800">Prénom</label>
+          @if(flashMessages.has('errors.firstname'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.firstname') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="text" id="firstname" name="firstname" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ flashMessages.get('firstname') || '' }}">
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="email" class="text-gray-800">Email</label>
+        @if(flashMessages.has('errors.email'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.email') }}</span>
+          </div>
+        @endif
+      </div>
+      <input type="email" name="email" id="email" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ flashMessages.get('email') || '' }}">
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="password" class="text-gray-800">Mot de passe</label>
+        @if(flashMessages.has('errors.password'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.password') }}</span>
+          </div>
+        @endif
+      </div>
+      <input type="password" name="password" id="password" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="">
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="password_confirmation" class="text-gray-800">Confirmation mot de passe</label>
+        @if(flashMessages.has('errors.password_confirmation'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.password_confirmation') }}</span>
+          </div>
+        @endif
+      </div>
+      <input type="password_confirmation" name="password_confirmation" id="password_confirmation" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="">
+    </div>
+    <button class="border border-gray-800 rounded px-6 py-3 self-end hover:bg-gray-800 hover:text-white transition flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>Créer un gérant</span>
+    </button>
+  </form>
+@endsection

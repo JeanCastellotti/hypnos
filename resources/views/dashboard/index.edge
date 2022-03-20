@@ -1,0 +1,30 @@
+@layout('layouts/main')
+
+@set('title', 'Mes informations - Hypnos')
+
+@section('content')
+  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+    <a href="{{ route('dashboard.index') }}" class="py-3 border-b border-gray-800 relative translate-y-px">Mes informations</a>
+    <a href="{{ route('dashboard.establishments') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Établissements</a>
+    <a href="{{ route('dashboard.managers') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Gérants</a>
+    <a href="" class="py-3 border-b border-gray-300 relative translate-y-px">Messages</a>
+  </div>
+
+  <form method="POST" autocomplete="off" novalidate class="flex flex-col">
+    <div class="flex items-center gap-5 mb-5">
+      <div class="flex-1">
+        <label for="lastname" class="text-gray-800 block mb-3">Nom</label>
+        <input type="text" id="lastname" name="lastname" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ auth.user.lastname }}">
+      </div>
+      <div class="flex-1">
+        <label for="firstname" class="text-gray-800 block mb-3">Prénom</label>
+        <input type="text" id="firstname" name="firstname" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ auth.user.firstname }}">
+      </div>
+    </div>
+    <div class="mb-5">
+      <label for="email" class="block mb-3">Email</label>
+      <input type="email" name="email" id="email" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ auth.user.email }}">
+    </div>
+    <button class="border border-gray-800 rounded px-6 py-3 self-end hover:bg-gray-800 hover:text-white transition">Modifier mes informations</button>
+  </form>
+@endsection
