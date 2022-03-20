@@ -14,4 +14,10 @@ export default class AuthController {
     session.flash('success', 'Vous êtes connecté')
     return response.redirect().toRoute('dashboard.index')
   }
+
+  public async logout({ auth, session, response }: HttpContextContract) {
+    await auth.logout()
+    session.flash('success', 'Vous avez été déconnecté')
+    return response.redirect().toRoute('auth.login')
+  }
 }
