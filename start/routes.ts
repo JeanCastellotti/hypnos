@@ -22,8 +22,24 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.on('/').render('index').as('home')
 
-Route.get('admin', 'AppController.showAdmin')
-Route.post('admin', 'AppController.storeAdmin')
+Route.get('/admin', 'AppController.showAdmin')
+Route.post('/admin', 'AppController.storeAdmin')
 
-Route.on('login').render('auth/login').as('login')
-Route.post('login', 'AuthController.login')
+Route.on('/login').render('auth/login').as('auth.login')
+Route.post('/login', 'AuthController.login')
+
+Route.get('/logout', 'AuthController.logout').as('auth.logout')
+
+Route.group(() => {
+  Route.on('/').render('dashboard/index').as('dashboard.index')
+  Route.get('/establishments', 'DashboardController.establishments').as('dashboard.establishments')
+  Route.group(() => {
+    Route.get('/', 'DashboardController.managers').as('dashboard.managers')
+    Route.on('/create').render('dashboard/create-manager').as('dashboard.createManager')
+    Route.post('/create', 'DashboardController.storeManager')
+    Route.get('/update/:id', 'DashboardController.showManager').as('dashboard.showManager')
+    Route.post('/update/:id', 'DashboardController.updateManager')
+  }).prefix('/managers')
+})
+  .prefix('/dashboard')
+  .middleware('auth')
