@@ -5,9 +5,9 @@ export default class ManagerValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    lastname: schema.string.optional({ trim: true }, [rules.alpha()]),
-    firstname: schema.string.optional({ trim: true }, [rules.alpha()]),
-    email: schema.string.optional({ trim: true }, [
+    lastname: schema.string({ trim: true }, [rules.alpha()]),
+    firstname: schema.string({ trim: true }, [rules.alpha()]),
+    email: schema.string({ trim: true }, [
       rules.email(),
       rules.unique({ table: 'users', column: 'email', whereNot: { id: this.ctx.params.id } }),
     ]),
