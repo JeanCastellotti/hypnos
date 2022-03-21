@@ -1,0 +1,95 @@
+@layout('layouts/main')
+
+@set('title', 'Créer un établissement - Hypnos')
+
+@section('content')
+  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+    <span class="py-3 border-b border-gray-800 relative translate-y-px">Créer un établissement</span>
+  </div>
+
+  <form method="POST" autocomplete="off" novalidate class="flex flex-col" enctype="multipart/form-data">
+    <div class="flex items-center gap-5 mb-5">
+      <div class="flex-1">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="name" class="text-gray-800">Nom</label>
+          @if(flashMessages.has('errors.name'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.name') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="text" id="name" name="name" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ flashMessages.get('name') || '' }}">
+      </div>
+      <div class="flex-1">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="city" class="text-gray-800">Ville</label>
+          @if(flashMessages.has('errors.city'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.city') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="text" id="city" name="city" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ flashMessages.get('city') || '' }}">
+      </div>
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="address" class="text-gray-800">Adresse</label>
+        @if(flashMessages.has('errors.address'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.address') }}</span>
+          </div>
+        @endif
+      </div>
+      <input type="type" name="address" id="address" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200" value="{{ flashMessages.get('address') || '' }}">
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="description" class="text-gray-800">Description</label>
+        @if(flashMessages.has('errors.description'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.description') }}</span>
+          </div>
+        @endif
+      </div>
+      <textarea name="description" id="description" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200 resize-none h-56">{{ flashMessages.get('description') || '' }}</textarea>
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="manager" class="text-gray-800">Gérant</label>
+        @if(flashMessages.has('errors.userId'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.userId') }}</span>
+          </div>
+        @endif
+      </div>
+      <select name="user_id" id="manager" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200">
+        @each(manager in managers)
+          <option value=""></option>
+          <option value="{{ manager.id }}">{{ manager.firstname}} {{ manager.lastname }}</option>
+        @endeach
+      </select>
+    </div>
+    <div class="mb-5">
+      <div class="mb-3 flex items-center justify-between">
+        <label for="hero" class="text-gray-800">Image</label>
+        @if(flashMessages.has('errors.hero'))
+          <div class="text-red-500 flex items-center gap-2 text-sm">
+            @!icons.exclamation({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.hero') }}</span>
+          </div>
+        @endif
+      </div>
+      <input type="file" name="hero" id="hero" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200">
+    </div>
+    <button class="border border-gray-800 rounded px-6 py-3 self-end hover:bg-gray-800 hover:text-white transition flex items-center gap-2">
+      @!icons.plus({ class: 'h-6 w-6' })
+      <span>Créer un établissement</span>
+    </button>
+  </form>
+@endsection
