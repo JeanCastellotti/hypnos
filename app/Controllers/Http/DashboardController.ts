@@ -5,6 +5,8 @@ import ManagerValidator from 'App/Validators/ManagerValidator'
 import ManagerUpdateValidator from 'App/Validators/ManagerUpdateValidator'
 import EstablishmentValidator from 'App/Validators/EstablishmentValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
+import EstablishmentUpdateValidator from 'App/Validators/EstablishmentUpdateValidator'
+import Drive from '@ioc:Adonis/Core/Drive'
 
 export default class DashboardController {
   public async establishments({ view }: HttpContextContract) {
@@ -34,12 +36,31 @@ export default class DashboardController {
   }
 
   public async editEstablishment({ view, params }: HttpContextContract) {
-    const establishment = await Establishment.find(params.id)
+    const establishment = await Establishment.findOrFail(params.id)
     const managers = await User.query().where('role', 'manager')
     return view.render('dashboard/establishments/edit', { establishment, managers })
   }
 
-  public async updateEstablishment({}: HttpContextContract) {}
+  public async updateEstablishment({ request, response, params, session }: HttpContextContract) {
+    const { hero, ...data } = await request.validate(EstablishmentUpdateValidator)
+    const establishment = await Establishment.findOrFail(params.id)
+
+    try {
+      if (hero) {
+        const filename = string.generateRandom(32) + '.' + hero.extname
+        await Drive.delete(establishment.hero)
+        await hero.moveToDisk('./', { name: filename })
+        establishment.hero = filename
+      }
+      await establishment?.merge({ ...data }).save()
+    } catch (error) {
+      session.flash('error', "Un problème est survenu lors de la modification de l'établissement")
+      return response.redirect().back()
+    }
+
+    session.flash('success', "L'établissement a bien été modifié")
+    return response.redirect().toRoute('dashboard.establishments')
+  }
 
   public async destroyEstablishment({}: HttpContextContract) {}
 
