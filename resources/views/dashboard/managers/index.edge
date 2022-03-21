@@ -42,25 +42,9 @@
       <span>Créer un gérant</span>
     </a>
   
-    <template x-teleport="body">
-      <div class="fixed inset-0 flex bg-gray-800/50 backdrop-blur-sm p-5" x-show="isOpen" x-cloak>
-        <div class="m-auto bg-white p-4 rounded max-w-screen-sm w-full" @click.away="close" x-show="isOpen" x-transition>
-          <p class="text-lg text-gray-800 mb-5">Supprimer un gérant</p>
-          <p class="text-gray-600 mb-5" x-text="message"></p>
-          <div class="flex gap-2 justify-end">
-            <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" @click="close">
-              @!icons.cross({ class: 'h-5 w-5' })
-              <span>Annuler</span>
-            </button>
-            <form method="POST" :action="`/dashboard/managers/delete/${id}?_method=DELETE`">
-              <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm">
-                @!icons.trash({ class: 'h-5 w-5 '})
-                <span>Supprimer</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </template>
+    @!modal({
+      title: 'Supprimer un gérant',
+      action: '/dashboard/managers/delete'
+    })
   </div>
 @endsection
