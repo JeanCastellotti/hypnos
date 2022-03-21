@@ -1,0 +1,42 @@
+@layout('layouts/main')
+
+@set('title', 'Les établissements - Hypnos')
+
+@section('content')
+  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+    <a href="{{ route('dashboard.index') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Mes informations</a>
+    <a href="{{ route('dashboard.establishments') }}" class="py-3 border-b border-gray-800 relative translate-y-px">Établissements</a>
+    <a href="{{ route('dashboard.managers') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Gérants</a>
+    <a href="" class="py-3 border-b border-gray-300 relative translate-y-px">Messages</a>
+  </div>
+
+  @if(establishments.length)
+    <table class="mb-10 w-full text-gray-600">
+      <tbody>
+        @each(establishment in establishments)
+          <tr>
+            <td class="py-3 pr-3">{{ establishment.name }}</td>
+            <td class="p-3">{{ establishment.city }}</td>
+            <td class="py-3 flex items-center gap-2 justify-end">
+              <a href="{{ route('dashboard.establishments.edit', { id: establishment.id }) }}" class="border border-orange-500 text-orange-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-orange-500 hover:text-white transition text-sm">
+                @!icons.edit({ class: 'h-5 w-5 '})
+                <span>Modifier</span>
+              </a>
+              <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm" data-id="{{ establishment.id }}" data-message="Voulez-vous vraiment supprimer {{ establishment.name }} à {{ establishment.city }} ?" @click="open($el)">
+                @!icons.trash({ class: 'h-5 w-5 '})
+                <span>Supprimer</span>
+              </button>
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  @else
+    <span class="text-gray-800 text-center block w-full mb-10">Aucun établissement</span>
+  @endif
+
+  <a href="{{ route('dashboard.establishments.create') }}" class="bg-white rounded inline-flex gap-2 items-center text-gray-800 py-2 px-4 transition transform hover:scale-105 hover:shadow-sm">
+    @!icons.plus({ class: 'h-6 w-6' })
+    <span>Créer un établissement</span>
+  </a>
+@endsection
