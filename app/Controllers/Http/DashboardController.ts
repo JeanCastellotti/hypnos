@@ -3,11 +3,36 @@ import Establishment from 'App/Models/Establishment'
 import User from 'App/Models/User'
 import ManagerValidator from 'App/Validators/ManagerValidator'
 import ManagerUpdateValidator from 'App/Validators/ManagerUpdateValidator'
+import EstablishmentValidator from 'App/Validators/EstablishmentValidator'
+import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class DashboardController {
   public async establishments({ view }: HttpContextContract) {
     const establishments = await Establishment.all()
     return view.render('dashboard/establishments', { establishments })
+  }
+
+  public async createEstablishment({ view }: HttpContextContract) {
+    const managers = await User.query().where('role', 'manager')
+    return view.render('dashboard/create-establishment', { managers })
+  }
+
+  public async storeEstablishment({ request, response, session }: HttpContextContract) {
+    const { hero, ...data } = await request.validate(EstablishmentValidator)
+
+    const filename = string.generateRandom(32) + '.' + hero.extname
+    await hero.moveToDisk('./', { name: filename })
+
+    try {
+      await Establishment.create({ ...data, hero: filename })
+    } catch (error) {
+      console.log(error)
+
+      session.flash('error', "Un problème est survenu lors de la création de l'établissement")
+    }
+
+    session.flash('success', "L'établissement a bien été créé")
+    return response.redirect().toRoute('dashboard.establishments')
   }
 
   public async managers({ view }: HttpContextContract) {
