@@ -19,15 +19,12 @@ export default class DashboardController {
 
   public async storeEstablishment({ request, response, session }: HttpContextContract) {
     const { hero, ...data } = await request.validate(EstablishmentValidator)
-
     const filename = string.generateRandom(32) + '.' + hero.extname
-    await hero.moveToDisk('./', { name: filename })
 
     try {
+      await hero.moveToDisk('./', { name: filename })
       await Establishment.create({ ...data, hero: filename })
     } catch (error) {
-      console.log(error)
-
       session.flash('error', "Un problème est survenu lors de la création de l'établissement")
       return response.redirect().back()
     }
@@ -48,29 +45,43 @@ export default class DashboardController {
       await User.create({ ...data, role: 'manager' })
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la création du gérant')
+      return response.redirect().back()
     }
 
     session.flash('success', 'Le gérant a bien été créé')
     return response.redirect().toRoute('dashboard.managers')
   }
 
-  public async showManager({ view, params }: HttpContextContract) {
+  public async editManager({ view, params }: HttpContextContract) {
     const manager = await User.find(params.id)
-    return view.render('dashboard/edit-manager', { manager })
+    return view.render('dashboard/managers/edit', { manager })
   }
 
   public async updateManager({ request, response, params, session }: HttpContextContract) {
     const data = await request.validate(ManagerUpdateValidator)
-
     const manager = await User.find(params.id)
-    await manager?.merge({ ...data }).save()
+
+    try {
+      await manager?.merge({ ...data }).save()
+    } catch (error) {
+      session.flash('error', 'Un problème est survenu lors de la modification du gérant')
+      return response.redirect().back()
+    }
+
     session.flash('success', 'Le gérant a bien été modifié')
     return response.redirect().toRoute('dashboard.managers')
   }
 
   public async destroyManager({ params, response, session }: HttpContextContract) {
     const manager = await User.find(params.id)
-    await manager?.delete()
+
+    try {
+      await manager?.delete()
+    } catch (error) {
+      session.flash('error', 'Un problème est survenu lors de la suppression du gérant')
+      return response.redirect().back()
+    }
+
     session.flash('success', 'Le gérant a bien été supprimé')
     return response.redirect().toRoute('dashboard.managers')
   }
