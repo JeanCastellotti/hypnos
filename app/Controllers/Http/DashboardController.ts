@@ -29,6 +29,7 @@ export default class DashboardController {
       console.log(error)
 
       session.flash('error', "Un problème est survenu lors de la création de l'établissement")
+      return response.redirect().back()
     }
 
     session.flash('success', "L'établissement a bien été créé")
