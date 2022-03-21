@@ -32,7 +32,7 @@ Route.get('/logout', 'AuthController.logout').as('auth.logout')
 
 Route.group(() => {
   Route.on('/').render('dashboard/index').as('dashboard.index')
-  Route.get('/establishments', 'DashboardController.establishments').as('dashboard.establishments')
+
   Route.group(() => {
     Route.get('/', 'DashboardController.managers').as('dashboard.managers')
     Route.on('/create').render('dashboard/create-manager').as('dashboard.createManager')
@@ -41,6 +41,14 @@ Route.group(() => {
     Route.post('/update/:id', 'DashboardController.updateManager')
     Route.delete('/delete/:id', 'DashboardController.destroyManager').as('dashboard.destroyManager')
   }).prefix('/managers')
+
+  Route.group(() => {
+    Route.get('/', 'DashboardController.establishments').as('dashboard.establishments')
+    Route.get('/create', 'DashboardController.createEstablishment').as(
+      'dashboard.createEstablishment'
+    )
+    Route.post('/create', 'DashboardController.storeEstablishment')
+  }).prefix('/establishments')
 })
   .prefix('/dashboard')
   .middleware('auth')
