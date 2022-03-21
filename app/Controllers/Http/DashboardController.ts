@@ -9,12 +9,12 @@ import { string } from '@ioc:Adonis/Core/Helpers'
 export default class DashboardController {
   public async establishments({ view }: HttpContextContract) {
     const establishments = await Establishment.all()
-    return view.render('dashboard/establishments', { establishments })
+    return view.render('dashboard/establishments/index', { establishments })
   }
 
   public async createEstablishment({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
-    return view.render('dashboard/create-establishment', { managers })
+    return view.render('dashboard/establishments/create', { managers })
   }
 
   public async storeEstablishment({ request, response, session }: HttpContextContract) {
@@ -37,7 +37,7 @@ export default class DashboardController {
 
   public async managers({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
-    return view.render('dashboard/managers', { managers })
+    return view.render('dashboard/managers/index', { managers })
   }
 
   public async storeManager({ request, response, session }: HttpContextContract) {
