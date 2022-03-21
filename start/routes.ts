@@ -35,19 +35,28 @@ Route.group(() => {
 
   Route.group(() => {
     Route.get('/', 'DashboardController.managers').as('dashboard.managers')
-    Route.on('/create').render('dashboard/create-manager').as('dashboard.createManager')
+    Route.on('/create').render('dashboard/managers/create').as('dashboard.managers.create')
     Route.post('/create', 'DashboardController.storeManager')
-    Route.get('/update/:id', 'DashboardController.showManager').as('dashboard.showManager')
+    Route.get('/update/:id', 'DashboardController.editManager').as('dashboard.managers.edit')
     Route.post('/update/:id', 'DashboardController.updateManager')
-    Route.delete('/delete/:id', 'DashboardController.destroyManager').as('dashboard.destroyManager')
+    Route.delete('/delete/:id', 'DashboardController.destroyManager').as(
+      'dashboard.managers.destroy'
+    )
   }).prefix('/managers')
 
   Route.group(() => {
     Route.get('/', 'DashboardController.establishments').as('dashboard.establishments')
     Route.get('/create', 'DashboardController.createEstablishment').as(
-      'dashboard.createEstablishment'
+      'dashboard.establishments.create'
     )
     Route.post('/create', 'DashboardController.storeEstablishment')
+    Route.get('/update/:id', 'DashboardController.editEstablishment').as(
+      'dashboard.establishments.edit'
+    )
+    Route.post('/update/:id', 'DashboardController.updateEstablishment')
+    Route.delete('/delete/:id', 'DashboardController.destroyEstablishment').as(
+      'dashboard.establishments.destroy'
+    )
   }).prefix('/establishments')
 })
   .prefix('/dashboard')
