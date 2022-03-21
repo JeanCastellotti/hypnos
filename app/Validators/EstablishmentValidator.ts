@@ -9,7 +9,7 @@ export default class EstablishmentValidator {
     city: schema.string({ trim: true }),
     address: schema.string({ trim: true }),
     description: schema.string({ trim: true }),
-    user_id: schema.number.nullableAndOptional(),
+    user_id: schema.number.optional(),
     hero: schema.file({ extnames: ['jpg', 'jpeg', 'png'] }),
   })
 
