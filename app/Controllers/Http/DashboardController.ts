@@ -33,6 +33,16 @@ export default class DashboardController {
     return response.redirect().toRoute('dashboard.establishments')
   }
 
+  public async editEstablishment({ view, params }: HttpContextContract) {
+    const establishment = await Establishment.find(params.id)
+    const managers = await User.query().where('role', 'manager')
+    return view.render('dashboard/establishments/edit', { establishment, managers })
+  }
+
+  public async updateEstablishment({}: HttpContextContract) {}
+
+  public async destroyEstablishment({}: HttpContextContract) {}
+
   public async managers({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
     return view.render('dashboard/managers/index', { managers })
