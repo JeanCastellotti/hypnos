@@ -62,7 +62,20 @@ export default class DashboardController {
     return response.redirect().toRoute('dashboard.establishments')
   }
 
-  public async destroyEstablishment({}: HttpContextContract) {}
+  public async destroyEstablishment({ params, session, response }: HttpContextContract) {
+    const establishment = await Establishment.findOrFail(params.id)
+
+    try {
+      await establishment.delete()
+      await Drive.delete(establishment.hero)
+    } catch (error) {
+      session.flash('error', "Un problème est survenu lors de la suppression de l'établissement")
+      return response.redirect().back()
+    }
+
+    session.flash('success', "L'établissement a bien été supprimé")
+    return response.redirect().toRoute('dashboard.establishments')
+  }
 
   public async managers({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
@@ -90,10 +103,10 @@ export default class DashboardController {
 
   public async updateManager({ request, response, params, session }: HttpContextContract) {
     const data = await request.validate(ManagerUpdateValidator)
-    const manager = await User.find(params.id)
+    const manager = await User.findOrFail(params.id)
 
     try {
-      await manager?.merge({ ...data }).save()
+      await manager.merge({ ...data }).save()
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la modification du gérant')
       return response.redirect().back()
@@ -104,10 +117,10 @@ export default class DashboardController {
   }
 
   public async destroyManager({ params, response, session }: HttpContextContract) {
-    const manager = await User.find(params.id)
+    const manager = await User.findOrFail(params.id)
 
     try {
-      await manager?.delete()
+      await manager.delete()
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la suppression du gérant')
       return response.redirect().back()
