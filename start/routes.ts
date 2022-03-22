@@ -20,10 +20,12 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.on('/').render('index').as('home')
+Route.get('/', 'AppController.main').as('home')
 
-Route.get('/admin', 'AppController.showAdmin')
+Route.get('/admin', 'AppController.createAdmin')
 Route.post('/admin', 'AppController.storeAdmin')
+
+Route.get('/establishments/:name', 'EstablishmentsController.show').as('establishments.show')
 
 Route.on('/login').render('auth/login').as('auth.login')
 Route.post('/login', 'AuthController.login')
