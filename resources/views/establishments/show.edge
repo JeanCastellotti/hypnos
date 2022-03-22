@@ -1,0 +1,54 @@
+@layout('layouts/establishment')
+
+@set('title', `${establishment.name} - Hypnos`)
+@set('description', truncate(establishment.description, 150))
+
+@section('hero')
+  <div class="h-96 relative mb-10">
+    <img src="/uploads/{{ establishment.hero }}" alt="{{ establishment.name }}" class="object-cover w-full h-full">
+    <div class="absolute bottom-0 inset-x-0 bg-white/80 backdrop-blur-sm py-5">
+      <div class="max-w-screen-lg mx-auto px-5 flex items-center justify-between text-gray-800">
+        <h1 class="text-4xl font-black">{{ establishment.name }}</h1>
+        <div class="flex items-center gap-3 text-lg">
+          <h2>{{ establishment.city }}</h2>
+          @!icons.location({ class: 'h-6 w-6' })
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection
+
+@section('content')
+  <p class="text-gray-600 leading-loose mb-10 pb-10 border-b text-lg">{{ establishment.description }}</p>
+  <div class="flex items-center justify-between mb-10">
+    <h3 class="text-gray-800 text-2xl font-bold">Toutes les suites</h3>
+    <a href="" class="border border-gray-800 rounded py-3 px-4 text-gray-800 flex items-center gap-2 hover:bg-gray-800 transition hover:text-white">
+      @!icons.paperPlane({ class: 'h-5 w-5'})
+      <span>Nous contacter</span>
+    </a>
+  </div>
+  <div class="space-y-5">
+    @each(suite in establishment.suites)
+      <div>
+        <div class="grid grid-cols-2 rounded overflow-hidden">
+          <img src="/uploads/{{ suite.picture_1 }}" alt="Image suite" class="object-cover h-40 w-full">
+          <img src="/uploads/{{ suite.picture_2 }}" alt="Image suite" class="object-cover h-40 w-full">
+        </div>
+        <div class="bg-white p-4 rounded shadow-sm grid grid-cols-2 gap-2">
+          <div class="flex flex-col items-start gap-4">
+            <span class="text-gray-800 text-2xl">{{ suite.title }}</span>
+            <span class="text-gray-800">{{ suite.price }}€ la nuit</span>
+            <a href="{{ suite.bookingUrl }}" class="text-blue-500 hover:underline">booking.com</a>
+            <a href="" class="flex items-center gap-4 rounded bg-gray-800 text-white py-3 px-6 transition transform hover:scale-105">
+              @!icons.cursorClick({ class: 'h-6 w-6' })
+              <span>Réserver</span>
+            </a>
+          </div>
+          <p class="text-gray-600 leading-loose">{{ suite.description }}</p>
+        </div>
+      </div>
+    @else
+      <span class="block text-center text-gray-800">Aucune suite</span>
+    @endeach
+  </div>
+@endsection
