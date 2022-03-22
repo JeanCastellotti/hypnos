@@ -27,4 +27,9 @@ export default class AppsController {
     session.flash('success', "L'administrateur a bien été créé")
     return response.redirect().toRoute('auth.login')
   }
+
+  public async main({ view }: HttpContextContract) {
+    const establishments = await Establishment.all()
+    return view.render('index', { establishments })
+  }
 }
