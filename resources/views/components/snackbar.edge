@@ -1,5 +1,5 @@
 @if(flashMessages.has('success') || flashMessages.has('error'))
-  <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 mx-auto px-5 cursor-pointer" x-data="snackbar($el)" x-init="timeout" x-on:click="close">
+  <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 mx-auto px-5 cursor-pointer" x-data="snackbar($el)" x-on:click="close">
     @if(flashMessages.has('error'))
       <div class="bg-red-300 border border-red-400 text-red-600 rounded p-4 flex gap-5 items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
