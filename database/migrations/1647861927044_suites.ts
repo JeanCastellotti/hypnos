@@ -10,6 +10,8 @@ export default class Suites extends BaseSchema {
       table.text('description').notNullable()
       table.float('price').notNullable()
       table.string('booking_url').notNullable()
+      table.string('picture_1').notNullable()
+      table.string('picture_2').notNullable()
       table
         .integer('establishment_id')
         .references('establishments.id')
