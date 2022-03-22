@@ -3,6 +3,7 @@ import {
   afterDelete,
   BaseModel,
   beforeDelete,
+  beforeSave,
   BelongsTo,
   belongsTo,
   column,
@@ -12,6 +13,7 @@ import {
 import User from './User'
 import Suite from './Suite'
 import Drive from '@ioc:Adonis/Core/Drive'
+import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class Establishment extends BaseModel {
   @column({ isPrimary: true })
@@ -46,6 +48,11 @@ export default class Establishment extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @beforeSave()
+  public static async titleCase(establishment: Establishment) {
+    establishment.name = string.capitalCase(establishment.name)
+  }
 
   @beforeDelete()
   public static async deleteSuitesPictures(establishment: Establishment) {
