@@ -13,5 +13,11 @@ export default class EstablishmentValidator {
     hero: schema.file({ extnames: ['jpg', 'jpeg', 'png'] }),
   })
 
-  public messages = {}
+  public messages = {
+    'name.required': 'Le nom est obligatoire',
+    'city.required': 'La ville est obligatoire',
+    'address.required': "L'adresse est obligatoire",
+    'description.required': 'La description est obligatoire',
+    'hero.required': "L'image est obligatoire",
+  }
 }
