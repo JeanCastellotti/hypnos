@@ -31,33 +31,41 @@ Route.post('/login', 'AuthController.login')
 Route.get('/logout', 'AuthController.logout').as('auth.logout')
 
 Route.group(() => {
-  Route.on('/').render('dashboard/index').as('dashboard.index')
+  Route.on('/').render('dashboard/index').as('index')
 
   Route.group(() => {
-    Route.get('/', 'DashboardController.managers').as('dashboard.managers')
-    Route.on('/create').render('dashboard/managers/create').as('dashboard.managers.create')
-    Route.post('/create', 'DashboardController.storeManager')
-    Route.get('/update/:id', 'DashboardController.editManager').as('dashboard.managers.edit')
-    Route.post('/update/:id', 'DashboardController.updateManager')
-    Route.delete('/delete/:id', 'DashboardController.destroyManager').as(
-      'dashboard.managers.destroy'
-    )
-  }).prefix('/managers')
+    Route.get('/', 'DashboardController.managers').as('index')
+    Route.get('/create', 'DashboardController.createManager').as('create')
+    Route.post('/create', 'DashboardController.storeManager').as('store')
+    Route.get('/update/:id', 'DashboardController.editManager').as('edit')
+    Route.post('/update/:id', 'DashboardController.updateManager').as('update')
+    Route.delete('/delete', 'DashboardController.destroyManager').as('destroy')
+  })
+    .prefix('/managers')
+    .as('managers')
 
   Route.group(() => {
-    Route.get('/', 'DashboardController.establishments').as('dashboard.establishments')
-    Route.get('/create', 'DashboardController.createEstablishment').as(
-      'dashboard.establishments.create'
-    )
-    Route.post('/create', 'DashboardController.storeEstablishment')
-    Route.get('/update/:id', 'DashboardController.editEstablishment').as(
-      'dashboard.establishments.edit'
-    )
-    Route.post('/update/:id', 'DashboardController.updateEstablishment')
-    Route.delete('/delete/:id', 'DashboardController.destroyEstablishment').as(
-      'dashboard.establishments.destroy'
-    )
-  }).prefix('/establishments')
+    Route.get('/', 'DashboardController.establishments').as('index')
+    Route.get('/create', 'DashboardController.createEstablishment').as('create')
+    Route.post('/create', 'DashboardController.storeEstablishment').as('store')
+    Route.get('/update/:id', 'DashboardController.editEstablishment').as('edit')
+    Route.post('/update/:id', 'DashboardController.updateEstablishment').as('update')
+    Route.delete('/delete', 'DashboardController.destroyEstablishment').as('destroy')
+  })
+    .prefix('/establishments')
+    .as('establishments')
+
+  Route.group(() => {
+    Route.get('/', 'DashboardController.suites').as('index')
+    Route.get('/create', 'DashboardController.createSuite').as('create')
+    Route.post('/create', 'DashboardController.storeSuite').as('store')
+    Route.get('/update/:id', 'DashboardController.editSuite').as('edit')
+    Route.post('/update/:id', 'DashboardController.updateSuite').as('update')
+    Route.delete('/delete', 'DashboardController.destroySuite').as('destroy')
+  })
+    .prefix('/suites')
+    .as('suites')
 })
   .prefix('/dashboard')
+  .as('dashboard')
   .middleware('auth')
