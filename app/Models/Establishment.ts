@@ -1,6 +1,17 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  afterDelete,
+  BaseModel,
+  beforeDelete,
+  BelongsTo,
+  belongsTo,
+  column,
+  HasMany,
+  hasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import Suite from './Suite'
+import Drive from '@ioc:Adonis/Core/Drive'
 
 export default class Establishment extends BaseModel {
   @column({ isPrimary: true })
@@ -27,9 +38,27 @@ export default class Establishment extends BaseModel {
   @belongsTo(() => User)
   public manager: BelongsTo<typeof User>
 
+  @hasMany(() => Suite)
+  public suites: HasMany<typeof Suite>
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @beforeDelete()
+  public static async deleteSuitesPictures(establishment: Establishment) {
+    const suites = await establishment.related('suites').query()
+
+    suites.forEach(async (suite) => {
+      await Drive.delete(suite.picture_1)
+      await Drive.delete(suite.picture_2)
+    })
+  }
+
+  @afterDelete()
+  public static async deleteHero(establishment: Establishment) {
+    await Drive.delete(establishment.hero)
+  }
 }
