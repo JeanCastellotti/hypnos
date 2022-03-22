@@ -1,0 +1,19 @@
+<div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10" x-data>
+  <a 
+    href="{{ route('dashboard.index') }}" 
+    class="py-3 border-b border-gray-300 relative translate-y-px whitespace-nowrap" 
+    :class="{'!border-gray-800': window.location.pathname === '/dashboard'}">Mes informations</a>
+  <a 
+    href="{{ route('dashboard.establishments.index') }}" 
+    class="py-3 border-b border-gray-300 relative translate-y-px" 
+    :class="{'!border-gray-800': window.location.pathname === '/dashboard/establishments'}">Établissements</a>
+  <a 
+    href="{{ route('dashboard.managers.index') }}" 
+    class="py-3 border-b border-gray-300 relative translate-y-px" 
+    :class="{'!border-gray-800': window.location.pathname === '/dashboard/managers'}">Gérants</a>
+  <a 
+    href="{{ route('dashboard.suites.index') }}" 
+    class="py-3 border-b border-gray-300 relative translate-y-px" 
+    :class="{'!border-gray-800': window.location.pathname === '/dashboard/suites'}">Suites</a>
+  <a href="" class="py-3 border-b border-gray-300 relative translate-y-px">Messages</a>
+</div>
