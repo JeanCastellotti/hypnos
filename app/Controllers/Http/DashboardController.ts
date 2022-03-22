@@ -7,6 +7,9 @@ import EstablishmentValidator from 'App/Validators/EstablishmentValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import EstablishmentUpdateValidator from 'App/Validators/EstablishmentUpdateValidator'
 import Drive from '@ioc:Adonis/Core/Drive'
+import Suite from 'App/Models/Suite'
+import SuiteValidator from 'App/Validators/SuiteValidator'
+import SuiteUpdateValidator from 'App/Validators/SuiteUpdateValidator'
 
 export default class DashboardController {
   public async establishments({ view }: HttpContextContract) {
@@ -32,7 +35,7 @@ export default class DashboardController {
     }
 
     session.flash('success', "L'établissement a bien été créé")
-    return response.redirect().toRoute('dashboard.establishments')
+    return response.redirect().toRoute('dashboard.establishments.index')
   }
 
   public async editEstablishment({ view, params }: HttpContextContract) {
@@ -52,34 +55,39 @@ export default class DashboardController {
         await hero.moveToDisk('./', { name: filename })
         establishment.hero = filename
       }
-      await establishment?.merge({ ...data }).save()
+
+      await establishment.merge({ ...data }).save()
     } catch (error) {
       session.flash('error', "Un problème est survenu lors de la modification de l'établissement")
       return response.redirect().back()
     }
 
     session.flash('success', "L'établissement a bien été modifié")
-    return response.redirect().toRoute('dashboard.establishments')
+    return response.redirect().toRoute('dashboard.establishments.index')
   }
 
-  public async destroyEstablishment({ params, session, response }: HttpContextContract) {
-    const establishment = await Establishment.findOrFail(params.id)
+  public async destroyEstablishment({ request, session, response }: HttpContextContract) {
+    const { id } = request.only(['id'])
+    const establishment = await Establishment.findOrFail(id)
 
     try {
       await establishment.delete()
-      await Drive.delete(establishment.hero)
     } catch (error) {
       session.flash('error', "Un problème est survenu lors de la suppression de l'établissement")
       return response.redirect().back()
     }
 
     session.flash('success', "L'établissement a bien été supprimé")
-    return response.redirect().toRoute('dashboard.establishments')
+    return response.redirect().toRoute('dashboard.establishments.index')
   }
 
   public async managers({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
     return view.render('dashboard/managers/index', { managers })
+  }
+
+  public async createManager({ view }: HttpContextContract) {
+    return view.render('dashboard/managers/create')
   }
 
   public async storeManager({ request, response, session }: HttpContextContract) {
@@ -93,7 +101,7 @@ export default class DashboardController {
     }
 
     session.flash('success', 'Le gérant a bien été créé')
-    return response.redirect().toRoute('dashboard.managers')
+    return response.redirect().toRoute('dashboard.managers.index')
   }
 
   public async editManager({ view, params }: HttpContextContract) {
@@ -113,11 +121,12 @@ export default class DashboardController {
     }
 
     session.flash('success', 'Le gérant a bien été modifié')
-    return response.redirect().toRoute('dashboard.managers')
+    return response.redirect().toRoute('dashboard.managers.index')
   }
 
-  public async destroyManager({ params, response, session }: HttpContextContract) {
-    const manager = await User.findOrFail(params.id)
+  public async destroyManager({ request, response, session }: HttpContextContract) {
+    const { id } = request.only(['id'])
+    const manager = await User.findOrFail(id)
 
     try {
       await manager.delete()
@@ -127,6 +136,88 @@ export default class DashboardController {
     }
 
     session.flash('success', 'Le gérant a bien été supprimé')
-    return response.redirect().toRoute('dashboard.managers')
+    return response.redirect().toRoute('dashboard.managers.index')
+  }
+
+  public async suites({ view }: HttpContextContract) {
+    const suites = await Suite.all()
+    return view.render('dashboard/suites/index', { suites })
+  }
+
+  public async createSuite({ view }: HttpContextContract) {
+    return view.render('dashboard/suites/create')
+  }
+
+  public async storeSuite({ request, response, session }) {
+    const { picture1, picture2, ...data } = await request.validate(SuiteValidator)
+    const filename1 = string.generateRandom(32) + '.' + picture1.extname
+    const filename2 = string.generateRandom(32) + '.' + picture2.extname
+    const establishment = await Establishment.firstOrFail()
+
+    try {
+      await Suite.create({
+        ...data,
+        establishmentId: establishment.id,
+        picture_1: filename1,
+        picture_2: filename2,
+      })
+      await picture1.moveToDisk('./', { name: filename1 })
+      await picture2.moveToDisk('./', { name: filename2 })
+    } catch (error) {
+      session.flash('error', 'Un problème est survenu lors de la création de la suite')
+      return response.redirect().back()
+    }
+
+    session.flash('success', 'La suite a bien été créée')
+    return response.redirect().toRoute('dashboard.suites.index')
+  }
+
+  public async editSuite({ params, view }: HttpContextContract) {
+    const suite = await Suite.findOrFail(params.id)
+    return view.render('dashboard/suites/edit', { suite })
+  }
+
+  public async updateSuite({ request, response, params, session }: HttpContextContract) {
+    const { picture1, picture2, ...data } = await request.validate(SuiteUpdateValidator)
+    const suite = await Suite.findOrFail(params.id)
+
+    try {
+      if (picture1) {
+        const filename = string.generateRandom(32) + '.' + picture1.extname
+        await Drive.delete(suite.picture_1)
+        await picture1.moveToDisk('./', { name: filename })
+        suite.picture_1 = filename
+      }
+
+      if (picture2) {
+        const filename = string.generateRandom(32) + '.' + picture2.extname
+        await Drive.delete(suite.picture_2)
+        await picture2.moveToDisk('./', { name: filename })
+        suite.picture_2 = filename
+      }
+
+      await suite.merge({ ...data }).save()
+    } catch (error) {
+      session.flash('error', 'Un problème est survenu lors de la modification de la suite')
+      return response.redirect().back()
+    }
+
+    session.flash('success', 'La suite a bien été modifiée')
+    return response.redirect().toRoute('dashboard.suites.index')
+  }
+
+  public async destroySuite({ request, response, session }: HttpContextContract) {
+    const { id } = request.only(['id'])
+    const suite = await Suite.findOrFail(id)
+
+    try {
+      await suite.delete()
+    } catch (error) {
+      session.flash('error', 'Un problème est survenu lors de la suppression de la suite')
+      return response.redirect().back()
+    }
+
+    session.flash('success', 'La suite a bien été supprimée')
+    return response.redirect().toRoute('dashboard.suites.index')
   }
 }
