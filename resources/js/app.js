@@ -1,18 +1,10 @@
-import Alpine from 'alpinejs'
 import '../css/app.css'
 
-Alpine.data('modal', () => ({
-  isOpen: false,
-  message: null,
-  id: null,
-  open(elt) {
-    this.isOpen = true
-    this.message = elt.dataset.message
-    this.id = elt.dataset.id
-  },
-  close() {
-    this.isOpen = false
-  },
-}))
+import Alpine from 'alpinejs'
+import modal from './components/modal'
+import snackbar from './components/snackbar'
+
+Alpine.data('modal', modal)
+Alpine.data('snackbar', snackbar)
 
 Alpine.start()
