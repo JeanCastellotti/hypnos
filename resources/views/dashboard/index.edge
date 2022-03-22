@@ -4,9 +4,10 @@
 
 @section('content')
   <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
-    <a href="{{ route('dashboard.index') }}" class="py-3 border-b border-gray-800 relative translate-y-px">Mes informations</a>
-    <a href="{{ route('dashboard.establishments') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Établissements</a>
-    <a href="{{ route('dashboard.managers') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Gérants</a>
+    <a href="{{ route('dashboard.index') }}" class="py-3 border-b border-gray-800 relative translate-y-px whitespace-nowrap">Mes informations</a>
+    <a href="{{ route('dashboard.establishments.index') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Établissements</a>
+    <a href="{{ route('dashboard.managers.index') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Gérants</a>
+    <a href="{{ route('dashboard.suites.index') }}" class="py-3 border-b border-gray-300 relative translate-y-px">Suites</a>
     <a href="" class="py-3 border-b border-gray-300 relative translate-y-px">Messages</a>
   </div>
 
