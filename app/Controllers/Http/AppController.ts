@@ -25,6 +25,6 @@ export default class AppsController {
     }
 
     session.flash('success', "L'administrateur a bien été créé")
-    return response.redirect('/login')
+    return response.redirect().toRoute('auth.login')
   }
 }
