@@ -20,10 +20,14 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.group(() => {
 Route.get('/', 'AppController.main').as('home')
 
-Route.get('/admin', 'AppController.createAdmin')
-Route.post('/admin', 'AppController.storeAdmin')
+  Route.group(() => {
+    Route.get('/admin', 'AppController.createAdmin').as('create')
+    Route.post('/admin', 'AppController.storeAdmin').as('store')
+  }).as('admin')
+}).as('app')
 
 Route.get('/establishments/:name', 'EstablishmentsController.show').as('establishments.show')
 
