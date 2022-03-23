@@ -29,6 +29,8 @@ Route.get('/establishments/:name', 'EstablishmentsController.show').as('establis
 
 Route.on('/login').render('auth/login').as('auth.login')
 Route.post('/login', 'AuthController.login')
+Route.on('/signup').render('auth.signup').as('auth.signup')
+Route.post('/signup', 'AuthController.signup')
 
 Route.get('/logout', 'AuthController.logout').as('auth.logout')
 

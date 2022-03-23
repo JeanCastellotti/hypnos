@@ -12,10 +12,10 @@
         </a>
       @else
         <a href="{{ route('auth.login') }}" class="text-gray-800 hover:underline">Se connecter</a>
-        <button class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">
+        <a href="{{ route('auth.signup') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">
           @!icons.user({ class: 'h-6 w-6'})
           <span>Créer un compte</span>
-        </button>
+        </a>
       @endif
     </nav>
   </div>
