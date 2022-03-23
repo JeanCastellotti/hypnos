@@ -29,8 +29,8 @@
   </div>
   <div class="space-y-5">
     @each(suite in establishment.suites)
-      <div>
-        <div class="grid grid-cols-2 rounded overflow-hidden">
+      <div class="rounded overflow-hidden">
+        <div class="grid grid-cols-2">
           <img src="/uploads/{{ suite.picture_1 }}" alt="Image suite" class="object-cover h-40 w-full">
           <img src="/uploads/{{ suite.picture_2 }}" alt="Image suite" class="object-cover h-40 w-full">
         </div>
