@@ -1,7 +1,16 @@
 import { DateTime } from 'luxon'
-import { afterDelete, BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  afterDelete,
+  BaseModel,
+  BelongsTo,
+  belongsTo,
+  column,
+  HasMany,
+  hasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import Establishment from './Establishment'
 import Drive from '@ioc:Adonis/Core/Drive'
+import Booking from './Booking'
 
 export default class Suite extends BaseModel {
   @column({ isPrimary: true })
@@ -30,6 +39,9 @@ export default class Suite extends BaseModel {
 
   @belongsTo(() => Establishment)
   public establishment: BelongsTo<typeof Establishment>
+
+  @hasMany(() => Booking)
+  public bookings: HasMany<typeof Booking>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
