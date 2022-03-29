@@ -90,6 +90,13 @@ Route.group(() => {
     .as('suites')
 
   Route.get('/messages', 'MessagesController.index').as('messages.index')
+
+  Route.group(() => {
+    Route.get('/', 'BookingsController.index').as('index')
+    Route.delete('/delete', 'BookingsController.destroy').as('destroy')
+  })
+    .prefix('bookings')
+    .as('bookings')
 })
   .prefix('/dashboard')
   .as('dashboard')
