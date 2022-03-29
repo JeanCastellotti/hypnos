@@ -20,8 +20,10 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
+Route.post('/suites', 'AppController.suites')
+
 Route.group(() => {
-Route.get('/', 'AppController.main').as('home')
+  Route.get('/', 'AppController.main').as('home')
 
   Route.group(() => {
     Route.get('/admin', 'AppController.createAdmin').as('create')
@@ -29,17 +31,30 @@ Route.get('/', 'AppController.main').as('home')
   }).as('admin')
 }).as('app')
 
-Route.get('/establishments/:name', 'EstablishmentsController.show').as('establishments.show')
-
-Route.on('/login').render('auth/login').as('auth.login')
-Route.post('/login', 'AuthController.login')
-Route.on('/signup').render('auth.signup').as('auth.signup')
-Route.post('/signup', 'AuthController.signup')
-
-Route.get('/logout', 'AuthController.logout').as('auth.logout')
+Route.group(() => {
+  Route.get('contact', 'MessagesController.create').as('create')
+  Route.post('contact', 'MessagesController.store').as('store')
+}).as('messages')
 
 Route.group(() => {
-  Route.on('/').render('dashboard/index').as('index')
+  Route.get('create', 'BookingsController.create').as('create')
+  Route.post('create', 'BookingsController.store').as('store')
+})
+  .prefix('bookings')
+  .as('bookings')
+
+Route.get('/establishments/:name', 'EstablishmentsController.show').as('establishments.show')
+
+Route.group(() => {
+  Route.get('/login', 'AuthController.showLogin').as('showLogin')
+  Route.post('/login', 'AuthController.login').as('login')
+  Route.get('/signup', 'AuthController.showSignup').as('showSignup')
+  Route.post('/signup', 'AuthController.signup').as('signup')
+  Route.get('/logout', 'AuthController.logout').as('logout')
+}).as('auth')
+
+Route.group(() => {
+  Route.on('/').render('pages/dashboard/index').as('index')
 
   Route.group(() => {
     Route.get('/', 'DashboardController.managers').as('index')
@@ -73,6 +88,8 @@ Route.group(() => {
   })
     .prefix('/suites')
     .as('suites')
+
+  Route.get('/messages', 'MessagesController.index').as('messages.index')
 })
   .prefix('/dashboard')
   .as('dashboard')
