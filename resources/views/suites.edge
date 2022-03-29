@@ -1,0 +1,4 @@
+<option value="" disabled selected>Sélectionnez une suite</option>
+@each(suite in suites)
+  <option value="{{ suite.id }}">{{ suite.title }}</option>
+@endeach
