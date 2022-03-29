@@ -7,10 +7,10 @@ export default class Booking extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
+  @column.dateTime()
   public from: DateTime
 
-  @column()
+  @column.dateTime()
   public to: DateTime
 
   @column()
