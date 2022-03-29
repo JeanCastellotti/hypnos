@@ -8,6 +8,6 @@ export default class EstablishmentsController {
     const establishment = await Establishment.findByOrFail('name', name)
     await establishment.load('suites')
 
-    return view.render('establishments/show', { establishment })
+    return view.render('pages/establishments/show', { establishment })
   }
 }
