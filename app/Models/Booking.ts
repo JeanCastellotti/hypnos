@@ -20,8 +20,8 @@ export default class Booking extends BaseModel {
   public userId: number
 
   @belongsTo(() => Suite)
-  public Suite: BelongsTo<typeof Suite>
+  public suite: BelongsTo<typeof Suite>
 
   @belongsTo(() => User)
-  public Customer: BelongsTo<typeof User>
+  public customer: BelongsTo<typeof User>
 }
