@@ -1,0 +1,64 @@
+@layout('layouts/main')
+
+@set('title', 'Mes réservations - Hypnos')
+
+@section('content')
+  <div x-data="modal">
+    @include('partials/dashboard/nav')
+  
+    @if(bookings.length)
+      <table class="mb-10 w-full text-gray-600 table-auto">
+        <tbody>
+          @each(booking in bookings)
+            @set('nights', booking.to.diff(booking.from, 'days').toObject().days)
+            <tr>
+              <td class="py-3 pr-3">{{ booking.suite.title }}</td>
+              <td class="p-3">{{ booking.suite.establishment.name }}</td>
+              <td class="p-3">Du {{ booking.from.toFormat('dd/MM/yy') }} au {{ booking.to.toFormat('dd/MM/yy') }}</td>
+              <td class="p-3">{{ nights }} nuits</td>
+              <td class="p-3">{{ nights * booking.suite.price }}€</td>
+              <td class="py-3 flex gap-2 justify-end">
+                @if(booking.from.diffNow('days').toObject().days >= 3)
+                  <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm" x-on:click="open({{ booking.id }})">
+                    @!icons.trash({ class: 'h-5 w-5 '})
+                    <span>Annuler</span>
+                  </button>
+                @else
+                <button class="border border-gray-300 text-gray-400 bg-gray-200 py-2 px-4 rounded flex gap-2 items-center text-sm" disabled>
+                  <span>Annulation impossible</span>
+                </button>
+                @endif
+              </td>
+            </tr>
+          @endeach
+        </tbody>
+      </table>
+    @else
+      <span class="text-gray-800 text-center block w-full mb-10">Aucune suite</span>
+    @endif
+  
+    @modal()
+      @slot('header')
+        <h1>Annuler une réservation</h1>
+      @end
+
+      @slot('main')
+        <p>Êtes-vous sûr de vouloir annuler votre réservation ? Toutes les données seront définitivement supprimées. Cette action est irréversible.</p>
+      @end
+
+      @slot('actions')
+        <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" x-on:click="close">
+          @!icons.cross({ class: 'h-5 w-5' })
+          <span>Fermer</span>
+        </button>
+        <form method="POST" action="{{ route('dashboard.bookings.destroy') }}?_method=DELETE">
+          <input type="hidden" name="id" x-bind:value="id">
+          <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm">
+            @!icons.trash({ class: 'h-5 w-5 '})
+            <span>Annuler</span>
+          </button>
+        </form>
+      @end
+    @end
+  </div>
+@endsection

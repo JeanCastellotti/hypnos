@@ -6,6 +6,17 @@ import BookingValidator from 'App/Validators/BookingValidator'
 import { DateTime } from 'luxon'
 
 export default class BookingsController {
+  public async index({ view, auth }: HttpContextContract) {
+    const bookings = await auth.user
+      ?.related('bookings')
+      .query()
+      .preload('suite', (suiteQuery) => {
+        suiteQuery.preload('establishment')
+      })
+
+    return view.render('pages/dashboard/bookings/index', { bookings })
+  }
+
   public async create({ request, view, session }: HttpContextContract) {
     session.forget('booking')
     const { establishment: establishmentQuery, suite: suiteQuery } = request.qs()
@@ -60,5 +71,19 @@ export default class BookingsController {
 
     session.flash('success', 'Votre réservation a bien été enregistrée')
     return response.header('hx-redirect', '/')
+  }
+
+  public async destroy({ request, response, session }: HttpContextContract) {
+    const { id } = request.body()
+    const booking = await Booking.findOrFail(id)
+    try {
+      await booking.delete()
+    } catch (error) {
+      session.flash('error', "Un problème est survenu lors de l'annulation de la réservation")
+      return response.redirect().back()
+    }
+
+    session.flash('success', 'Votre réservation a bien été annulée')
+    return response.redirect().toRoute('dashboard.bookings.index')
   }
 }
