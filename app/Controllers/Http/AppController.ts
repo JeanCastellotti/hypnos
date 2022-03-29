@@ -12,7 +12,7 @@ export default class AppsController {
       return response.redirect().toRoute('home')
     }
 
-    return view.render('pagses/admin/index')
+    return view.render('pages/admin/index')
   }
 
   public async storeAdmin({ request, response, session }: HttpContextContract) {
