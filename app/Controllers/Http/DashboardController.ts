@@ -14,12 +14,12 @@ import SuiteUpdateValidator from 'App/Validators/SuiteUpdateValidator'
 export default class DashboardController {
   public async establishments({ view }: HttpContextContract) {
     const establishments = await Establishment.all()
-    return view.render('dashboard/establishments/index', { establishments })
+    return view.render('pages/dashboard/establishments/index', { establishments })
   }
 
   public async createEstablishment({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
-    return view.render('dashboard/establishments/create', { managers })
+    return view.render('pages/dashboard/establishments/create', { managers })
   }
 
   public async storeEstablishment({ request, response, session }: HttpContextContract) {
@@ -41,7 +41,7 @@ export default class DashboardController {
   public async editEstablishment({ view, params }: HttpContextContract) {
     const establishment = await Establishment.findOrFail(params.id)
     const managers = await User.query().where('role', 'manager')
-    return view.render('dashboard/establishments/edit', { establishment, managers })
+    return view.render('pages/dashboard/establishments/edit', { establishment, managers })
   }
 
   public async updateEstablishment({ request, response, params, session }: HttpContextContract) {
@@ -83,11 +83,11 @@ export default class DashboardController {
 
   public async managers({ view }: HttpContextContract) {
     const managers = await User.query().where('role', 'manager')
-    return view.render('dashboard/managers/index', { managers })
+    return view.render('pages/dashboard/managers/index', { managers })
   }
 
   public async createManager({ view }: HttpContextContract) {
-    return view.render('dashboard/managers/create')
+    return view.render('pages/dashboard/managers/create')
   }
 
   public async storeManager({ request, response, session }: HttpContextContract) {
@@ -106,7 +106,7 @@ export default class DashboardController {
 
   public async editManager({ view, params }: HttpContextContract) {
     const manager = await User.find(params.id)
-    return view.render('dashboard/managers/edit', { manager })
+    return view.render('pages/dashboard/managers/edit', { manager })
   }
 
   public async updateManager({ request, response, params, session }: HttpContextContract) {
@@ -141,11 +141,11 @@ export default class DashboardController {
 
   public async suites({ view }: HttpContextContract) {
     const suites = await Suite.all()
-    return view.render('dashboard/suites/index', { suites })
+    return view.render('pages/dashboard/suites/index', { suites })
   }
 
   public async createSuite({ view }: HttpContextContract) {
-    return view.render('dashboard/suites/create')
+    return view.render('pages/dashboard/suites/create')
   }
 
   public async storeSuite({ request, response, session }) {
@@ -174,7 +174,7 @@ export default class DashboardController {
 
   public async editSuite({ params, view }: HttpContextContract) {
     const suite = await Suite.findOrFail(params.id)
-    return view.render('dashboard/suites/edit', { suite })
+    return view.render('pages/dashboard/suites/edit', { suite })
   }
 
   public async updateSuite({ request, response, params, session }: HttpContextContract) {
