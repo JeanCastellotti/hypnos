@@ -1,11 +1,17 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Booking from 'App/Models/Booking'
 import User from 'App/Models/User'
 import LoginValidator from 'App/Validators/LoginValidator'
 import SignupValidator from 'App/Validators/SignupValidator'
 
 export default class AuthController {
+  public async showLogin({ view }: HttpContextContract) {
+    return view.render('pages/auth/login')
+  }
+
   public async login({ request, response, auth, session }: HttpContextContract) {
     const { email, password } = await request.validate(LoginValidator)
+
     try {
       await auth.attempt(email, password)
     } catch (error) {
@@ -13,8 +19,20 @@ export default class AuthController {
       return response.redirect().back()
     }
 
+    if (session.has('booking')) {
+      const { suite: suiteId, from, to } = session.get('booking')
+      await Booking.create({ suiteId, from, to, userId: auth.user?.id })
+      session.flash('success', 'La réservation a bien été enregistrée')
+      session.forget('booking')
+      return response.redirect().toRoute('dashboard.index')
+    }
+
     session.flash('success', 'Vous êtes connecté')
     return response.redirect().toRoute('dashboard.index')
+  }
+
+  public async showSignup({ view }: HttpContextContract) {
+    return view.render('pages/auth/signup')
   }
 
   public async signup({ request, response, session }: HttpContextContract) {
