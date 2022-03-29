@@ -1,0 +1,18 @@
+<div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+
+  <a href="{{ route('dashboard.index') }}" class="py-3 border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.index') ? 'border-gray-800' : 'border-gray-300' }}" >Mes informations</a>
+
+  @if(auth.user.role == 'admin')
+    <a href="{{ route('dashboard.establishments.index') }}" class="py-3 border-b relative translate-y-px {{ request.matchesRoute('dashboard.establishments.index') ? 'border-gray-800' : 'border-gray-300' }}">Établissements</a>
+    <a href="{{ route('dashboard.managers.index') }}" class="py-3 border-b relative translate-y-px {{ request.matchesRoute('dashboard.managers.index') ? 'border-gray-800' : 'border-gray-300' }}">Gérants</a>
+  @endif
+
+  @if(auth.user.role === 'admin' || auth.user.role === 'manager')
+    <a href="{{ route('dashboard.suites.index') }}" class="py-3 border-b relative translate-y-px {{ request.matchesRoute('dashboard.suites.index') ? 'border-gray-800' : 'border-gray-300' }}" >Suites</a>
+  @endif
+
+  @if(auth.user.role === 'admin')
+    <a href="{{ route('dashboard.messages.index') }}" class="py-3 border-b relative translate-y-px {{ request.matchesRoute('dashboard.messages.index') ? 'border-gray-800' : 'border-gray-300' }}">Messages</a>
+  @endif
+  
+</div>

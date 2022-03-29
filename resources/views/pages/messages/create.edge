@@ -1,0 +1,81 @@
+@layout('layouts/centered')
+
+@set('title', 'Contactez-nous - Hypnos')
+@set('description', 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam, voluptates.')
+
+@section('content')
+  <div class="bg-white p-6 rounded w-full shadow-sm">
+    <h1 class="text-gray-800 mb-5 text-center text-2xl">Nous contacter</h1>
+      <form method="POST" autocomplete="off" novalidate>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="subject" class="text-gray-800">Sujet</label>
+          @if(flashMessages.has('errors.subject'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.subject') }}</span>
+            </div>
+          @endif
+        </div>
+        <select id="subject" name="subject" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100">
+          <option value="" disabled selected>Sélectionnez un sujet</option>
+          <option value="info">Je souhaite en savoir plus sur une suite</option>
+          <option value="service">Je souhaite commander un service supplémentaire</option>
+          <option value="issue">J'ai un souci avec cette application</option>
+          <option value="complaint">Je souhaite poser une réclamation</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="lastname" class="text-gray-800">Nom</label>
+          @if(flashMessages.has('errors.lastname'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.lastname') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="text" id="lastname" name="lastname" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('lastname') || '' }}">
+      </div>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="firstname" class="text-gray-800">Prénom</label>
+          @if(flashMessages.has('errors.firstname'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.firstname') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="text" id="firstname" name="firstname" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('firstname') || '' }}">
+      </div>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="email" class="text-gray-800">Adresse email</label>
+          @if(flashMessages.has('errors.email'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.email') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="email" id="email" name="email" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('email') || '' }}">
+      </div>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="message" class="text-gray-800">Message</label>
+          @if(flashMessages.has('errors.message'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.message') }}</span>
+            </div>
+          @endif
+        </div>
+        <textarea type="message" id="message" name="message" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100 resize-none h-56">{{ flashMessages.get('message') || '' }}</textarea>
+      </div>    
+      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
+        Nous contacter
+      </button>
+    </form>
+  </div>
+@endsection

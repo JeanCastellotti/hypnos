@@ -1,10 +1,9 @@
-@layout('layouts/centered')
+@layout('layouts/main')
 
 @set('title', 'Se connecter - Hypnos')
-@set('robots', 'index, follow')
 
 @section('content')
-  <div class="bg-white p-6 rounded w-full shadow-sm">
+  <div class="bg-white p-6 rounded w-full shadow-sm max-w-screen-sm mx-auto">
     <div class="flex items-center justify-between mb-5">
       <h1 class="text-gray-800 text-center text-2xl">Se connecter</h1>
       <a href="{{ route('auth.signup') }}" class="text-md text-blue-500">Je n'ai pas de compte</a>

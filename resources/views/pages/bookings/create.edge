@@ -1,0 +1,85 @@
+@layout('layouts/main')
+
+@set('title', 'Réserver une suite - Hypnos')
+
+@section('content')
+  <div class="bg-white p-6 rounded w-full shadow-sm space-y-5 max-w-screen-sm mx-auto" id="booking-form">
+    <h1 class="text-gray-800 text-center text-2xl">Réserver une suite</h1>
+    @if(flashMessages.has('formError'))
+      <div class="rounded p-4 bg-red-300 border border-red-400 text-red-600 mb-3">
+        {{ flashMessages.get('formError') }}
+      </div>
+    @endif  
+    <form method="POST" autocomplete="off" novalidate hx-post hx-trigger="submit" hx-select="#booking-form" hx-target="#booking-form" hx-swap="outerHTML" hx-disinherit="*" x-data="bookingForm">
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="establishment" class="text-gray-800">Établissement</label>
+          @if(flashMessages.has('errors.establishment'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.establishment') }}</span>
+            </div>
+          @endif
+        </div>
+        <select id="establishment" name="establishment" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" hx-post="/suites" hx-trigger="change" hx-params="establishment" hx-target="#suite" x-on:change="updateQuery()">
+          <option disabled selected value="">Sélectionnez un établissement</option>
+          @each(establishment in establishments)
+            @if(establishment.id === currentEstablishment)
+              <option value="{{ establishment.id }}" selected>{{ establishment.name }}</option>
+            @else
+              <option value="{{ establishment.id }}">{{ establishment.name }}</option>
+            @endif
+          @endeach
+        </select>
+      </div>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="suite" class="text-gray-800">Suite</label>
+          @if(flashMessages.has('errors.suite'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.suite') }}</span>
+            </div>
+          @endif
+        </div>
+        <select id="suite" name="suite" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" x-on:change="updateQuery()">
+          <option disabled value="" selected>Sélectionnez une suite</option>
+          @each(suite in suites)
+            @if(suite.id === currentSuite)
+              <option value="{{ suite.id }}" selected>{{ suite.title }}</option>
+            @else
+              <option value="{{ suite.id }}">{{ suite.title }}</option>
+            @endif
+          @endeach
+        </select>
+      </div>
+      <div class="mb-3">  
+        <div class="mb-3 flex items-center justify-between">
+          <label for="from" class="text-gray-800">Début du séjour</label>
+          @if(flashMessages.has('errors.from'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.from') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="date" id="from" name="from" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('from') || '' }}">
+      </div>
+      <div class="mb-3">
+        <div class="mb-3 flex items-center justify-between">
+          <label for="to" class="text-gray-800">Fin du séjour</label>
+          @if(flashMessages.has('errors.to'))
+            <div class="text-red-500 flex items-center gap-2 text-sm">
+              @!icons.exclamation({ class: 'h-5 w-5' })
+              <span>{{ flashMessages.get('errors.to') }}</span>
+            </div>
+          @endif
+        </div>
+        <input type="date" id="to" name="to" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('to') || '' }}">
+      </div>
+      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
+        Réserver
+      </button>
+    </form>
+  </div>
+@endsection

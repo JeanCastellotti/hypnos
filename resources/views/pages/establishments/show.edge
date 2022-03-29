@@ -22,7 +22,7 @@
   <p class="text-gray-600 leading-loose mb-10 pb-10 border-b text-lg">{{ establishment.description }}</p>
   <div class="flex items-center justify-between mb-10">
     <h3 class="text-gray-800 text-2xl font-bold">Toutes les suites</h3>
-    <a href="" class="border border-gray-800 rounded py-3 px-4 text-gray-800 flex items-center gap-2 hover:bg-gray-800 transition hover:text-white">
+    <a href="{{ route('messages.create') }}" class="border border-gray-800 rounded py-3 px-4 text-gray-800 flex items-center gap-2 hover:bg-gray-800 transition hover:text-white">
       @!icons.paperPlane({ class: 'h-5 w-5'})
       <span>Nous contacter</span>
     </a>
@@ -39,7 +39,7 @@
             <span class="text-gray-800 text-2xl">{{ suite.title }}</span>
             <span class="text-gray-800">{{ suite.price }}€ la nuit</span>
             <a href="{{ suite.bookingUrl }}" class="text-blue-500 hover:underline">booking.com</a>
-            <a href="" class="flex items-center gap-4 rounded bg-gray-800 text-white py-3 px-6 transition transform hover:scale-105">
+            <a href="{{ route('bookings.create',  { qs: { establishment: establishment.id, suite: suite.id } }) }}" class="flex items-center gap-4 rounded bg-gray-800 text-white py-3 px-6 transition transform hover:scale-105">
               @!icons.cursorClick({ class: 'h-6 w-6' })
               <span>Réserver</span>
             </a>
