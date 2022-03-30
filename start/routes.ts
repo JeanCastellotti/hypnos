@@ -101,7 +101,7 @@ Route.group(() => {
 
   Route.group(() => {
     Route.get('/', 'BookingsController.index').as('index')
-    Route.delete('/delete', 'BookingsController.destroy').as('destroy')
+    Route.get('/delete/:id', 'BookingsController.delete').as('delete')
   })
     .prefix('bookings')
     .as('bookings')
