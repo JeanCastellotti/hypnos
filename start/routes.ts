@@ -63,6 +63,7 @@ Route.group(() => {
     Route.get('/update/:id', 'DashboardController.editManager').as('edit')
     Route.post('/update/:id', 'DashboardController.updateManager').as('update')
     Route.get('/delete/:id', 'DashboardController.deleteManager').as('delete')
+    Route.delete('/delete/:id', 'DashboardController.destroyManager').as('destroy')
   })
     .prefix('managers')
     .as('managers')
