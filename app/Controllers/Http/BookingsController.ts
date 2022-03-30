@@ -73,9 +73,9 @@ export default class BookingsController {
     return response.header('hx-redirect', '/')
   }
 
-  public async destroy({ request, response, session }: HttpContextContract) {
-    const { id } = request.body()
-    const booking = await Booking.findOrFail(id)
+  public async destroy({ params, response, session }: HttpContextContract) {
+    const booking = await Booking.findOrFail(params.id)
+
     try {
       await booking.delete()
     } catch (error) {
