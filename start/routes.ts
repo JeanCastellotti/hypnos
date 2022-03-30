@@ -89,7 +89,12 @@ Route.group(() => {
     .prefix('/suites')
     .as('suites')
 
-  Route.get('/messages', 'MessagesController.index').as('messages.index')
+  Route.group(() => {
+    Route.get('/', 'MessagesController.index').as('index')
+    Route.get('/show/:id', 'MessagesController.show').as('show')
+  })
+    .as('messages')
+    .prefix('messages')
 
   Route.group(() => {
     Route.get('/', 'BookingsController.index').as('index')

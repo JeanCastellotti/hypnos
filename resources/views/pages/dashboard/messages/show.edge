@@ -1,0 +1,24 @@
+@modal()
+  @slot('header')
+    @if(message.subject === 'info')
+      <h1>Je souhaite en savoir plus sur une suite</h1>
+    @elseif(message.subject === 'service')
+      <h1>Je souhaite commander un service supplémentaire</h1>
+    @elseif(message.subject === 'issue')
+      <h1>J'ai un souci avec cette application</h1>
+    @else
+      <h1>Je souhaite poser une réclamation</h1> 
+    @endif
+  @end
+
+  @slot('content')
+    <p>{{ message.message }}</p>
+  @end
+
+  @slot('actions')
+    <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" _="on click trigger closeModal">
+      @!icons.cross({ class: 'h-5 w-5' })
+      <span>Fermer</span>
+    </button>
+  @end
+@end
