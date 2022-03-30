@@ -35,8 +35,6 @@ export default class AppsController {
   }
 
   public async suites({ request, view }: HttpContextContract) {
-    console.log('lol')
-
     const { establishment: id } = await request.body()
     const suites = await Suite.query().select('id', 'title').where('establishment_id', id)
     return view.render('suites', { suites })
