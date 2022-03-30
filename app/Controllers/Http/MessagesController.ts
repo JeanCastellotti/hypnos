@@ -36,5 +36,20 @@ export default class MessagesController {
     return view.render('pages/dashboard/messages/delete', { message })
   }
 
-  public async destroy() {}
+  public async destroy({ params, response, session }) {
+    const message = await Message.findOrFail(params.id)
+
+    try {
+      await message.delete()
+    } catch (error) {
+      session.flash(
+        'error',
+        'Un problème est survenu lors de la suppression du message. Veuillez réessayer ultérieurement'
+      )
+      return response.redirect().back()
+    }
+
+    session.flash('success', 'Le message a bien été supprimé')
+    return response.redirect().toRoute('dashboard.messages.index')
+  }
 }
