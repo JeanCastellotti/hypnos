@@ -70,6 +70,7 @@ export default class DashboardController {
     const establishment = await Establishment.findOrFail(params.id)
     return view.render('pages/dashboard/establishments.delete', { establishment })
   }
+
   public async destroyEstablishment({ params, session, response }: HttpContextContract) {
     const establishment = await Establishment.findOrFail(params.id)
 
@@ -217,6 +218,7 @@ export default class DashboardController {
     const suite = await Suite.findOrFail(params.id)
     return view.render('pages/dashboard/suites/delete', { suite })
   }
+
   public async destroySuite({ params, response, session }: HttpContextContract) {
     const suite = await Suite.findOrFail(params.id)
 
