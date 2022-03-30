@@ -3,7 +3,7 @@
 @set('title', 'Les messages - Hypnos')
 
 @section('content')
-  <div x-data="modal">
+  <div>
     @include('partials/dashboard/nav')
   
     @if(messages.length)
@@ -14,11 +14,11 @@
               <td class="py-3 pr-3">{{ message.firstname }} {{ message.lastname }}</td>
               <td class="p-3">{{ message.email }}</td>              
               <td class="py-3 flex items-center gap-2 justify-end">
-                <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm">
+                <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" hx-get="{{ route('dashboard.messages.show', [message.id]) }}" hx-target="body" hx-swap="beforeend">
                   @!icons.eye({ class: 'h-5 w-5 '})
                   <span>Voir</span>
                 </button>
-                <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm" x-on:click="open({{ message.id }})">
+                <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm" hx-get="{{ route('dashboard.messages.delete', [message.id]) }}" hx-target="body" hx-swap="beforeend" _="on click add .overflow-hidden to body">
                   @!icons.trash({ class: 'h-5 w-5 '})
                   <span>Supprimer</span>
                 </button>
@@ -30,29 +30,5 @@
     @else
       <span class="text-gray-800 text-center block w-full mb-10">Aucun gérant</span>
     @endif
-  
-    @modal()
-      @slot('header')
-        <h1>Supprimer un message</h1>
-      @end
-
-      @slot('main')
-        <p>Êtes-vous sûr de vouloir supprimer ce message ? Toutes les données seront définitivement supprimées. Cette action est irréversible.</p>
-      @end
-
-      @slot('actions')
-        <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" x-on:click="close">
-          @!icons.cross({ class: 'h-5 w-5' })
-          <span>Annuler</span>
-        </button>
-        <form method="POST" action="{{ route('dashboard.managers.destroy') }}?_method=DELETE">
-          <input type="hidden" name="id" x-bind:value="id">
-          <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm">
-            @!icons.trash({ class: 'h-5 w-5 '})
-            <span>Supprimer</span>
-          </button>
-        </form>
-      @end
-    @end
   </div>
 @endsection
