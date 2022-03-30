@@ -213,6 +213,10 @@ export default class DashboardController {
     return response.redirect().toRoute('dashboard.suites.index')
   }
 
+  public async deleteSuite({ params, view }: HttpContextContract) {
+    const suite = await Suite.findOrFail(params.id)
+    return view.render('pages/dashboard/suites/delete', { suite })
+  }
   public async destroySuite({ params, response, session }: HttpContextContract) {
     const suite = await Suite.findOrFail(params.id)
 
