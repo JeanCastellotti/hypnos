@@ -124,9 +124,10 @@ export default class DashboardController {
     return response.redirect().toRoute('dashboard.managers.index')
   }
 
-  public async destroyManager({ request, response, session }: HttpContextContract) {
-    const { id } = request.only(['id'])
-    const manager = await User.findOrFail(id)
+  public async deleteManager({ params, view }: HttpContextContract) {
+    const manager = await User.findOrFail(params.id)
+    return view.render('pages/dashboard/managers/delete', { manager })
+  }
 
     try {
       await manager.delete()
