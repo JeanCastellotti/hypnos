@@ -36,4 +36,5 @@ export default class MessagesController {
     return view.render('pages/dashboard/messages/delete', { message })
   }
 
+  public async destroy() {}
 }
