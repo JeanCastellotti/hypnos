@@ -66,9 +66,8 @@ export default class DashboardController {
     return response.redirect().toRoute('dashboard.establishments.index')
   }
 
-  public async destroyEstablishment({ request, session, response }: HttpContextContract) {
-    const { id } = request.only(['id'])
-    const establishment = await Establishment.findOrFail(id)
+  public async destroyEstablishment({ params, session, response }: HttpContextContract) {
+    const establishment = await Establishment.findOrFail(params.id)
 
     try {
       await establishment.delete()
