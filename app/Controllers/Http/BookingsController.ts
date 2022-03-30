@@ -73,6 +73,11 @@ export default class BookingsController {
     return response.header('hx-redirect', '/')
   }
 
+  public async delete({ params, view }: HttpContextContract) {
+    const booking = await Booking.findOrFail(params.id)
+    return view.render('pages/dashboard/bookings/delete', { booking })
+  }
+
   public async destroy({ params, response, session }: HttpContextContract) {
     const booking = await Booking.findOrFail(params.id)
 
