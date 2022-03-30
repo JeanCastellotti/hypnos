@@ -1,17 +1,15 @@
-<template x-teleport="body">
-  <div class="fixed inset-0 flex bg-gray-800/30 backdrop-blur-sm p-5" x-show="opened" x-cloak>
-    <div class="m-auto bg-white rounded max-w-screen-sm w-full overflow-hidden" x-on:click.away="close" x-show="opened" x-transition>
-      <div class="p-4">
-        <header class="text-lg text-gray-800 mb-5">
-          {{{ await $slots.header() }}}
-        </header>
-        <main class="text-gray-600">
-          {{{ await $slots.main() }}}
-        </main>
-      </div>
-      <footer class="flex gap-2 justify-end p-4 bg-gray-100">
-        {{{ await $slots.actions() }}}
-      </footer>
+<div class="fixed inset-0 flex bg-gray-800/30 backdrop-blur-sm p-5" _="on load add .overflow-hidden to body on closeModal add .fadeOut to #modal then wait for animationend then remove me then remove .overflow-hidden from body on click trigger closeModal">
+  <div id="modal" class="m-auto bg-white rounded max-w-screen-sm w-full overflow-hidden fadeIn" _="on click halt bubbling">
+    <div class="p-4">
+      <header class="text-lg text-gray-800 mb-5">
+        {{{ await $slots.header() }}}
+      </header>
+      <main class="text-gray-600">
+        {{{ await $slots.content() }}}
+      </main>
     </div>
+    <footer class="flex gap-2 justify-end p-4 bg-gray-100">
+      {{{ await $slots.actions() }}}
+    </footer>
   </div>
-</template>
+</div>
