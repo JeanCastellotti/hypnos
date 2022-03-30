@@ -8,6 +8,11 @@ export default class MessagesController {
     return view.render('pages/dashboard/messages/index', { messages })
   }
 
+  public async show({ params, view }: HttpContextContract) {
+    const message = await Message.findOrFail(params.id)
+    return view.render('pages/dashboard/messages/show', { message })
+  }
+
   public async create({ view }: HttpContextContract) {
     return view.render('pages/messages/create')
   }
@@ -25,4 +30,10 @@ export default class MessagesController {
     session.flash('success', 'Votre message a bien été envoyé')
     return response.redirect().toRoute('app.home')
   }
+
+  public async delete({ params, view }: HttpContextContract) {
+    const message = await Message.findOrFail(params.id)
+    return view.render('pages/dashboard/messages/delete', { message })
+  }
+
 }
