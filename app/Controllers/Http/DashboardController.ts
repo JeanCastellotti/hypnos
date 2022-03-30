@@ -129,6 +129,9 @@ export default class DashboardController {
     return view.render('pages/dashboard/managers/delete', { manager })
   }
 
+  public async destroyManager({ response, params, session }: HttpContextContract) {
+    const manager = await User.findOrFail(params.id)
+
     try {
       await manager.delete()
     } catch (error) {
