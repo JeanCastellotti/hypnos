@@ -3,7 +3,7 @@
 @set('title', 'Les établissements - Hypnos')
 
 @section('content')
-  <div x-data="modal">
+  <div>
     @include('partials/dashboard/nav')
   
     @if(establishments.length)
@@ -14,11 +14,11 @@
               <td class="py-3 pr-3">{{ establishment.name }}</td>
               <td class="p-3">{{ establishment.city }}</td>
               <td class="py-3 flex items-center gap-2 justify-end">
-                <a href="{{ route('dashboard.establishments.edit', { id: establishment.id }) }}" class="border border-orange-500 text-orange-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-orange-500 hover:text-white transition text-sm">
+                <a href="{{ route('dashboard.establishments.edit', [establishment.id]) }}" class="border border-orange-500 text-orange-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-orange-500 hover:text-white transition text-sm">
                   @!icons.edit({ class: 'h-5 w-5 '})
                   <span>Modifier</span>
                 </a>
-                <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm" x-on:click="open({{ establishment.id }})">
+                <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm" hx-get="{{ route('dashboard.establishments.delete', [establishment.id]) }}" hx-target="body" hx-swap="beforeend">
                   @!icons.trash({ class: 'h-5 w-5 '})
                   <span>Supprimer</span>
                 </button>
@@ -35,29 +35,5 @@
       @!icons.plus({ class: 'h-6 w-6' })
       <span>Créer un établissement</span>
     </a>
-
-    @modal()
-      @slot('header')
-        <h1>Supprimer un établissement</h1>
-      @end
-
-      @slot('main')
-        <p>Êtes-vous sûr de vouloir supprimer cet établissement ? Toutes les données seront définitivement supprimées. Cette action est irréversible.</p>
-      @end
-
-      @slot('actions')
-        <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" x-on:click="close">
-          @!icons.cross({ class: 'h-5 w-5' })
-          <span>Annuler</span>
-        </button>
-        <form method="POST" action="{{ route('dashboard.establishments.destroy') }}?_method=DELETE">
-          <input type="hidden" name="id" x-bind:value="id">
-          <button class="border border-red-500 text-red-500 py-2 px-4 rounded flex gap-2 items-center hover:bg-red-500 hover:text-white transition text-sm">
-            @!icons.trash({ class: 'h-5 w-5 '})
-            <span>Supprimer</span>
-          </button>
-        </form>
-      @end
-    @end
   </div>
 @endsection
