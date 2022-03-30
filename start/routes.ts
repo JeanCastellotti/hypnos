@@ -92,6 +92,7 @@ Route.group(() => {
   Route.group(() => {
     Route.get('/', 'MessagesController.index').as('index')
     Route.get('/show/:id', 'MessagesController.show').as('show')
+    Route.get('/delete/:id', 'MessagesController.delete').as('delete')
   })
     .as('messages')
     .prefix('messages')
