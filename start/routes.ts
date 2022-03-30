@@ -74,7 +74,7 @@ Route.group(() => {
     Route.post('/create', 'DashboardController.storeEstablishment').as('store')
     Route.get('/update/:id', 'DashboardController.editEstablishment').as('edit')
     Route.post('/update/:id', 'DashboardController.updateEstablishment').as('update')
-    Route.delete('/delete', 'DashboardController.destroyEstablishment').as('destroy')
+    Route.get('/delete/:id', 'DashboardController.deleteEstablishment').as('delete')
   })
     .prefix('/establishments')
     .as('establishments')
