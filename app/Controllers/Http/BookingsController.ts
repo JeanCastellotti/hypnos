@@ -70,7 +70,7 @@ export default class BookingsController {
     }
 
     session.flash('success', 'Votre réservation a bien été enregistrée')
-    return response.header('hx-redirect', '/')
+    return response.header('hx-redirect', '/dashboard/bookings')
   }
 
   public async delete({ params, view }: HttpContextContract) {
