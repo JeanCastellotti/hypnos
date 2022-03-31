@@ -172,7 +172,7 @@ export default class DashboardController {
     try {
       await Suite.create({
         ...data,
-        establishmentId: establishment.id,
+        establishmentId: establishment[0]?.id,
         picture_1: filename1,
         picture_2: filename2,
       })
