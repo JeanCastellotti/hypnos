@@ -152,7 +152,14 @@ export default class DashboardController {
     return view.render('pages/dashboard/suites/index', { suites })
   }
 
-  public async createSuite({ view }: HttpContextContract) {
+  public async createSuite({ view, response, session, auth }: HttpContextContract) {
+    const establishment = await auth.user!.related('establishment').query()
+
+    if (!establishment.length) {
+      session.flash('error', "Vous n'avez pas encore la possibilité de créer une suite")
+      return response.redirect().back()
+    }
+
     return view.render('pages/dashboard/suites/create')
   }
 
