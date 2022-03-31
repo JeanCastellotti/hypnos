@@ -1,11 +1,8 @@
 @layout('layouts/main')
-
 @set('title', 'Mes informations - Hypnos')
 
 @section('content')
-
   @include('partials/dashboard/nav')
-
   <form method="POST" autocomplete="off" novalidate class="flex flex-col">
     {{ csrfField() }}
     <div class="flex items-center gap-5 mb-5">
