@@ -69,8 +69,8 @@
         @endif
       </div>
       <select name="user_id" id="manager" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200">
+        <option value=""></option>
         @each(manager in managers)
-          <option value=""></option>
           @if(manager.id === establishment.userId)
             <option value="{{ manager.id }}" selected>{{ manager.firstname}} {{ manager.lastname }}</option>
           @else
