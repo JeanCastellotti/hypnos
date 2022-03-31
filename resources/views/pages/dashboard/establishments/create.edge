@@ -14,7 +14,7 @@
           <label for="name" class="text-gray-800">Nom</label>
           @if(flashMessages.has('errors.name'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.name') }}</span>
             </div>
           @endif
@@ -26,7 +26,7 @@
           <label for="city" class="text-gray-800">Ville</label>
           @if(flashMessages.has('errors.city'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.city') }}</span>
             </div>
           @endif
@@ -39,7 +39,7 @@
         <label for="address" class="text-gray-800">Adresse</label>
         @if(flashMessages.has('errors.address'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.address') }}</span>
           </div>
         @endif
@@ -51,7 +51,7 @@
         <label for="description" class="text-gray-800">Description</label>
         @if(flashMessages.has('errors.description'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.description') }}</span>
           </div>
         @endif
@@ -63,14 +63,14 @@
         <label for="manager" class="text-gray-800">Gérant</label>
         @if(flashMessages.has('errors.userId'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.userId') }}</span>
           </div>
         @endif
       </div>
       <select name="user_id" id="manager" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200">
+        <option value="" disabled selected>Sélectionnez un gérant</option>
         @each(manager in managers)
-          <option value=""></option>
           <option value="{{ manager.id }}">{{ manager.firstname}} {{ manager.lastname }}</option>
         @endeach
       </select>
@@ -80,7 +80,7 @@
         <label for="hero" class="text-gray-800">Image</label>
         @if(flashMessages.has('errors.hero'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.hero') }}</span>
           </div>
         @endif
