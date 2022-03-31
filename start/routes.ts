@@ -61,28 +61,39 @@ Route.group(() => {
   Route.on('/').render('pages/dashboard/index').as('index')
 
   Route.group(() => {
-    Route.get('/', 'DashboardController.managers').as('index')
-    Route.get('/create', 'DashboardController.createManager').as('create')
-    Route.post('/create', 'DashboardController.storeManager').as('store')
-    Route.get('/update/:id', 'DashboardController.editManager').as('edit')
-    Route.post('/update/:id', 'DashboardController.updateManager').as('update')
-    Route.get('/delete/:id', 'DashboardController.deleteManager').as('delete')
-    Route.delete('/delete/:id', 'DashboardController.destroyManager').as('destroy')
-  })
-    .prefix('managers')
-    .as('managers')
+    Route.group(() => {
+      Route.get('/', 'DashboardController.managers').as('index')
+      Route.get('/create', 'DashboardController.createManager').as('create')
+      Route.post('/create', 'DashboardController.storeManager').as('store')
+      Route.get('/update/:id', 'DashboardController.editManager').as('edit')
+      Route.post('/update/:id', 'DashboardController.updateManager').as('update')
+      Route.get('/delete/:id', 'DashboardController.deleteManager').as('delete')
+      Route.delete('/delete/:id', 'DashboardController.destroyManager').as('destroy')
+    })
+      .prefix('managers')
+      .as('managers')
 
-  Route.group(() => {
-    Route.get('/', 'DashboardController.establishments').as('index')
-    Route.get('/create', 'DashboardController.createEstablishment').as('create')
-    Route.post('/create', 'DashboardController.storeEstablishment').as('store')
-    Route.get('/update/:id', 'DashboardController.editEstablishment').as('edit')
-    Route.post('/update/:id', 'DashboardController.updateEstablishment').as('update')
-    Route.get('/delete/:id', 'DashboardController.deleteEstablishment').as('delete')
-    Route.delete('/delete/:id', 'DashboardController.destroyEstablishment').as('destroy')
-  })
-    .prefix('/establishments')
-    .as('establishments')
+    Route.group(() => {
+      Route.get('/', 'DashboardController.establishments').as('index')
+      Route.get('/create', 'DashboardController.createEstablishment').as('create')
+      Route.post('/create', 'DashboardController.storeEstablishment').as('store')
+      Route.get('/update/:id', 'DashboardController.editEstablishment').as('edit')
+      Route.post('/update/:id', 'DashboardController.updateEstablishment').as('update')
+      Route.get('/delete/:id', 'DashboardController.deleteEstablishment').as('delete')
+      Route.delete('/delete/:id', 'DashboardController.destroyEstablishment').as('destroy')
+    })
+      .prefix('/establishments')
+      .as('establishments')
+
+    Route.group(() => {
+      Route.get('/', 'MessagesController.index').as('index')
+      Route.get('/show/:id', 'MessagesController.show').as('show')
+      Route.get('/delete/:id', 'MessagesController.delete').as('delete')
+      Route.delete('/delete/:id', 'MessagesController.destroy').as('destroy')
+    })
+      .as('messages')
+      .prefix('messages')
+  }).middleware('admin')
 
   Route.group(() => {
     Route.get('/', 'DashboardController.suites').as('index')
@@ -95,15 +106,7 @@ Route.group(() => {
   })
     .prefix('/suites')
     .as('suites')
-
-  Route.group(() => {
-    Route.get('/', 'MessagesController.index').as('index')
-    Route.get('/show/:id', 'MessagesController.show').as('show')
-    Route.get('/delete/:id', 'MessagesController.delete').as('delete')
-    Route.delete('/delete/:id', 'MessagesController.destroy').as('destroy')
-  })
-    .as('messages')
-    .prefix('messages')
+    .middleware('manager')
 
   Route.group(() => {
     Route.get('/', 'BookingsController.index').as('index')
