@@ -46,11 +46,15 @@ Route.group(() => {
 Route.get('/establishments/:name', 'EstablishmentsController.show').as('establishments.show')
 
 Route.group(() => {
-  Route.get('/login', 'AuthController.showLogin').as('showLogin')
+  Route.group(() => {
+    Route.get('/login', 'AuthController.showLogin').as('showLogin')
+    Route.get('/signup', 'AuthController.showSignup').as('showSignup')
+  }).middleware('guest')
+
   Route.post('/login', 'AuthController.login').as('login')
-  Route.get('/signup', 'AuthController.showSignup').as('showSignup')
   Route.post('/signup', 'AuthController.signup').as('signup')
-  Route.get('/logout', 'AuthController.logout').as('logout')
+
+  Route.get('/logout', 'AuthController.logout').as('logout').middleware('auth')
 }).as('auth')
 
 Route.group(() => {
