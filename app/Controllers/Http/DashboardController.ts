@@ -163,11 +163,11 @@ export default class DashboardController {
     return view.render('pages/dashboard/suites/create')
   }
 
-  public async storeSuite({ request, response, session }) {
+  public async storeSuite({ request, response, session, auth }) {
     const { picture1, picture2, ...data } = await request.validate(SuiteValidator)
     const filename1 = string.generateRandom(32) + '.' + picture1.extname
     const filename2 = string.generateRandom(32) + '.' + picture2.extname
-    const establishment = await Establishment.firstOrFail()
+    const establishment = await auth.user.related('establishment').query()
 
     try {
       await Suite.create({
