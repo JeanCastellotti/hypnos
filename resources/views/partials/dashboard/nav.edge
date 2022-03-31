@@ -11,7 +11,7 @@
     <a href="{{ route('dashboard.managers.index') }}" class="py-3 border-b relative translate-y-px {{ request.matchesRoute('dashboard.managers.index') ? 'border-gray-800' : 'border-gray-300' }}">Gérants</a>
   @endif
 
-  @if(auth.user.role === 'admin' || auth.user.role === 'manager')
+  @if(auth.user.role === 'manager')
     <a href="{{ route('dashboard.suites.index') }}" class="py-3 border-b relative translate-y-px {{ request.matchesRoute('dashboard.suites.index') ? 'border-gray-800' : 'border-gray-300' }}" >Suites</a>
   @endif
 
