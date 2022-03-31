@@ -5,7 +5,7 @@ export default class ContactValidator {
   constructor(protected ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    subject: schema.string(),
+    subject: schema.enum(['info', 'service', 'issue', 'complaint'] as const),
     lastname: schema.string({ trim: true }, [rules.alpha()]),
     firstname: schema.string({ trim: true }, [rules.alpha()]),
     email: schema.string({ trim: true }, [rules.email()]),
