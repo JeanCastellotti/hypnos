@@ -9,6 +9,7 @@
       <a href="{{ route('auth.signup') }}" class="text-md text-blue-500">Je n'ai pas de compte</a>
     </div>
     <form method="POST" autocomplete="off" novalidate>
+      {{ csrfField() }}
       <div class="mb-3">
         <div class="mb-3 flex items-center justify-between">
           <label for="email" class="text-gray-800">Adresse email</label>

@@ -11,6 +11,7 @@
       </div>
     @endif  
     <form method="POST" autocomplete="off" novalidate hx-post hx-trigger="submit" hx-select="#booking-form" hx-target="#booking-form" hx-swap="outerHTML" hx-disinherit="*" x-data="bookingForm">
+      {{ csrfField() }}
       <div class="mb-3">
         <div class="mb-3 flex items-center justify-between">
           <label for="establishment" class="text-gray-800">Établissement</label>

@@ -7,6 +7,7 @@
   @include('partials/dashboard/nav')
 
   <form method="POST" autocomplete="off" novalidate class="flex flex-col">
+    {{ csrfField() }}
     <div class="flex items-center gap-5 mb-5">
       <div class="flex-1">
         <label for="lastname" class="text-gray-800 block mb-3">Nom</label>
