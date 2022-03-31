@@ -49,7 +49,7 @@ export default class BookingsController {
 
     if (!suiteIsAvailable) {
       session.flash('formError', "La suite n'est pas disponible aux dates indiquées")
-      return response.redirect().toRoute('bookings.create', { qs: { ...request.qs() } })
+      return response.redirect().withQs().back()
     }
 
     if (!auth.isLoggedIn) {
@@ -66,7 +66,7 @@ export default class BookingsController {
       })
     } catch (error) {
       session.flash('formError', 'Un problème est survenu lors de la création de la réservation')
-      return response.redirect().toRoute('bookings.create', { qs: { ...request.qs() } })
+      return response.redirect().withQs().back()
     }
 
     session.flash('success', 'Votre réservation a bien été enregistrée')
