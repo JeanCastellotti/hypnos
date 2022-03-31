@@ -17,7 +17,7 @@
           <label for="establishment" class="text-gray-800">Établissement</label>
           @if(flashMessages.has('errors.establishment'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.establishment') }}</span>
             </div>
           @endif
@@ -38,7 +38,7 @@
           <label for="suite" class="text-gray-800">Suite</label>
           @if(flashMessages.has('errors.suite'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.suite') }}</span>
             </div>
           @endif
@@ -59,7 +59,7 @@
           <label for="from" class="text-gray-800">Début du séjour</label>
           @if(flashMessages.has('errors.from'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.from') }}</span>
             </div>
           @endif
@@ -71,7 +71,7 @@
           <label for="to" class="text-gray-800">Fin du séjour</label>
           @if(flashMessages.has('errors.to'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.to') }}</span>
             </div>
           @endif

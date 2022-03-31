@@ -15,7 +15,7 @@
           <label for="email" class="text-gray-800">Adresse email</label>
           @if(flashMessages.has('errors.email'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.email') }}</span>
             </div>
           @endif
@@ -27,7 +27,7 @@
           <label for="password" class="text-gray-800">Mot de passe</label>
           @if(flashMessages.has('errors.password'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.password') }}</span>
             </div>
           @endif

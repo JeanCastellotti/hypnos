@@ -13,7 +13,7 @@
           <label for="subject" class="text-gray-800">Sujet</label>
           @if(flashMessages.has('errors.subject'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.subject') }}</span>
             </div>
           @endif
@@ -31,7 +31,7 @@
           <label for="lastname" class="text-gray-800">Nom</label>
           @if(flashMessages.has('errors.lastname'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.lastname') }}</span>
             </div>
           @endif
@@ -43,7 +43,7 @@
           <label for="firstname" class="text-gray-800">Prénom</label>
           @if(flashMessages.has('errors.firstname'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.firstname') }}</span>
             </div>
           @endif
@@ -55,7 +55,7 @@
           <label for="email" class="text-gray-800">Adresse email</label>
           @if(flashMessages.has('errors.email'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.email') }}</span>
             </div>
           @endif
@@ -67,7 +67,7 @@
           <label for="message" class="text-gray-800">Message</label>
           @if(flashMessages.has('errors.message'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.message') }}</span>
             </div>
           @endif

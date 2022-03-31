@@ -15,7 +15,7 @@
           <label for="title" class="text-gray-800">Titre</label>
           @if(flashMessages.has('errors.title'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.title') }}</span>
             </div>
           @endif
@@ -27,7 +27,7 @@
           <label for="price" class="text-gray-800">Tarif</label>
           @if(flashMessages.has('errors.price'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamation({ class: 'h-5 w-5' })
+              @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.price') }}</span>
             </div>
           @endif
@@ -40,7 +40,7 @@
         <label for="description" class="text-gray-800">Description</label>
         @if(flashMessages.has('errors.description'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.description') }}</span>
           </div>
         @endif
@@ -52,7 +52,7 @@
         <label for="booking_url" class="text-gray-800">Lien booking.com</label>
         @if(flashMessages.has('errors.booking_url'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.booking_url') }}</span>
           </div>
         @endif
@@ -64,7 +64,7 @@
         <label for="picture1" class="text-gray-800">Première image</label>
         @if(flashMessages.has('errors.picture1'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.picture1') }}</span>
           </div>
         @endif
@@ -76,7 +76,7 @@
         <label for="picture2" class="text-gray-800">Deuxième image</label>
         @if(flashMessages.has('errors.picture2'))
           <div class="text-red-500 flex items-center gap-2 text-sm">
-            @!icons.exclamation({ class: 'h-5 w-5' })
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.picture2') }}</span>
           </div>
         @endif
