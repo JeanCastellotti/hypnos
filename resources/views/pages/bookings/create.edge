@@ -22,7 +22,7 @@
             </div>
           @endif
         </div>
-        <select id="establishment" name="establishment" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" hx-post="/suites" hx-trigger="change" hx-params="establishment" hx-target="#suite" x-on:change="updateQuery()">
+        <select id="establishment" name="establishment" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" hx-post="/suites" hx-trigger="change" hx-target="#suite" x-on:change="updateQuery()">
           <option disabled selected value="">Sélectionnez un établissement</option>
           @each(establishment in establishments)
             @if(establishment.id === currentEstablishment)

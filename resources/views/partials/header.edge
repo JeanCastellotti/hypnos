@@ -3,7 +3,7 @@
     <a href="{{ route('app.home') }}">
       <img src="/logo-2.png" alt="Logo Hyponos" class="h-12">
     </a>
-    <nav class="flex items-center gap-5">
+    <nav class="hidden sm:flex sm:items-center sm:gap-5 ">
       @if(auth.isLoggedIn)
         <a href="{{ route('auth.logout') }}" class="text-gray-800 hover:underline">Se déconnecter</a>
         <a href="{{ route('dashboard.index') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">

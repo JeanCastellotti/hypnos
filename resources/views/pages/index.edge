@@ -2,13 +2,13 @@
 @set('title', 'Bienvenue chez Hypnos') 
 
 @section('content')
-  <div class="grid md:grid-cols-2 gap-5">
+  <div class="grid gap-5 sm:grid-cols-2">
     @each(establishment in establishments)
-    <div class="h-96 overflow-hidden rounded relative group">
+    <div class="h-52 overflow-hidden rounded relative group md:h-96">
       <a href="{{ route('establishments.show', [dashCase(establishment.name)]) }}" class="absolute inset-0 z-20"></a>
       <img src="/uploads/{{ establishment.hero }}" alt="{{ establishment.name }}" class="w-full h-full object-cover transition transform group-hover:scale-105" />
-      <div class="absolute inset-x-0 bottom-0 h-28 transition-[height] bg-gray-800/50 p-4 backdrop-blur-sm text-white group-hover:h-full">
-        <div class="flex flex-col gap-3 mb-10">
+      <div class="absolute inset-x-0 bottom-0 h-16 transition-[height] bg-gray-800/50 p-4 backdrop-blur-sm text-white md:group-hover:h-full">
+        <div class="flex items-center justify-between mb-10">
           <span class="text-2xl font-thin">{{ establishment.name }}</span>
           <div class="font-bold tracking-wider flex gap-2 items-center">
             @!icons.location({ class: 'h-6 w-6' })
