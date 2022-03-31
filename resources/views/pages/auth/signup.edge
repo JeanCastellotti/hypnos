@@ -4,9 +4,9 @@
 
 @section('content')
   <div class="bg-white p-6 rounded w-full shadow-sm max-w-screen-sm mx-auto">
-    <div class="flex items-center justify-between mb-5">
+    <div class="flex flex-col gap-3 sm:gap-0 sm:flex-row items-center justify-between mb-5">
       <h1 class="text-gray-800 text-center text-2xl">Créer un compte</h1>
-      <a href="{{ route('auth.login') }}" class="text-md text-blue-500">J'ai déjà un compte</a>
+      <a href="{{ route('auth.login') }}" class="text-sm sm:text-md text-blue-500">J'ai déjà un compte</a>
     </div>
     <form method="POST" autocomplete="off" novalidate>
       {{ csrfField() }}
