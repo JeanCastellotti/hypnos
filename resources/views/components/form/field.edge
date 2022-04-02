@@ -1,0 +1,18 @@
+<div class="space-y-1 mb-5">
+  <div class="flex items-center justify-between">
+    <label for="{{ name }}" class="text-gray-800">{{ label }}</label>
+    @if(errors)
+      <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
+        @!icons.exclamationCircle({ class: 'h-5 w-5' })
+        <span>{{ errors }}</span>
+      </div>
+    @endif
+  </div>
+  <input type="{{ type || 'text' }}" id="{{ name }}" name="{{ name }}" class="bg-gray-200 p-4 rounded w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100 text-gray-500" value="{{ value || '' }}">
+  @if(errors)
+    <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
+      @!icons.exclamationCircle({ class: 'h-5 w-5' })
+      <span>{{ errors }}</span>
+    </p>
+  @endif
+</div>
