@@ -10,66 +10,43 @@
     </div>
     <form method="POST" autocomplete="off" novalidate>
       {{ csrfField() }}
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="lastname" class="text-gray-800">Nom</label>
-          @if(flashMessages.has('errors.lastname'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.lastname') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="text" id="lastname" name="lastname" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('lastname') || '' }}">
-      </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="firstname" class="text-gray-800">Prénom</label>
-          @if(flashMessages.has('errors.firstname'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.firstname') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="text" id="firstname" name="firstname" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('firstname') || '' }}">
-      </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="email" class="text-gray-800">Adresse email</label>
-          @if(flashMessages.has('errors.email'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.email') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="email" id="email" name="email" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('email') || '' }}">
-      </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="password" class="text-gray-800">Mot de passe</label>
-          @if(flashMessages.has('errors.password'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.password') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="password" id="password" name="password" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100">
-      </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="password_confirmation" class="text-gray-800">Confirmation mot de passe</label>
-          @if(flashMessages.has('errors.password_confirmation'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.password_confirmation') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="password" id="password_confirmation" name="password_confirmation" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100">
-      </div>
+
+      @!component('components/form/field', {
+        label: 'Prénom',
+        name: 'firstname',
+        errors: flashMessages.get('errors.firstname'),
+        value: flashMessages.get('firstname')
+      })
+
+      @!component('components/form/field', {
+        label: 'Nom',
+        name: 'lastname',
+        errors: flashMessages.get('errors.lastname'),
+        value: flashMessages.get('lastname')
+      })
+
+      @!component('components/form/field', {
+        label: 'Adresse email',
+        name: 'email',
+        type: 'email',
+        errors: flashMessages.get('errors.email'),
+        value: flashMessages.get('email')
+      })
+
+      @!component('components/form/field', {
+        label: 'Mot de passe',
+        name: 'password',
+        type: 'password',
+        errors: flashMessages.get('errors.password')
+      })
+
+      @!component('components/form/field', {
+        label: 'Confirmation mot de passe',
+        name: 'password_confirmation',
+        type: 'password_confirmation',
+        errors: flashMessages.get('errors.password_confirmation')
+      })
+      
       <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
         Créer un compte
       </button>

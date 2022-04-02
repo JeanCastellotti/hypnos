@@ -10,42 +10,22 @@
     </div>
     <form method="POST" autocomplete="off" novalidate>
       {{ csrfField() }}
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="email" class="text-gray-800">Adresse email</label>
-          @if(flashMessages.has('errors.email'))
-            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.email') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="email" id="email" name="email" class="bg-gray-200 p-4 rounded w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100 text-gray-600" value="{{ flashMessages.get('email') || '' }}">
-        @if(flashMessages.has('errors.email'))
-          <p class="text-red-500 flex items-center gap-2 text-sm mt-1 md:hidden">
-            @!icons.exclamationCircle({ class: 'h-5 w-5' })
-            <span>{{ flashMessages.get('errors.email') }}</span>
-          </p>
-        @endif
-      </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
-          <label for="password" class="text-gray-800">Mot de passe</label>
-          @if(flashMessages.has('errors.password'))
-            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.password') }}</span>
-            </div>
-          @endif
-        </div>
-        <input type="password" id="password" name="password" class="bg-gray-200 p-4 rounded w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100 text-gray-600">
-        @if(flashMessages.has('errors.email'))
-          <p class="text-red-500 flex items-center gap-2 text-sm mt-1 md:hidden">
-            @!icons.exclamationCircle({ class: 'h-5 w-5' })
-            <span>{{ flashMessages.get('errors.password') }}</span>
-          </p>
-        @endif
-      </div>
+
+      @!component('components/form/field', {
+        label: 'Adresse email',
+        name: 'email',
+        type: 'email',
+        errors: flashMessages.get('errors.email'),
+        value: flashMessages.get('email')
+      })
+
+      @!component('components/form/field', {
+        label: 'Mot de passe',
+        name: 'password',
+        type: 'password',
+        errors: flashMessages.get('errors.password')
+      })
+      
       <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
         Se connecter
       </button>
