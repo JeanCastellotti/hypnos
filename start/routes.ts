@@ -93,7 +93,7 @@ Route.group(() => {
     })
       .as('messages')
       .prefix('messages')
-  }).middleware('admin')
+  }) //.middleware('admin')
 
   Route.group(() => {
     Route.get('/', 'SuitesController.index').as('index')
@@ -106,7 +106,7 @@ Route.group(() => {
   })
     .prefix('/suites')
     .as('suites')
-    .middleware('manager')
+  //.middleware('manager')
 
   Route.group(() => {
     Route.get('/', 'BookingsController.index').as('index')
