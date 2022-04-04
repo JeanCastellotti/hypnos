@@ -1,17 +1,14 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class BookingsController {
-  public async index({}: HttpContextContract) {}
+  public async index({ view, auth }: HttpContextContract) {
+    const bookings = await auth.user
+      ?.related('bookings')
+      .query()
+      .preload('suite', (suiteQuery) => {
+        suiteQuery.preload('establishment')
+      })
 
-  public async create({}: HttpContextContract) {}
-
-  public async store({}: HttpContextContract) {}
-
-  public async show({}: HttpContextContract) {}
-
-  public async edit({}: HttpContextContract) {}
-
-  public async update({}: HttpContextContract) {}
-
-  public async destroy({}: HttpContextContract) {}
+    return view.render('pages/dashboard/bookings/index', { bookings })
+  }
 }
