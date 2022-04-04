@@ -1,4 +1,5 @@
 <div class="space-y-1 mb-5">
+
   <div class="flex items-center justify-between">
     <label for="{{ name }}" class="text-gray-800">{{ label }}</label>
     @if(errors)
@@ -8,11 +9,21 @@
       </div>
     @endif
   </div>
-  <input type="{{ type || 'text' }}" id="{{ name }}" name="{{ name }}" class="bg-gray-200 p-4 rounded w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100 text-gray-500" value="{{ value || '' }}">
-  @if(errors)
-    <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
-      @!icons.exclamationCircle({ class: 'h-5 w-5' })
-      <span>{{ errors }}</span>
-    </p>
+
+  @if(type === 'select')
+    <select name="{{ name }}" id="{{ name }}" class="p-4 rounded w-full focus:outline-none focus:ring {{ light ? 'bg-white focus:ring-gray-200' : 'bg-gray-200 focus:ring-offset-2 focus:ring-gray-100' }} text-gray-500">
+      {{{ await $slots.main() }}}
+    </select>
+  @elseif(type === 'textarea')
+    <textarea name="{{ name }}" id="{{ name }}" class="rounded p-4 w-full text-gray-600 focus:outline-none focus:ring resize-none h-56 {{ light ? 'bg-white focus:ring-gray-200' : 'bg-gray-200 focus:ring-offset-2 focus:ring-gray-100' }}">{{ value || '' }}</textarea>
+  @else
+    <input type="{{ type || 'text' }}" id="{{ name }}" name="{{ name }}" class="p-4 rounded w-full focus:outline-none focus:ring {{ light ? 'bg-white focus:ring-gray-200' : 'bg-gray-200 focus:ring-offset-2 focus:ring-gray-100' }} text-gray-500" value="{{ value || '' }}">
   @endif
+
+  @if(errors)
+      <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
+        @!icons.exclamationCircle({ class: 'h-5 w-5' })
+        <span>{{ errors }}</span>
+      </p>
+    @endif
 </div>
