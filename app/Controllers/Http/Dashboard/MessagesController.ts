@@ -3,8 +3,11 @@ import Message from 'App/Models/Message'
 import ContactValidator from 'App/Validators/ContactValidator'
 
 export default class MessagesController {
-  public async index({ view }: HttpContextContract) {
+  public async index({ view, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('viewMessages')
+
     const messages = await Message.all()
+
     return view.render('pages/dashboard/messages/index', { messages })
   }
 

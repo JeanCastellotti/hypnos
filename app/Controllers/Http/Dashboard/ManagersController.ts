@@ -1,10 +1,12 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Role from 'App/Enums/Roles'
 import User from 'App/Models/User'
 import ManagerUpdateValidator from 'App/Validators/ManagerUpdateValidator'
 import ManagerValidator from 'App/Validators/ManagerValidator'
 
 export default class ManagersController {
-  public async index({ view }: HttpContextContract) {
+  public async index({ view, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('viewManagers')
     const managers = await User.query().where('role', 'manager')
     return view.render('pages/dashboard/managers/index', { managers })
   }
@@ -13,11 +15,13 @@ export default class ManagersController {
     return view.render('pages/dashboard/managers/create')
   }
 
-  public async store({ request, response, session }: HttpContextContract) {
+  public async store({ request, response, session, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('viewManagers')
+
     const data = await request.validate(ManagerValidator)
 
     try {
-      await User.create({ ...data, role: 'manager' })
+      await User.create({ ...data, role: Role.MANAGER })
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la création du gérant')
       return response.redirect().back()

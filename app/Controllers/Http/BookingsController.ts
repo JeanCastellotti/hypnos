@@ -61,23 +61,4 @@ export default class BookingsController {
     session.flash('success', 'Votre réservation a bien été enregistrée')
     return response.header('hx-redirect', '/dashboard/bookings')
   }
-
-  public async delete({ params, view }: HttpContextContract) {
-    const booking = await Booking.findOrFail(params.id)
-    return view.render('pages/dashboard/bookings/delete', { booking })
-  }
-
-  public async destroy({ params, response, session }: HttpContextContract) {
-    const booking = await Booking.findOrFail(params.id)
-
-    try {
-      await booking.delete()
-    } catch (error) {
-      session.flash('error', "Un problème est survenu lors de l'annulation de la réservation")
-      return response.redirect().back()
-    }
-
-    session.flash('success', 'Votre réservation a bien été annulée')
-    return response.redirect().toRoute('dashboard.bookings.index')
-  }
 }

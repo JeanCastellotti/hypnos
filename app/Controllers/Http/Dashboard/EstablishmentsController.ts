@@ -7,17 +7,20 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import EstablishmentUpdateValidator from 'App/Validators/EstablishmentUpdateValidator'
 
 export default class EstablishmentsController {
-  public async index({ view }: HttpContextContract) {
+  public async index({ view, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('viewEstablishments')
     const establishments = await Establishment.all()
     return view.render('pages/dashboard/establishments/index', { establishments })
   }
 
-  public async create({ view }: HttpContextContract) {
+  public async create({ view, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('createEstablishment')
     const managers = await User.query().where('role', 'manager')
     return view.render('pages/dashboard/establishments/create', { managers })
   }
 
-  public async store({ request, response, session }: HttpContextContract) {
+  public async store({ request, response, session, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('storeEstablishment')
     const { hero, ...data } = await request.validate(EstablishmentValidator)
     const filename = string.generateRandom(32) + '.' + hero.extname
 
@@ -33,13 +36,15 @@ export default class EstablishmentsController {
     return response.redirect().toRoute('dashboard.establishments.index')
   }
 
-  public async edit({ view, params }: HttpContextContract) {
+  public async edit({ view, params, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('editEstablishment')
     const establishment = await Establishment.findOrFail(params.id)
     const managers = await User.query().where('role', 'manager')
     return view.render('pages/dashboard/establishments/edit', { establishment, managers })
   }
 
-  public async update({ request, response, params, session }: HttpContextContract) {
+  public async update({ request, response, params, session, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('updateEstablishment')
     const { hero, ...data } = await request.validate(EstablishmentUpdateValidator)
     const establishment = await Establishment.findOrFail(params.id)
 
@@ -61,12 +66,14 @@ export default class EstablishmentsController {
     return response.redirect().toRoute('dashboard.establishments.index')
   }
 
-  public async delete({ params, view }: HttpContextContract) {
+  public async delete({ params, view, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('deleteEstablishment')
     const establishment = await Establishment.findOrFail(params.id)
     return view.render('pages/dashboard/establishments.delete', { establishment })
   }
 
-  public async destroy({ params, session, response }: HttpContextContract) {
+  public async destroy({ params, session, response, bouncer }: HttpContextContract) {
+    await bouncer.with('DashboardPolicy').authorize('destroyEstablishment')
     const establishment = await Establishment.findOrFail(params.id)
 
     try {

@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Role from 'App/Enums/Roles'
 import Booking from 'App/Models/Booking'
 import User from 'App/Models/User'
 import LoginValidator from 'App/Validators/LoginValidator'
@@ -9,7 +10,7 @@ export default class AuthController {
     return view.render('pages/auth/login')
   }
 
-  public async login({ request, response, auth, session }: HttpContextContract) {
+  public async login({ request, response, auth, session, bouncer }: HttpContextContract) {
     const { email, password } = await request.validate(LoginValidator)
 
     try {
@@ -20,6 +21,7 @@ export default class AuthController {
     }
 
     if (session.has('booking')) {
+      await bouncer.with('DashboardPolicy').authorize('storeBooking')
       const { suite: suiteId, from, to } = session.get('booking')
       await Booking.create({ suiteId, from, to, userId: auth.user?.id })
       session.flash('success', 'La réservation a bien été enregistrée')
@@ -39,7 +41,7 @@ export default class AuthController {
     const data = await request.validate(SignupValidator)
 
     try {
-      await User.create({ ...data, role: 'customer' })
+      await User.create({ ...data, role: Role.USER })
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la création de votre compte')
       return response.redirect().back()
