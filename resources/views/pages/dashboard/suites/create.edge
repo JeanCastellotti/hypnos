@@ -9,7 +9,60 @@
 
   <form method="POST" autocomplete="off" novalidate class="flex flex-col" enctype="multipart/form-data">
     {{ csrfField() }}
-    <div class="flex items-center gap-5 mb-5">
+
+    @!component('components/form/field', {
+      label: 'Titre',
+      name: 'title',
+      errors: flashMessages.get('errors.title'),
+      value: flashMessages.get('title'),
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Tarif',
+      name: 'price',
+      type: 'number',
+      errors: flashMessages.get('errors.price'),
+      value: flashMessages.get('price'),
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Lien Booking.com',
+      name: 'booking_url',
+      errors: flashMessages.get('errors.booking_url'),
+      value: flashMessages.get('booking_url'),
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Description',
+      name: 'description',
+      type: 'textarea',
+      errors: flashMessages.get('errors.description'),
+      value: flashMessages.get('description'),
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Image 1',
+      name: 'picture1',
+      type: 'file',
+      errors: flashMessages.get('errors.picture1'),
+      value: flashMessages.get('picture1'),
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Image 2',
+      name: 'picture2',
+      type: 'file',
+      errors: flashMessages.get('errors.picture2'),
+      value: flashMessages.get('picture2'),
+      light: true
+    })
+
+    {{--  <div class="flex items-center gap-5 mb-5">
       <div class="flex-1">
         <div class="mb-3 flex items-center justify-between">
           <label for="title" class="text-gray-800">Titre</label>
@@ -82,7 +135,7 @@
         @endif
       </div>
       <input type="file" name="picture2" id="picture2" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200">
-    </div>
+    </div>  --}}
     <button class="border border-gray-800 rounded px-6 py-3 self-end hover:bg-gray-800 hover:text-white transition flex items-center gap-2">
       @!icons.plus({ class: 'h-6 w-6' })
       <span>Créer une suite</span>
