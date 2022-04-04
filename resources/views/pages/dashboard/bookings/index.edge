@@ -33,10 +33,10 @@
         </tbody>
       </table>
     @else
-      <span class="text-gray-800 text-center block w-full mb-10">Aucune réservation</span>
+      <span class="text-gray-600 text-center block w-full mb-10">Aucune réservation</span>
     @endif
 
-    <a href="{{ route('bookings.create') }}" class="bg-white rounded inline-flex gap-2 items-center text-gray-800 py-2 px-4 transition transform hover:scale-105 hover:shadow-sm">
+    <a href="{{ route('bookings.create') }}" class="bg-white rounded inline-flex gap-2 items-center justify-center md:justify-start text-gray-800 py-2 px-4 transition transform hover:scale-105 hover:shadow-sm w-full md:w-auto">
       @!icons.plus({ class: 'h-6 w-6' })
       <span>Réserver une suite</span>
     </a>

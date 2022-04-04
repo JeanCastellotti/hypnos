@@ -7,12 +7,12 @@
     @include('partials/dashboard/nav')
   
     @if(messages.length)
-      <table class="mb-10 w-full text-gray-600">
-        <tbody>
+      <table class="w-full text-gray-500 mb-10 text-sm sm:text-base">
+        <tbody class="space-y-2">
           @each(message in messages)
-            <tr>
-              <td class="py-3 pr-3">{{ message.firstname }} {{ message.lastname }}</td>
-              <td class="p-3">{{ message.email }}</td>              
+            <tr class="block border border-gray-300 p-2 space-y-2 md:table-row md:border-0 md:p-0 md:space-y-0">
+              <td class="md:py-3 md:pr-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Gérant">{{ message.firstname }} {{ message.lastname }}</td>
+              <td class="md:p-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Email">{{ message.email }}</td>              
               <td class="py-3 flex items-center gap-2 justify-end">
                 <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" hx-get="{{ route('dashboard.messages.show', [message.id]) }}" hx-target="body" hx-swap="beforeend">
                   @!icons.eye({ class: 'h-5 w-5 '})
@@ -28,7 +28,7 @@
         </tbody>
       </table>
     @else
-      <span class="text-gray-800 text-center block w-full mb-10">Aucun message</span>
+      <span class="text-gray-600 text-center block w-full mb-10">Aucun message</span>
     @endif
   </div>
 @endsection
