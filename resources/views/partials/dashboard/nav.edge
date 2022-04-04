@@ -2,21 +2,18 @@
 
   <a href="{{ route('dashboard.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}" >Mes informations</a>
 
-  @if(auth.user.role === 'customer')
+  @if(auth.user.role === 'user')
     <a href="{{ route('dashboard.bookings.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.bookings.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Mes réservations</a>
   @endif
 
   @if(auth.user.role == 'admin')
     <a href="{{ route('dashboard.establishments.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.establishments.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Établissements</a>
     <a href="{{ route('dashboard.managers.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.managers.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Gérants</a>
+    <a href="{{ route('dashboard.messages.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.messages.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Messages</a>
   @endif
 
   @if(auth.user.role === 'manager')
     <a href="{{ route('dashboard.suites.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.suites.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}" >Suites</a>
   @endif
 
-  @if(auth.user.role === 'admin')
-    <a href="{{ route('dashboard.messages.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.messages.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Messages</a>
-  @endif
-  
 </div>
