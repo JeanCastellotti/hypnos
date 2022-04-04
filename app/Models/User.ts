@@ -11,6 +11,7 @@ import {
 import Establishment from './Establishment'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Booking from './Booking'
+import Role from 'App/Enums/Roles'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -29,7 +30,7 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public role: string
+  public role: Role
 
   @hasOne(() => Establishment)
   public establishment: HasOne<typeof Establishment>
