@@ -4,8 +4,15 @@
 @set('description', truncate(establishment.description, 150))
 
 @section('hero')
+  @set('filename', establishment.hero.split('.')[0])
+  @set('extname', establishment.hero.split('.')[1])
   <div class="h-96 relative mb-5 sm:mb-10">
-    <img src="/uploads/{{ establishment.hero }}" alt="{{ establishment.name }}" class="object-cover w-full h-full">
+    <picture>
+      <source media="(max-width: 640px)" srcset="/uploads/{{ `${filename}-small.${extname}` }}">
+      <source media="(max-width: 768px)" srcset="/uploads/{{ `${filename}-medium.${extname}` }}">
+      <source media="(max-width: 1280px)" srcset="/uploads/{{ `${filename}-large.${extname}` }}">
+      <img src="/uploads/{{ `${filename}-large.${extname}` }}" alt="{{ establishment.name }}" class="object-cover w-full h-full">
+    </picture>
     <div class="absolute bottom-0 inset-x-0 bg-white/80 backdrop-blur-sm py-5">
       <div class="max-w-screen-lg mx-auto px-5 flex flex-col gap-3 sm:gap-0 sm:flex-row items-center justify-between text-gray-800">
         <h1 class=" text-4xl font-black">{{ establishment.name }}</h1>
