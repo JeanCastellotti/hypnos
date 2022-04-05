@@ -5,12 +5,13 @@ export default class BookingsController {
   public async index({ view, auth, bouncer }: HttpContextContract) {
     await bouncer.with('DashboardPolicy').authorize('viewBookings')
 
-    const bookings = await auth.user
-      ?.related('bookings')
+    const bookings = await auth
+      .user!.related('bookings')
       .query()
       .preload('suite', (query) => {
         query.preload('establishment')
       })
+      .orderBy('to', 'desc')
 
     return view.render('pages/dashboard/bookings/index', { bookings })
   }
