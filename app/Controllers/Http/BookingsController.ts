@@ -22,7 +22,7 @@ export default class BookingsController {
     })
   }
 
-  public async store({ request, response, session, auth }: HttpContextContract) {
+  public async store({ request, response, session, auth, bouncer }: HttpContextContract) {
     const { establishment, ...data } = await request.validate(BookingValidator)
 
     const suite = await Suite.find(data.suite)
@@ -47,6 +47,7 @@ export default class BookingsController {
     }
 
     try {
+      await bouncer.with('DashboardPolicy').authorize('storeBooking')
       await Booking.create({
         suiteId: data.suite,
         userId: auth.user?.id,
