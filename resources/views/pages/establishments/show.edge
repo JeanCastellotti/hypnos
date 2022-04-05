@@ -6,7 +6,7 @@
 @section('hero')
   @set('filename', establishment.hero.split('.')[0])
   @set('extname', establishment.hero.split('.')[1])
-  <div class="h-96 relative mb-5 sm:mb-10">
+  <div class="h-64 md:h-96 relative mb-5 sm:mb-10">
     <picture>
       <source media="(max-width: 640px)" srcset="/uploads/{{ `${filename}-small.${extname}` }}">
       <source media="(max-width: 768px)" srcset="/uploads/{{ `${filename}-medium.${extname}` }}">
