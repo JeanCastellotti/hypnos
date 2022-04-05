@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Role from 'App/Enums/Roles'
 import Establishment from 'App/Models/Establishment'
 import Suite from 'App/Models/Suite'
 import User from 'App/Models/User'
@@ -19,7 +20,7 @@ export default class AppController {
     const data = await request.validate(AdminValidator)
 
     try {
-      await User.create({ ...data, role: 'admin' })
+      await User.create({ ...data, role: Role.ADMIN })
     } catch (error) {
       session.flash('error', "Un problème est survenu lors de la création de l'administrateur")
       return response.redirect().back()
