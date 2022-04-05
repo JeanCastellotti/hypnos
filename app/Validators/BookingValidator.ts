@@ -8,7 +8,7 @@ export default class BookingValidator {
     establishment: schema.number(),
     suite: schema.number(),
     from: schema.date({}, [rules.afterOrEqual('today')]),
-    to: schema.date({}, [rules.afterOrEqualToField('from')]),
+    to: schema.date({}, [rules.afterField('from')]),
   })
 
   public messages = {
@@ -17,6 +17,6 @@ export default class BookingValidator {
     'from.required': 'Le début du séjour est obligatoire',
     'from.afterOrEqual': 'Le début du séjour est invalide',
     'to.required': 'La fin du séjour est obligatoire',
-    'to.afterOrEqualToField': 'La fin du séjour est invalide',
+    'to.afterField': 'La fin du séjour est invalide',
   }
 }
