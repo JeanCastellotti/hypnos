@@ -21,7 +21,10 @@ export default class SuitesController {
     const establishments = await Establishment.all()
 
     if (!establishment && auth.user!.role !== Role.ADMIN) {
-      session.flash('error', "Vous n'avez pas encore la possibilité de créer une suite")
+      session.flash(
+        'error',
+        "Vous n'avez pas encore la possibilité de créer une suite. Si le problème persiste, contactez l'administrateur."
+      )
       return response.redirect().back()
     }
 
