@@ -66,6 +66,10 @@ export default class Establishment extends BaseModel {
 
   @afterDelete()
   public static async deleteHero(establishment: Establishment) {
-    await Drive.delete(establishment.hero)
+    const [filename, extname] = establishment.hero.split('.')
+    await Drive.delete(`${filename}-big.${extname}`)
+    await Drive.delete(`${filename}-large.${extname}`)
+    await Drive.delete(`${filename}-medium.${extname}`)
+    await Drive.delete(`${filename}-small.${extname}`)
   }
 }
