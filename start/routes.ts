@@ -20,7 +20,9 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.post('/suites', 'AppController.suites')
+Route.group(() => {
+  Route.post('suites', 'AppController.suites')
+}).prefix('htmx')
 
 Route.group(() => {
   Route.get('/', 'AppController.main').as('home')
