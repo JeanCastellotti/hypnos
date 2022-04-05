@@ -51,7 +51,15 @@ export default class Suite extends BaseModel {
 
   @afterDelete()
   public static async deletePictures(suite: Suite) {
-    await Drive.delete(suite.picture_1)
-    await Drive.delete(suite.picture_2)
+    const [picture1Filename, picture1Extname] = suite.picture_1.split('.')
+    const [picture2Filename, picture2Extname] = suite.picture_2.split('.')
+
+    await Drive.delete(`${picture1Filename}-large.${picture1Extname}`)
+    await Drive.delete(`${picture1Filename}-medium.${picture1Extname}`)
+    await Drive.delete(`${picture1Filename}-small.${picture1Extname}`)
+
+    await Drive.delete(`${picture2Filename}-large.${picture2Extname}`)
+    await Drive.delete(`${picture2Filename}-medium.${picture2Extname}`)
+    await Drive.delete(`${picture2Filename}-small.${picture2Extname}`)
   }
 }

@@ -6,6 +6,7 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import SuiteUpdateValidator from 'App/Validators/SuiteUpdateValidator'
 import Establishment from 'App/Models/Establishment'
 import Role from 'App/Enums/Roles'
+import sharp from 'sharp'
 
 export default class SuitesController {
   public async index({ view, bouncer, auth }: HttpContextContract) {
@@ -34,19 +35,31 @@ export default class SuitesController {
   public async store({ request, response, session, auth, bouncer }) {
     await bouncer.with('DashboardPolicy').authorize('storeSuite')
     const { picture1, picture2, ...data } = await request.validate(SuiteValidator)
-    const filename1 = string.generateRandom(32) + '.' + picture1.extname
-    const filename2 = string.generateRandom(32) + '.' + picture2.extname
+    const filename1 = string.generateRandom(32)
+    const filename2 = string.generateRandom(32)
     const establishment = await auth.user.related('establishment').query().first()
 
     try {
       await Suite.create({
         ...data,
         establishmentId: establishment.id,
-        picture_1: filename1,
-        picture_2: filename2,
+        picture_1: filename1 + '.' + picture1.extname,
+        picture_2: filename2 + '.' + picture2.extname,
       })
-      await picture1.moveToDisk('./', { name: filename1 })
-      await picture2.moveToDisk('./', { name: filename2 })
+      // await picture1.moveToDisk('./', { name: filename1 })
+      // await picture2.moveToDisk('./', { name: filename2 })
+      const resizePicture1Large = await sharp(picture1.tmpPath).resize(1280).toBuffer()
+      const resizePicture1Medium = await sharp(picture1.tmpPath).resize(768).toBuffer()
+      const resizePicture1Small = await sharp(picture1.tmpPath).resize(640).toBuffer()
+      const resizePicture2Large = await sharp(picture2.tmpPath).resize(1280).toBuffer()
+      const resizePicture2Medium = await sharp(picture2.tmpPath).resize(768).toBuffer()
+      const resizePicture2Small = await sharp(picture2.tmpPath).resize(640).toBuffer()
+      await Drive.put(`${filename1}-large.${picture1.extname}`, resizePicture1Large)
+      await Drive.put(`${filename1}-medium.${picture1.extname}`, resizePicture1Medium)
+      await Drive.put(`${filename1}-small.${picture1.extname}`, resizePicture1Small)
+      await Drive.put(`${filename2}-large.${picture2.extname}`, resizePicture2Large)
+      await Drive.put(`${filename2}-medium.${picture2.extname}`, resizePicture2Medium)
+      await Drive.put(`${filename2}-small.${picture2.extname}`, resizePicture2Small)
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la création de la suite')
       return response.redirect().back()
