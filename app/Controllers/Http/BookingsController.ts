@@ -3,7 +3,7 @@ import Booking from 'App/Models/Booking'
 import Establishment from 'App/Models/Establishment'
 import Suite from 'App/Models/Suite'
 import BookingValidator from 'App/Validators/BookingValidator'
-import { DateTime } from 'luxon'
+import { DateTime, Interval } from 'luxon'
 
 export default class BookingsController {
   public async create({ request, view, session }: HttpContextContract) {
@@ -29,15 +29,15 @@ export default class BookingsController {
     const bookings = await suite?.related('bookings').query()
     const start = DateTime.fromISO(data.from.toString())
     const end = DateTime.fromISO(data.to.toString())
+    const bookingPeriod = Interval.fromDateTimes(start, end)
 
-    const suiteIsAvailable = !bookings?.some(
-      (booking) =>
-        (start >= booking.from && start <= booking.to) ||
-        (booking.from >= start && booking.from <= end)
-    )
+    const suiteNotAvailable = bookings?.some((booking) => {
+      const period = Interval.fromDateTimes(booking.from, booking.to)
+      return period.overlaps(bookingPeriod) || period.equals(bookingPeriod)
+    })
 
-    if (!suiteIsAvailable) {
-      session.flash('formError', "La suite n'est pas disponible aux dates indiquées")
+    if (suiteNotAvailable) {
+      session.flash('formError', "La suite n'est pas disponible aux dates indiquées.")
       return response.redirect().withQs().back()
     }
 
