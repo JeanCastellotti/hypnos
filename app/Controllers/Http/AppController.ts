@@ -4,7 +4,7 @@ import Suite from 'App/Models/Suite'
 import User from 'App/Models/User'
 import AdminValidator from 'App/Validators/AdminValidator'
 
-export default class AppsController {
+export default class AppController {
   public async createAdmin({ response, view }: HttpContextContract) {
     const admin = await User.findBy('role', 'admin')
 
