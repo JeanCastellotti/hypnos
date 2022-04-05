@@ -22,6 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
   Route.post('suites', 'AppController.suites')
+  Route.get('pictures/:suiteId/:picture', 'AppController.picture')
 }).prefix('htmx')
 
 Route.group(() => {
