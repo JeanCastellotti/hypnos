@@ -5,7 +5,7 @@ import EstablishmentValidator from 'App/Validators/EstablishmentValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import Drive from '@ioc:Adonis/Core/Drive'
 import EstablishmentUpdateValidator from 'App/Validators/EstablishmentUpdateValidator'
-const sharp = require('sharp')
+import sharp from 'sharp'
 
 export default class EstablishmentsController {
   public async index({ view, bouncer }: HttpContextContract) {
