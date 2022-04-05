@@ -38,6 +38,12 @@ export default class AppController {
   public async suites({ request, view }: HttpContextContract) {
     const { establishment: id } = await request.body()
     const suites = await Suite.query().select('id', 'title').where('establishment_id', id)
-    return view.render('suites', { suites })
+    return view.render('htmx/suites', { suites })
+  }
+
+  public async picture({ params, view }: HttpContextContract) {
+    const suite = await Suite.findOrFail(params.suiteId)
+    const picture = suite['picture_' + params.picture]
+    return view.render('htmx/picture', { picture })
   }
 }
