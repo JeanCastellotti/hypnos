@@ -4,6 +4,7 @@ import Establishment from 'App/Models/Establishment'
 import Suite from 'App/Models/Suite'
 import User from 'App/Models/User'
 import AdminValidator from 'App/Validators/AdminValidator'
+import Drive from '@ioc:Adonis/Core/Drive'
 
 export default class AppController {
   public async createAdmin({ response, view }: HttpContextContract) {
@@ -32,6 +33,12 @@ export default class AppController {
 
   public async main({ view }: HttpContextContract) {
     const establishments = await Establishment.all()
+
+    for (const establishment of establishments) {
+      const [filename, extname] = establishment.hero.split('.')
+      establishment.hero = await Drive.getUrl(`${filename}-small.${extname}`)
+    }
+
     return view.render('pages/index', { establishments })
   }
 
@@ -43,7 +50,10 @@ export default class AppController {
 
   public async picture({ params, view }: HttpContextContract) {
     const suite = await Suite.findOrFail(params.suiteId)
-    const picture = suite['picture_' + params.picture]
+
+    const [filename, extname] = suite['picture_' + params.picture].split('.')
+    const picture = await Drive.getUrl(`${filename}-large.${extname}`)
+
     return view.render('htmx/picture', { picture })
   }
 }
