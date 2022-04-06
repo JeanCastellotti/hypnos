@@ -1,12 +1,7 @@
-@set('filename', picture.split('.')[0])
-@set('extname', picture.split('.')[1])
-
 <div class="fixed inset-0 flex bg-gray-800/30 backdrop-blur-sm p-5" _="on load add .overflow-hidden to body on closeModal add .fadeOut to #modal then wait for animationend then remove me then remove .overflow-hidden from body on click trigger closeModal">
   <div id="modal" class="m-auto bg-white rounded max-w-screen-xl h-full w-full overflow-hidden fadeIn p-2">
     <picture>
-      <source media="(max-width: 640px)" srcset="/uploads/{{ `${filename}-small.${extname}` }}">
-      <source media="(max-width: 768px)" srcset="/uploads/{{ `${filename}-medium.${extname}` }}">
-      <img src="/uploads/{{ `${filename}-large.${extname}` }}" alt="Image" class="object-cover w-full h-full">
+      <img src="{{ picture }}" alt="Image" class="object-cover w-full h-full">
     </picture>
   </div>
 </div>
