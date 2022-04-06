@@ -8,10 +8,10 @@ import Drive from '@ioc:Adonis/Core/Drive'
 
 export default class AppController {
   public async createAdmin({ response, view }: HttpContextContract) {
-    const admin = await User.findBy('role', 'admin')
+    const admin = await User.findBy('role', Role.ADMIN)
 
     if (admin) {
-      return response.redirect().toRoute('home')
+      return response.redirect().toRoute('app.home')
     }
 
     return view.render('pages/admin/index')
