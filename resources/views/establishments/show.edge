@@ -4,14 +4,12 @@
 @set('description', truncate(establishment.description, 150))
 
 @section('hero')
-  @set('filename', establishment.picture.filename)
-  @set('extname', establishment.picture.extname)
   <div class="h-64 md:h-96 relative mb-5 sm:mb-10">
     <picture>
-      <source media="(max-width: 640px)" srcset="{{ await Drive.getUrl(`${filename}-sm.${extname}`) }}">
-      <source media="(max-width: 768px)" srcset="{{ await Drive.getUrl(`${filename}-md.${extname}`) }}">
-      <source media="(max-width: 1280px)" srcset="{{ await Drive.getUrl(`${filename}-lg.${extname}`) }}">
-      <img src="{{ await Drive.getUrl(`${filename}-xl.${extname}`) }}" alt="{{ establishment.name }}" class="object-cover w-full h-full">
+      <source media="(max-width: 640px)" srcset="{{ await Drive.getUrl(establishment.picture.small) }}">
+      <source media="(max-width: 768px)" srcset="{{ await Drive.getUrl(establishment.picture.medium) }}">
+      <source media="(max-width: 1280px)" srcset="{{ await Drive.getUrl(establishment.picture.large) }}">
+      <img src="{{ await Drive.getUrl(establishment.picture.big) }}" alt="{{ establishment.name }}" class="object-cover w-full h-full">
     </picture>
     <div class="absolute bottom-0 inset-x-0 bg-white/80 backdrop-blur-sm py-5">
       <div class="max-w-screen-lg mx-auto px-5 flex flex-col gap-3 sm:gap-0 sm:flex-row items-center justify-between text-gray-800">
@@ -38,8 +36,8 @@
     @each(suite in establishment.suites)
       <div class="flex flex-col rounded overflow-hidden">
         <div class="grid sm:grid-cols-2 order-1 sm:order-none">
-          <img src="{{ await Drive.getUrl(`${suite.picture1.filename}-sm.${suite.picture1.extname}`) }}" alt="Image suite" class="object-cover h-40 w-full cursor-pointer pointer-events-none md:pointer-events-auto" hx-get="/htmx/pictures/{{ `${suite.picture1.filename}-lg.${suite.picture1.extname}` }}" hx-target="body" hx-swap="beforeend">
-          <img src="{{ await Drive.getUrl(`${suite.picture2.filename}-sm.${suite.picture2.extname}`) }}" alt="Image suite" class="object-cover h-40 w-full cursor-pointer pointer-events-none md:pointer-events-auto" hx-get="/htmx/pictures/{{ `${suite.picture2.filename}-lg.${suite.picture2.extname}` }}" hx-target="body" hx-swap="beforeend">
+          <img src="{{ await Drive.getUrl(suite.picture1.small) }}" alt="Image suite" class="object-cover h-40 w-full cursor-pointer pointer-events-none md:pointer-events-auto" hx-get="/htmx/pictures/{{ suite.picture1.large }}" hx-target="body" hx-swap="beforeend">
+          <img src="{{ await Drive.getUrl(suite.picture2.small) }}" alt="Image suite" class="object-cover h-40 w-full cursor-pointer pointer-events-none md:pointer-events-auto" hx-get="/htmx/pictures/{{ suite.picture2.large }}" hx-target="body" hx-swap="beforeend">
         </div>
         <div class="bg-white p-4 rounded shadow-sm grid sm:grid-cols-2 gap-2">
           <div class="flex flex-col items-center sm:items-start gap-4">
