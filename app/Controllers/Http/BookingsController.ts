@@ -14,7 +14,7 @@ export default class BookingsController {
     const suites =
       establishment && (await establishment.related('suites').query().select('id', 'title'))
 
-    return view.render('pages/bookings/create', {
+    return view.render('bookings/create', {
       establishments,
       suites,
       currentEstablishment: establishment?.id,
@@ -27,12 +27,12 @@ export default class BookingsController {
 
     const suite = await Suite.find(data.suite)
     const bookings = await suite?.related('bookings').query()
-    const start = DateTime.fromISO(data.from.toString())
-    const end = DateTime.fromISO(data.to.toString())
+    const start = DateTime.fromISO(data.start.toString())
+    const end = DateTime.fromISO(data.end.toString())
     const bookingPeriod = Interval.fromDateTimes(start, end)
 
     const suiteNotAvailable = bookings?.some((booking) => {
-      const period = Interval.fromDateTimes(booking.from, booking.to)
+      const period = Interval.fromDateTimes(booking.start, booking.end)
       return period.overlaps(bookingPeriod) || period.equals(bookingPeriod)
     })
 
@@ -51,8 +51,8 @@ export default class BookingsController {
       await Booking.create({
         suiteId: data.suite,
         userId: auth.user?.id,
-        from: data.from,
-        to: data.to,
+        start: data.start,
+        end: data.end,
       })
     } catch (error) {
       session.flash('formError', 'Un problème est survenu lors de la création de la réservation')
