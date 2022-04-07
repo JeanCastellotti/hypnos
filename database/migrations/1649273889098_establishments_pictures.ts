@@ -5,11 +5,15 @@ export default class EstablishmentsPictures extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.string('filename')
-      table.string('extname')
+      table.string('filename').notNullable()
+      table.string('extname').notNullable()
 
-      table.integer('establishment_id').references('establishments.id').unique().onDelete('CASCADE')
+      table
+        .integer('establishment_id')
+        .primary()
+        .references('establishments.id')
+        .unique()
+        .onDelete('CASCADE')
     })
   }
 

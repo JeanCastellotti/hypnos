@@ -3,9 +3,6 @@ import Establishment from './Establishment'
 
 export default class EstablishmentsPicture extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
-
-  @column()
   public establishmentId: number
 
   @column()
@@ -14,26 +11,26 @@ export default class EstablishmentsPicture extends BaseModel {
   @column()
   public extname: string
 
+  @belongsTo(() => Establishment)
+  public establishment: BelongsTo<typeof Establishment>
+
   @computed()
   public get small() {
-    return `${this.filename}-small.${this.extname}`
+    return `${this.filename}-sm.${this.extname}`
   }
 
   @computed()
   public get medium() {
-    return `${this.filename}-medium.${this.extname}`
+    return `${this.filename}-md.${this.extname}`
   }
 
   @computed()
   public get large() {
-    return `${this.filename}-large.${this.extname}`
+    return `${this.filename}-lg.${this.extname}`
   }
 
   @computed()
   public get big() {
-    return `${this.filename}-big.${this.extname}`
+    return `${this.filename}-xl.${this.extname}`
   }
-
-  @belongsTo(() => Establishment)
-  public establishment: BelongsTo<typeof Establishment>
 }
