@@ -2,13 +2,72 @@
 @set('title', 'Modifier un établissement - Hypnos')
 
 @section('content')
-  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+  
+  <div class="flex items-center justify-between gap-10 text-gray-800 border-b border-gray-300 mb-10">
     <span class="py-3 border-b border-gray-800 relative translate-y-px">Modifier un établissement</span>
+    <a href="{{ route('dashboard.establishments.index')}}" class="block text-blue-500">Revenir en arrière</a>
   </div>
 
   <form method="POST" autocomplete="off" novalidate class="flex flex-col" enctype="multipart/form-data">
     {{ csrfField() }}
-    <div class="flex items-center gap-5 mb-5">
+
+    @!component('components/form/field', {
+      label: 'Nom',
+      name: 'name',
+      errors: flashMessages.get('errors.name'),
+      value: flashMessages.get('name') || establishment.name,
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Ville',
+      name: 'city',
+      errors: flashMessages.get('errors.city'),
+      value: flashMessages.get('city') || establishment.city,
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Adresse',
+      name: 'address',
+      errors: flashMessages.get('errors.address'),
+      value: flashMessages.get('address') || establishment.address,
+      light: true
+    })
+
+    @component('components/form/field', {
+      label: 'Gérant',
+      name: 'user_id',
+      type: 'select',
+      errors: flashMessages.get('errors.user_id'),
+      value: flashMessages.get('user_id'),
+      light: true
+    })
+      <option value="" disabled selected>Sélectionnez un gérant</option>
+      @each(manager in managers)
+        <option value="{{ manager.id }}">{{ manager.firstname}} {{ manager.lastname }}</option>
+      @endeach
+    @end
+
+    @!component('components/form/field', {
+      label: 'Description',
+      name: 'description',
+      type: 'textarea',
+      errors: flashMessages.get('errors.description'),
+      value: flashMessages.get('description') || establishment.description,
+      light: true
+    })
+
+    @!component('components/form/field', {
+      label: 'Image',
+      name: 'hero',
+      type: 'file',
+      errors: flashMessages.get('errors.hero'),
+      value: flashMessages.get('hero'),
+      light: true
+    })
+
+    {{--  <div class="flex items-center gap-5 mb-5">
       <div class="flex-1">
         <div class="mb-3 flex items-center justify-between">
           <label for="name" class="text-gray-800">Nom</label>
@@ -90,7 +149,7 @@
         @endif
       </div>
       <input type="file" name="hero" id="hero" class="bg-white rounded p-4 w-full text-gray-600 focus:outline-none focus:ring focus:ring-gray-200">
-    </div>
+    </div>  --}}
     <button class="border border-gray-800 rounded px-6 py-3 self-end hover:bg-gray-800 hover:text-white transition flex items-center gap-2">
       @!icons.plus({ class: 'h-6 w-6' })
       <span>Enregistrer les modifications</span>
