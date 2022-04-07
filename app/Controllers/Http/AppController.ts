@@ -8,20 +8,18 @@ import Drive from '@ioc:Adonis/Core/Drive'
 
 export default class AppController {
   public async createAdmin({ response, view }: HttpContextContract) {
-    const admin = await User.findBy('role', Role.ADMIN)
+    const admin = await User.findBy('roleId', Role.ADMIN)
 
-    if (admin) {
-      return response.redirect().toRoute('app.home')
-    }
+    if (admin) return response.redirect().toRoute('app.home')
 
-    return view.render('pages/admin/index')
+    return view.render('admin/index')
   }
 
   public async storeAdmin({ request, response, session }: HttpContextContract) {
     const data = await request.validate(AdminValidator)
 
     try {
-      await User.create({ ...data, role: Role.ADMIN })
+      await User.create({ ...data, roleId: Role.ADMIN })
     } catch (error) {
       session.flash('error', "Un problème est survenu lors de la création de l'administrateur")
       return response.redirect().back()
@@ -32,14 +30,9 @@ export default class AppController {
   }
 
   public async main({ view }: HttpContextContract) {
-    const establishments = await Establishment.all()
+    const establishments = await Establishment.query().preload('picture')
 
-    for (const establishment of establishments) {
-      const [filename, extname] = establishment.hero.split('.')
-      establishment.hero = await Drive.getUrl(`${filename}-small.${extname}`)
-    }
-
-    return view.render('pages/index', { establishments })
+    return view.render('index', { establishments })
   }
 
   public async suites({ request, view }: HttpContextContract) {
@@ -49,11 +42,7 @@ export default class AppController {
   }
 
   public async picture({ params, view }: HttpContextContract) {
-    const suite = await Suite.findOrFail(params.suiteId)
-
-    const [filename, extname] = suite['picture_' + params.picture].split('.')
-    const picture = await Drive.getUrl(`${filename}-large.${extname}`)
-
+    const picture = await Drive.getUrl(params.filename)
     return view.render('htmx/picture', { picture })
   }
 }
