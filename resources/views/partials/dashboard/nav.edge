@@ -1,3 +1,16 @@
+@set('role', auth.user.roleId)
+
+<div class="mb-5 md:mb-10 text-gray-800">
+  @if(role === Role.ADMIN)
+    <h1 class="text-2xl">Administration</h1>
+  @elseif(role === Role.USER)
+    <h1 class="text-2xl">Mon compte</h1>
+  @else
+    <h1 class="text-2xl">Mon établissement</h1>
+  @endif
+  <small>Connecté en tant que {{ auth.user.firstname }} {{ auth.user.lastname }}</small>
+</div>
+
 <div class="flex flex-col md:flex-row text-center md:items-center gap-2 md:gap-10 text-gray-800 border-b pb-10 md:pb-0 border-gray-300 mb-10">
 
   @can('DashboardPolicy.viewSettings')
