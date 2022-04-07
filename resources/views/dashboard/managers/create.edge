@@ -3,8 +3,9 @@
 @set('title', 'Créer un gérant - Hypnos')
 
 @section('content')
-  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+  <div class="flex items-center justify-between gap-10 text-gray-800 border-b border-gray-300 mb-10">
     <span class="py-3 border-b border-gray-800 relative translate-y-px">Créer un gérant</span>
+    <a href="{{ route('dashboard.managers.index')}}" class="block text-blue-500">Revenir en arrière</a>
   </div>
 
   <form method="POST" autocomplete="off" novalidate class="flex flex-col">
@@ -41,7 +42,6 @@
       name: 'password',
       type: 'password',
       errors: flashMessages.get('errors.password'),
-      value: flashMessages.get('password'),
       light: true
     })
 
@@ -50,7 +50,6 @@
       name: 'password_confirmation',
       type: 'password',
       errors: flashMessages.get('errors.password_confirmation'),
-      value: flashMessages.get('password_confirmation'),
       light: true
     })
 
