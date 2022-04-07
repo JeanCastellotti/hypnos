@@ -8,16 +8,16 @@ export default class MessagesController {
 
     const messages = await Message.all()
 
-    return view.render('pages/dashboard/messages/index', { messages })
+    return view.render('dashboard/messages/index', { messages })
   }
 
   public async show({ params, view }: HttpContextContract) {
     const message = await Message.findOrFail(params.id)
-    return view.render('pages/dashboard/messages/show', { message })
+    return view.render('dashboard/messages/show', { message })
   }
 
   public async create({ view }: HttpContextContract) {
-    return view.render('pages/messages/create')
+    return view.render('messages/create')
   }
 
   public async store({ request, response, session }: HttpContextContract) {
@@ -36,7 +36,7 @@ export default class MessagesController {
 
   public async delete({ params, view }: HttpContextContract) {
     const message = await Message.findOrFail(params.id)
-    return view.render('pages/dashboard/messages/delete', { message })
+    return view.render('dashboard/messages/delete', { message })
   }
 
   public async destroy({ params, response, session }) {
