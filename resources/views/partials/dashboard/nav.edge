@@ -1,19 +1,27 @@
 <div class="flex flex-col md:flex-row text-center md:items-center gap-2 md:gap-10 text-gray-800 border-b pb-10 md:pb-0 border-gray-300 mb-10">
 
-  <a href="{{ route('dashboard.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}" >Mes informations</a>
+  @can('DashboardPolicy.viewSettings')
+    <a href="{{ route('dashboard.settings.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Mes informations</a>
+  @end
 
-  @if(auth.user.role === 'user')
+  @can('DashboardPolicy.viewBookings')
     <a href="{{ route('dashboard.bookings.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.bookings.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Mes réservations</a>
-  @endif
+  @end
 
-  @if(auth.user.role == 'admin')
-    <a href="{{ route('dashboard.establishments.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.establishments.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Établissements</a>
-    <a href="{{ route('dashboard.managers.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.managers.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Gérants</a>
-    <a href="{{ route('dashboard.messages.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.messages.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Messages</a>
-  @endif
-
-  @if(auth.user.role === 'manager')
+  @can('DashboardPolicy.viewSuites')
     <a href="{{ route('dashboard.suites.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.suites.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}" >Suites</a>
-  @endif
+  @end
+
+  @can('DashboardPolicy.viewEstablishments')
+    <a href="{{ route('dashboard.establishments.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.establishments.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Établissements</a>
+  @end
+
+  @can('DashboardPolicy.viewManagers')
+    <a href="{{ route('dashboard.managers.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.managers.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Gérants</a>
+  @end
+
+  @can('DashboardPolicy.viewMessages')
+    <a href="{{ route('dashboard.messages.index') }}" class="py-3 md:border-b relative translate-y-px {{ request.matchesRoute('dashboard.messages.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Messages</a>
+  @end
 
 </div>
