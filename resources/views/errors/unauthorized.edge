@@ -1,1 +1,9 @@
-<p> It's a 403 </p>
+@layout('layouts/main')
+
+@section('content')
+  <div class="flex flex-col items-center space-y-5">
+    <p class="text-6xl text-gray-800 font-bold">403</p>
+    <p class="text-xl text-gray-600">Vous ne pouvez pas réaliser cette action</p>
+    <a href="javascript:history.back()" class="text-blue-500">Revenir en arrière</a>
+  </div>
+@endsection
