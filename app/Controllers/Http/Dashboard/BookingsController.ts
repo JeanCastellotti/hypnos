@@ -18,9 +18,7 @@ export default class BookingsController {
 
   public async delete({ params, view, bouncer }: HttpContextContract) {
     const booking = await Booking.findOrFail(params.id)
-
     await bouncer.with('DashboardPolicy').authorize('deleteBooking', booking)
-
     return view.render('dashboard/bookings/delete', { booking })
   }
 
@@ -30,9 +28,13 @@ export default class BookingsController {
     await bouncer.with('DashboardPolicy').authorize('destroyBooking', booking)
 
     try {
+      if (booking.start.diffNow('days').toObject().days! <= 3) {
+        session.flash('error', "Il n'est pas possible d'annuler cette réservation.")
+        return response.redirect().toRoute('dashboard.bookings.index')
+      }
       await booking.delete()
     } catch (error) {
-      session.flash('error', "Un problème est survenu lors de l'annulation de la réservation")
+      session.flash('error', "Un problème est survenu lors de l'annulation de la réservation.")
       return response.redirect().back()
     }
 
