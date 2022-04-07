@@ -1,6 +1,7 @@
 import {
   BaseModel,
   beforeDelete,
+  beforeSave,
   BelongsTo,
   belongsTo,
   column,
@@ -11,6 +12,7 @@ import Establishment from './Establishment'
 import Drive from '@ioc:Adonis/Core/Drive'
 import Booking from './Booking'
 import SuitesPicture from './SuitesPicture'
+import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class Suite extends BaseModel {
   @column({ isPrimary: true })
@@ -52,6 +54,13 @@ export default class Suite extends BaseModel {
 
   @hasMany(() => Booking)
   public bookings: HasMany<typeof Booking>
+
+  @beforeSave()
+  public static async titleCase(suite: Suite) {
+    if (suite.$dirty.title) {
+      suite.title = string.capitalCase(suite.title)
+    }
+  }
 
   @beforeDelete()
   public static async deletePictures(suite: Suite) {
