@@ -12,7 +12,7 @@ export default class Establishments extends BaseSchema {
       table.string('city').notNullable()
       table.string('address').notNullable()
 
-      table.integer('user_id').references('users.id').onDelete('SET NULL')
+      table.integer('user_id').references('users.id').onDelete('SET NULL').unique()
     })
   }
 
