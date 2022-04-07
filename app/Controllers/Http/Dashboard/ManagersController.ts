@@ -7,12 +7,12 @@ import ManagerValidator from 'App/Validators/ManagerValidator'
 export default class ManagersController {
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('DashboardPolicy').authorize('viewManagers')
-    const managers = await User.query().where('role', 'manager')
-    return view.render('pages/dashboard/managers/index', { managers })
+    const managers = await User.query().where('roleId', Role.MANAGER)
+    return view.render('dashboard/managers/index', { managers })
   }
 
   public async create({ view }: HttpContextContract) {
-    return view.render('pages/dashboard/managers/create')
+    return view.render('dashboard/managers/create')
   }
 
   public async store({ request, response, session, bouncer }: HttpContextContract) {
@@ -21,7 +21,7 @@ export default class ManagersController {
     const data = await request.validate(ManagerValidator)
 
     try {
-      await User.create({ ...data, role: Role.MANAGER })
+      await User.create({ ...data, roleId: Role.MANAGER })
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la création du gérant')
       return response.redirect().back()
@@ -33,7 +33,7 @@ export default class ManagersController {
 
   public async edit({ view, params }: HttpContextContract) {
     const manager = await User.find(params.id)
-    return view.render('pages/dashboard/managers/edit', { manager })
+    return view.render('dashboard/managers/edit', { manager })
   }
 
   public async update({ request, response, params, session }: HttpContextContract) {
@@ -53,7 +53,7 @@ export default class ManagersController {
 
   public async delete({ params, view }: HttpContextContract) {
     const manager = await User.findOrFail(params.id)
-    return view.render('pages/dashboard/managers/delete', { manager })
+    return view.render('dashboard/managers/delete', { manager })
   }
 
   public async destroy({ response, params, session }: HttpContextContract) {
