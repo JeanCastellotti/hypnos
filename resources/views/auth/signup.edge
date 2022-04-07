@@ -8,7 +8,7 @@
       <h1 class="text-gray-800 text-center text-2xl">Créer un compte</h1>
       <a href="{{ route('auth.login') }}" class="text-sm sm:text-md text-blue-500">J'ai déjà un compte</a>
     </div>
-    <form method="POST" autocomplete="off" novalidate>
+    <form method="POST" autocomplete="off" novalidate x-data="form($el)" @submit.prevent="submit">
       {{ csrfField() }}
 
       @!component('components/form/field', {
@@ -47,7 +47,8 @@
         errors: flashMessages.get('errors.password_confirmation')
       })
       
-      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
+      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition flex gap-2 items-center justify-center group" :disabled="loading">
+        @!loadingSpinner()
         Créer un compte
       </button>
     </form>

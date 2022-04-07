@@ -8,7 +8,7 @@
       <h1 class="text-gray-800 text-center text-2xl">Se connecter</h1>
       <a href="{{ route('auth.signup') }}" class="text-sm sm:text-md text-blue-500">Je n'ai pas de compte</a>
     </div>
-    <form method="POST" autocomplete="off" novalidate>
+    <form method="POST" autocomplete="off" novalidate x-data="form($el)" @submit.prevent="submit">
       {{ csrfField() }}
 
       @!component('components/form/field', {
@@ -26,7 +26,8 @@
         errors: flashMessages.get('errors.password')
       })
       
-      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
+      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition group flex items-center justify-center gap-2" :disabled="loading">
+        @!loadingSpinner()
         Se connecter
       </button>
     </form>
