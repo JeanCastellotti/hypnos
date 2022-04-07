@@ -3,8 +3,9 @@
 @set('title', 'Créer un établissement - Hypnos')
 
 @section('content')
-  <div class="flex items-center gap-10 text-gray-800 border-b border-gray-300 mb-10">
+  <div class="flex items-center justify-between gap-10 text-gray-800 border-b border-gray-300 mb-10">
     <span class="py-3 border-b border-gray-800 relative translate-y-px">Créer un établissement</span>
+    <a href="{{ route('dashboard.establishments.index')}}" class="block text-blue-500">Revenir en arrière</a>
   </div>
 
   <form method="POST" autocomplete="off" novalidate class="flex flex-col" enctype="multipart/form-data">
