@@ -56,27 +56,27 @@
       </div>
       <div class="mb-3">  
         <div class="mb-3 flex items-center justify-between">
-          <label for="from" class="text-gray-800">Début du séjour</label>
-          @if(flashMessages.has('errors.from'))
+          <label for="start" class="text-gray-800">Début du séjour</label>
+          @if(flashMessages.has('errors.start'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.from') }}</span>
+              <span>{{ flashMessages.get('errors.start') }}</span>
             </div>
           @endif
         </div>
-        <input type="date" id="from" name="from" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('from') || '' }}">
+        <input type="date" id="start" name="start" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('start') || '' }}">
       </div>
       <div class="mb-3">
         <div class="mb-3 flex items-center justify-between">
-          <label for="to" class="text-gray-800">Fin du séjour</label>
-          @if(flashMessages.has('errors.to'))
+          <label for="end" class="text-gray-800">Fin du séjour</label>
+          @if(flashMessages.has('errors.end'))
             <div class="text-red-500 flex items-center gap-2 text-sm">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.to') }}</span>
+              <span>{{ flashMessages.get('errors.end') }}</span>
             </div>
           @endif
         </div>
-        <input type="date" id="to" name="to" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('to') || '' }}">
+        <input type="date" id="end" name="end" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('end') || '' }}">
       </div>
       <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
         Réserver
