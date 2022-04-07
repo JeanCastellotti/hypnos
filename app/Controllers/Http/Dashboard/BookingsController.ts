@@ -13,7 +13,7 @@ export default class BookingsController {
       })
       .orderBy('to', 'desc')
 
-    return view.render('pages/dashboard/bookings/index', { bookings })
+    return view.render('dashboard/bookings/index', { bookings })
   }
 
   public async delete({ params, view, bouncer }: HttpContextContract) {
@@ -21,7 +21,7 @@ export default class BookingsController {
 
     await bouncer.with('DashboardPolicy').authorize('deleteBooking', booking)
 
-    return view.render('pages/dashboard/bookings/delete', { booking })
+    return view.render('dashboard/bookings/delete', { booking })
   }
 
   public async destroy({ params, response, session, bouncer }: HttpContextContract) {
