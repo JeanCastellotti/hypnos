@@ -43,12 +43,6 @@ export default class Suite extends BaseModel {
   @hasMany(() => Booking)
   public bookings: HasMany<typeof Booking>
 
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
-
   @afterDelete()
   public static async deletePictures(suite: Suite) {
     const [picture1Filename, picture1Extname] = suite.picture_1.split('.')
