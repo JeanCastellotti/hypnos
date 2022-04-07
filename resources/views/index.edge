@@ -1,12 +1,15 @@
 @layout('layouts/main')
-@set('title', 'Bienvenue chez Hypnos') 
+@set('title', 'Bienvenue chez Hypnos')
+@set('description', 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Amet, aperiam.')
 
 @section('content')
-  <div class="grid gap-5 sm:grid-cols-2">
-    @each(establishment in establishments)
+<div class="grid gap-5 sm:grid-cols-2">
+  @each(establishment in establishments)
+    @set('filename', establishment.picture.filename)
+    @set('extname', establishment.picture.extname)
     <div class="h-52 overflow-hidden rounded relative group md:h-96">
-      <a href="{{ route('establishments.show', [dashCase(establishment.name)]) }}" class="absolute inset-0 z-20"></a>
-      <img src="{{ establishment.hero }}" alt="{{ establishment.name }}" class="w-full h-full object-cover transition transform group-hover:scale-105" />
+      <a href="{{ route('establishments.show', [establishment.slug]) }}" class="absolute inset-0 z-20"></a>
+      <img src="{{ await Drive.getUrl(`${filename}-sm.${extname}`) }}" alt="{{ establishment.name }}" class="w-full h-full object-cover transition transform group-hover:scale-105" />
       <div class="absolute inset-x-0 bottom-0 h-16 transition-[height] bg-gray-800/50 p-4 backdrop-blur-sm text-white md:group-hover:h-full">
         <div class="flex items-center justify-between mb-5">
           <span class="text-2xl font-thin">{{ establishment.name }}</span>
