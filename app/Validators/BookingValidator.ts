@@ -7,8 +7,8 @@ export default class BookingValidator {
   public schema = schema.create({
     establishment: schema.number(),
     suite: schema.number(),
-    from: schema.date({}, [rules.afterOrEqual('today')]),
-    to: schema.date({}, [rules.afterField('from')]),
+    start: schema.date({}, [rules.afterOrEqual('today')]),
+    end: schema.date({}, [rules.afterField('from')]),
   })
 
   public messages = {
