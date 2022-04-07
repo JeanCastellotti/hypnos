@@ -11,7 +11,7 @@ export default class BookingsController {
       .preload('suite', (query) => {
         query.preload('establishment')
       })
-      .orderBy('to', 'desc')
+      .orderBy('end', 'desc')
 
     return view.render('dashboard/bookings/index', { bookings })
   }
