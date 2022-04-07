@@ -6,10 +6,28 @@
     <nav class="hidden sm:flex sm:items-center sm:gap-5 ">
       @if(auth.isLoggedIn)
         <a href="{{ route('auth.logout') }}" class="text-gray-800 hover:underline">Se déconnecter</a>
-        <a href="{{ route('dashboard.index') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">
-          @!icons.user({ class: 'h-6 w-6'})
-          <span>Mon compte</span>
-        </a>
+
+        @can('DashboardPolicy.viewSettings')
+          <a href="{{ route('dashboard.settings.index') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">
+            @!icons.user({ class: 'h-6 w-6'})
+            <span>Mon compte</span>
+          </a>
+        @end
+
+        @can('DashboardPolicy.viewEstablishments')
+          <a href="{{ route('dashboard.establishments.index') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">
+            @!icons.user({ class: 'h-6 w-6'})
+            <span>Administration</span>
+          </a>
+        @end
+
+        @can('DashboardPolicy.viewSuites')
+          <a href="{{ route('dashboard.suites.index') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">
+            @!icons.user({ class: 'h-6 w-6'})
+            <span>Gérer mon établissement</span>
+          </a>
+        @end
+
       @else
         <a href="{{ route('auth.login') }}" class="text-gray-800 hover:underline">Se connecter</a>
         <a href="{{ route('auth.signup') }}" class="border border-gray-800 rounded px-3 py-1.5 text-gray-800 flex items-center gap-2 hover:bg-gray-800 hover:text-gray-50 transition">

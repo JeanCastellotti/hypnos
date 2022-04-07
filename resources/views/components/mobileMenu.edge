@@ -8,7 +8,15 @@
       <a href="{{ route('app.home') }}">Accueil</a>
     @if(auth.isLoggedIn)
       <a href="{{ route('auth.logout') }}">Se déconnecter</a>
-      <a href="{{ route('dashboard.index') }}">Mon compte</a>
+      @can('DashboardPolicy.viewSettings')
+        <a href="{{ route('dashboard.settings.index') }}">Mon compte</a>
+      @end
+      @can('DashboardPolicy.viewEstablishments')
+        <a href="{{ route('dashboard.establishments.index') }}">Administration</a>
+      @end
+      @can('DashboardPolicy.viewSuites')
+        <a href="{{ route('dashboard.suites.index') }}">Gérer mon établissement</a>
+      @end
     @else
       <a href="{{ route('auth.login') }}">Se connecter</a>
       <a href="{{ route('auth.signup') }}">Créer un compte</a>
