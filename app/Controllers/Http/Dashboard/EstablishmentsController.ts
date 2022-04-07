@@ -18,7 +18,7 @@ export default class EstablishmentsController {
 
   public async create({ view, bouncer }: HttpContextContract) {
     await bouncer.with('DashboardPolicy').authorize('createEstablishment')
-    const managers = await User.query().where('roleId', Role.MANAGER)
+    const managers = await User.query().where('roleId', Role.MANAGER).doesntHave('establishment')
     return view.render('dashboard/establishments/create', { managers })
   }
 
@@ -59,6 +59,8 @@ export default class EstablishmentsController {
   public async edit({ view, params, bouncer }: HttpContextContract) {
     await bouncer.with('DashboardPolicy').authorize('editEstablishment')
     const establishment = await Establishment.findOrFail(params.id)
+    await establishment.load('manager')
+
     const managers = await User.query().where('roleId', Role.MANAGER)
     return view.render('dashboard/establishments/edit', { establishment, managers })
   }
