@@ -8,15 +8,15 @@ export default class BookingValidator {
     establishment: schema.number(),
     suite: schema.number(),
     start: schema.date({}, [rules.afterOrEqual('today')]),
-    end: schema.date({}, [rules.afterField('from')]),
+    end: schema.date({}, [rules.afterField('start')]),
   })
 
   public messages = {
     'establishment.required': "L'établissement est obligatoire",
     'suite.required': 'La suite est obligatoire',
-    'from.required': 'Le début du séjour est obligatoire',
-    'from.afterOrEqual': 'Le début du séjour est invalide',
-    'to.required': 'La fin du séjour est obligatoire',
-    'to.afterField': 'La fin du séjour est invalide',
+    'start.required': 'Le début du séjour est obligatoire',
+    'start.afterOrEqual': 'Le début du séjour est invalide',
+    'end.required': 'La fin du séjour est obligatoire',
+    'end.afterField': 'La fin du séjour est invalide',
   }
 }
