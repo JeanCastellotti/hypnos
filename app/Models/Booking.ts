@@ -7,11 +7,11 @@ export default class Booking extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column.dateTime()
-  public from: DateTime
+  @column.date()
+  public start: DateTime
 
-  @column.dateTime()
-  public to: DateTime
+  @column.date()
+  public end: DateTime
 
   @column()
   public suiteId: number

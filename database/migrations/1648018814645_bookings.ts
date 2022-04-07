@@ -6,8 +6,9 @@ export default class Bookings extends BaseSchema {
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.timestamp('from', { useTz: true })
-      table.timestamp('to', { useTz: true })
+      table.date('start')
+      table.date('end')
+
       table.integer('suite_id').references('suites.id').notNullable()
       table.integer('user_id').references('users.id').notNullable()
     })
