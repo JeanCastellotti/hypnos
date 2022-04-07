@@ -1,7 +1,6 @@
-import { DateTime } from 'luxon'
 import {
-  afterDelete,
   BaseModel,
+  beforeDelete,
   BelongsTo,
   belongsTo,
   column,
@@ -11,6 +10,7 @@ import {
 import Establishment from './Establishment'
 import Drive from '@ioc:Adonis/Core/Drive'
 import Booking from './Booking'
+import SuitesPicture from './SuitesPicture'
 
 export default class Suite extends BaseModel {
   @column({ isPrimary: true })
@@ -29,13 +29,23 @@ export default class Suite extends BaseModel {
   public bookingUrl: string
 
   @column()
-  public picture_1: string
+  public picture_1: number
 
   @column()
-  public picture_2: string
+  public picture_2: number
 
   @column()
   public establishmentId: number
+
+  @belongsTo(() => SuitesPicture, {
+    foreignKey: 'picture_1',
+  })
+  public picture1: BelongsTo<typeof SuitesPicture>
+
+  @belongsTo(() => SuitesPicture, {
+    foreignKey: 'picture_2',
+  })
+  public picture2: BelongsTo<typeof SuitesPicture>
 
   @belongsTo(() => Establishment)
   public establishment: BelongsTo<typeof Establishment>
@@ -43,17 +53,15 @@ export default class Suite extends BaseModel {
   @hasMany(() => Booking)
   public bookings: HasMany<typeof Booking>
 
-  @afterDelete()
+  @beforeDelete()
   public static async deletePictures(suite: Suite) {
-    const [picture1Filename, picture1Extname] = suite.picture_1.split('.')
-    const [picture2Filename, picture2Extname] = suite.picture_2.split('.')
-
-    await Drive.delete(`${picture1Filename}-large.${picture1Extname}`)
-    await Drive.delete(`${picture1Filename}-medium.${picture1Extname}`)
-    await Drive.delete(`${picture1Filename}-small.${picture1Extname}`)
-
-    await Drive.delete(`${picture2Filename}-large.${picture2Extname}`)
-    await Drive.delete(`${picture2Filename}-medium.${picture2Extname}`)
-    await Drive.delete(`${picture2Filename}-small.${picture2Extname}`)
+    await suite.load('picture1')
+    await suite.load('picture2')
+    await Drive.delete(`${suite.picture1.filename}-sm.${suite.picture1.extname}`)
+    await Drive.delete(`${suite.picture1.filename}-lg.${suite.picture1.extname}`)
+    await Drive.delete(`${suite.picture2.filename}-sm.${suite.picture2.extname}`)
+    await Drive.delete(`${suite.picture2.filename}-lg.${suite.picture2.extname}`)
+    await suite.picture1.delete()
+    await suite.picture2.delete()
   }
 }

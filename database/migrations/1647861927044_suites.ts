@@ -12,6 +12,8 @@ export default class Suites extends BaseSchema {
       table.string('booking_url').notNullable()
 
       table.integer('establishment_id').references('establishments.id').onDelete('CASCADE')
+      table.integer('picture_1').references('suites_pictures.id').onDelete('CASCADE')
+      table.integer('picture_2').references('suites_pictures.id').onDelete('CASCADE')
     })
   }
 
