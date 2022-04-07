@@ -7,41 +7,47 @@ import SignupValidator from 'App/Validators/SignupValidator'
 
 export default class AuthController {
   public async showLogin({ view }: HttpContextContract) {
-    return view.render('pages/auth/login')
+    return view.render('auth/login')
   }
 
   public async login({ request, response, auth, session, bouncer }: HttpContextContract) {
     const { email, password } = await request.validate(LoginValidator)
 
     try {
-      await auth.attempt(email, password)
+      const user = await auth.attempt(email, password)
+
+      if (session.has('booking')) {
+        await bouncer.with('DashboardPolicy').authorize('storeBooking')
+        const { suite: suiteId, start, end } = session.get('booking')
+        await Booking.create({ suiteId, start, end, userId: auth.user?.id })
+        session.flash('success', 'La réservation a bien été enregistrée')
+        session.forget('booking')
+        return response.redirect().toRoute('dashboard.index')
+      }
+
+      session.flash('success', 'Vous êtes connecté')
+
+      let redirect = 'dashboard.settings.index'
+
+      if (user.roleId === Role.ADMIN) redirect = 'dashboard.establishments.index'
+      else if (user.roleId === Role.MANAGER) redirect = 'dashboard.suites.index'
+
+      return response.redirect().toRoute(redirect)
     } catch (error) {
       session.flash('error', 'Email ou mot de passe incorrect')
       return response.redirect().back()
     }
-
-    if (session.has('booking')) {
-      await bouncer.with('DashboardPolicy').authorize('storeBooking')
-      const { suite: suiteId, from, to } = session.get('booking')
-      await Booking.create({ suiteId, from, to, userId: auth.user?.id })
-      session.flash('success', 'La réservation a bien été enregistrée')
-      session.forget('booking')
-      return response.redirect().toRoute('dashboard.index')
-    }
-
-    session.flash('success', 'Vous êtes connecté')
-    return response.redirect().toRoute('dashboard.index')
   }
 
   public async showSignup({ view }: HttpContextContract) {
-    return view.render('pages/auth/signup')
+    return view.render('auth/signup')
   }
 
   public async signup({ request, response, session }: HttpContextContract) {
     const data = await request.validate(SignupValidator)
 
     try {
-      await User.create({ ...data, role: Role.USER })
+      await User.create({ ...data, roleId: Role.USER })
     } catch (error) {
       session.flash('error', 'Un problème est survenu lors de la création de votre compte')
       return response.redirect().back()
