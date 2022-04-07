@@ -4,7 +4,7 @@ import ContactValidator from 'App/Validators/ContactValidator'
 
 export default class MessagesController {
   public async create({ view }: HttpContextContract) {
-    return view.render('pages/messages/create')
+    return view.render('messages/create')
   }
 
   public async store({ request, response, session }: HttpContextContract) {
