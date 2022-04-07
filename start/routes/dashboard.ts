@@ -1,4 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
+import Role from 'App/Enums/Roles'
 
 Route.group(() => {
   Route.group(() => {
@@ -67,3 +68,9 @@ Route.group(() => {
   .prefix('dashboard')
   .as('dashboard')
   .middleware('auth')
+  .middleware(({ view }, next) => {
+    view.share({
+      Role,
+    })
+    return next()
+  })
