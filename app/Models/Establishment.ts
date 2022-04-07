@@ -1,6 +1,4 @@
-import { DateTime } from 'luxon'
 import {
-  afterDelete,
   BaseModel,
   beforeDelete,
   beforeSave,
@@ -54,13 +52,15 @@ export default class Establishment extends BaseModel {
   @hasMany(() => Suite)
   public suites: HasMany<typeof Suite>
 
-  @hasOne(() => EstablishmentsPicture)
+  @hasOne(() => EstablishmentsPicture, {
+    foreignKey: 'establishmentId',
+  })
   public picture: HasOne<typeof EstablishmentsPicture>
 
   @beforeSave()
   public static async titleCase(establishment: Establishment) {
     if (establishment.$dirty.name) {
-      establishment.name = string.titleCase(establishment.name)
+      establishment.name = string.titleCase(establishment.name.toLowerCase())
     }
   }
 
