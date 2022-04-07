@@ -34,12 +34,16 @@
   </div>
   <div class="space-y-5">
     @each(suite in establishment.suites)
-      <div class="flex flex-col rounded overflow-hidden">
-        <div class="grid sm:grid-cols-2 order-1 sm:order-none">
-          <img src="{{ await Drive.getUrl(suite.picture1.small) }}" alt="Image suite" class="object-cover h-40 w-full cursor-pointer pointer-events-none md:pointer-events-auto" hx-get="/htmx/pictures/{{ suite.picture1.large }}" hx-target="body" hx-swap="beforeend">
-          <img src="{{ await Drive.getUrl(suite.picture2.small) }}" alt="Image suite" class="object-cover h-40 w-full cursor-pointer pointer-events-none md:pointer-events-auto" hx-get="/htmx/pictures/{{ suite.picture2.large }}" hx-target="body" hx-swap="beforeend">
+      <div class="flex flex-col rounded overflow-hidden shadow-sm bg-white">
+        <div class="grid sm:grid-cols-2 gap-2 order-1 sm:order-none p-2 rounded">
+          <div class="h-40 rounded overflow-hidden">
+            <img src="{{ await Drive.getUrl(suite.picture1.small) }}" alt="Image suite" class="object-cover h-full w-full cursor-pointer pointer-events-none md:pointer-events-auto transition transform hover:scale-105" hx-get="/htmx/pictures/{{ suite.picture1.large }}" hx-target="body" hx-swap="beforeend">
+          </div>
+          <div class="h-40 rounded overflow-hidden">
+            <img src="{{ await Drive.getUrl(suite.picture2.small) }}" alt="Image suite" class="object-cover h-full w-full cursor-pointer pointer-events-none md:pointer-events-auto transition transform hover:scale-105" hx-get="/htmx/pictures/{{ suite.picture2.large }}" hx-target="body" hx-swap="beforeend">
+          </div>
         </div>
-        <div class="bg-white p-4 rounded shadow-sm grid sm:grid-cols-2 gap-2">
+        <div class="bg-white p-4 rounded grid sm:grid-cols-2 gap-2">
           <div class="flex flex-col items-center sm:items-start gap-4">
             <span class="text-gray-800 text-2xl">{{ suite.title }}</span>
             <span class="text-gray-800">{{ suite.price }}€ la nuit</span>
