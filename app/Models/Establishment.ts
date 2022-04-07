@@ -28,6 +28,7 @@ export default class Establishment extends BaseModel {
   @slugify({
     strategy: 'dbIncrement',
     fields: ['name'],
+    allowUpdates: true,
   })
   public slug: string
 
