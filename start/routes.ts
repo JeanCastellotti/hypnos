@@ -25,7 +25,7 @@ import './routes/dashboard'
 
 Route.group(() => {
   Route.post('suites', 'AppController.suites')
-  Route.get('pictures/:id', 'AppController.picture')
+  Route.get('pictures/:filename', 'AppController.picture')
 }).prefix('htmx')
 
 Route.group(() => {
@@ -49,4 +49,4 @@ Route.group(() => {
   .prefix('bookings')
   .as('bookings')
 
-Route.get('/establishments/:name', 'EstablishmentsController.show').as('establishments.show')
+Route.get('/establishments/:slug', 'EstablishmentsController.show').as('establishments.show')
