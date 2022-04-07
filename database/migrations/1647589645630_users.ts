@@ -10,7 +10,9 @@ export default class Users extends BaseSchema {
       table.string('lastname').notNullable()
       table.string('email').notNullable().unique()
       table.string('password').notNullable()
-      table.string('role').notNullable()
+
+      table.integer('role_id').references('roles.id').defaultTo(1)
+
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
     })

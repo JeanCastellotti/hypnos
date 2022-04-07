@@ -2,6 +2,8 @@ import { DateTime } from 'luxon'
 import {
   BaseModel,
   beforeSave,
+  BelongsTo,
+  belongsTo,
   column,
   HasMany,
   hasMany,
@@ -11,7 +13,8 @@ import {
 import Establishment from './Establishment'
 import Hash from '@ioc:Adonis/Core/Hash'
 import Booking from './Booking'
-import Role from 'App/Enums/Roles'
+import Role from './Role'
+import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -30,7 +33,10 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public role: Role
+  public roleId: number
+
+  @belongsTo(() => Role)
+  public role: BelongsTo<typeof Role>
 
   @hasOne(() => Establishment)
   public establishment: HasOne<typeof Establishment>
@@ -48,6 +54,20 @@ export default class User extends BaseModel {
   public static async hashPassword(user: User) {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
+    }
+  }
+
+  @beforeSave()
+  public static async firstnameCase(user: User) {
+    if (user.$dirty.firstname) {
+      user.firstname = string.capitalCase(user.firstname)
+    }
+  }
+
+  @beforeSave()
+  public static async lastnameCase(user: User) {
+    if (user.$dirty.lastname) {
+      user.lastname = string.capitalCase(user.lastname)
     }
   }
 }
