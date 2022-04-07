@@ -14,7 +14,7 @@
 <div class="flex flex-col md:flex-row text-center md:items-center gap-2 md:gap-10 text-gray-800 border-b pb-10 md:pb-0 border-gray-300 mb-10">
 
   @can('DashboardPolicy.viewSettings')
-    <a href="{{ route('dashboard.settings.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Mes informations</a>
+    <a href="{{ route('dashboard.settings.index') }}" class="py-3 md:border-b relative translate-y-px whitespace-nowrap {{ request.matchesRoute('dashboard.settings.index') ? 'border-gray-800 bg-white md:bg-transparent' : 'border-gray-300' }}">Mes informations</a>
   @end
 
   @can('DashboardPolicy.viewBookings')
