@@ -10,6 +10,7 @@ export default class ContactValidator {
     firstname: schema.string({ trim: true }, [rules.alpha()]),
     email: schema.string({ trim: true }, [rules.email()]),
     message: schema.string({ trim: true }),
+    establishment: schema.number(),
   })
 
   public messages = {
