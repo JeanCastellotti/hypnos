@@ -12,11 +12,11 @@
     @endif  
     <form method="POST" autocomplete="off" novalidate hx-post hx-trigger="submit" hx-select="#booking-form" hx-target="#booking-form" hx-swap="outerHTML" hx-disinherit="*" x-data="bookingForm">
       {{ csrfField() }}
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
+      <div class="space-y-1 mb-5">
+        <div class="flex items-center justify-between">
           <label for="establishment" class="text-gray-800">Établissement</label>
           @if(flashMessages.has('errors.establishment'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
+            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.establishment') }}</span>
             </div>
@@ -32,12 +32,18 @@
             @endif
           @endeach
         </select>
+        @if(flashMessages.has('errors.establishment'))
+          <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.establishment') }}</span>
+          </p>
+        @endif
       </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
+      <div class="space-y-1 mb-5">
+        <div class="flex items-center justify-between">
           <label for="suite" class="text-gray-800">Suite</label>
           @if(flashMessages.has('errors.suite'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
+            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.suite') }}</span>
             </div>
@@ -53,30 +59,48 @@
             @endif
           @endeach
         </select>
+        @if(flashMessages.has('errors.suite'))
+          <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.suite') }}</span>
+          </p>
+        @endif
       </div>
-      <div class="mb-3">  
-        <div class="mb-3 flex items-center justify-between">
+      <div class="space-y-1 mb-5">  
+        <div class="flex items-center justify-between">
           <label for="start" class="text-gray-800">Début du séjour</label>
           @if(flashMessages.has('errors.start'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
+            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.start') }}</span>
             </div>
           @endif
         </div>
         <input type="date" id="start" name="start" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('start') || '' }}">
+        @if(flashMessages.has('errors.start'))
+          <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.start') }}</span>
+          </p>
+        @endif
       </div>
-      <div class="mb-3">
-        <div class="mb-3 flex items-center justify-between">
+      <div class="space-y-1 mb-5">
+        <div class="flex items-center justify-between">
           <label for="end" class="text-gray-800">Fin du séjour</label>
           @if(flashMessages.has('errors.end'))
-            <div class="text-red-500 flex items-center gap-2 text-sm">
+            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.end') }}</span>
             </div>
           @endif
         </div>
         <input type="date" id="end" name="end" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('end') || '' }}">
+        @if(flashMessages.has('errors.end'))
+          <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
+            @!icons.exclamationCircle({ class: 'h-5 w-5' })
+            <span>{{ flashMessages.get('errors.end') }}</span>
+          </p>
+        @endif
       </div>
       <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
         Réserver
