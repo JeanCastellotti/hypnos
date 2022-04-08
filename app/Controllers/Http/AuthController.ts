@@ -22,7 +22,7 @@ export default class AuthController {
         await Booking.create({ suiteId, start, end, userId: auth.user?.id })
         session.flash('success', 'La réservation a bien été enregistrée')
         session.forget('booking')
-        return response.redirect().toRoute('dashboard.index')
+        return response.redirect().toRoute('dashboard.bookings.index')
       }
 
       session.flash('success', 'Vous êtes connecté')
