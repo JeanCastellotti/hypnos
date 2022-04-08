@@ -6,8 +6,16 @@
 @section('content')
   <div class="bg-white p-6 rounded w-full shadow-sm max-w-screen-sm mx-auto">
     <h1 class="text-gray-800 mb-5 text-center text-2xl">Nous contacter</h1>
-    <form method="POST" autocomplete="off" novalidate>
+    <form 
+      method="POST" 
+      autocomplete="off" 
+      novalidate 
+      x-data="form($el)" 
+      @submit.prevent="submit">
+      
       {{ csrfField() }}
+
+      <input type="hidden" name="establishment" value="{{ establishment }}">
 
       @component('components/form/field', {
         label: 'Sujet',
@@ -53,7 +61,8 @@
         value: flashMessages.get('message')
       })
 
-      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
+      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition group flex items-center gap-2 justify-center" :disabled="loading">
+        @!loadingSpinner()
         Nous contacter
       </button>
     </form>

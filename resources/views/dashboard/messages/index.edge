@@ -11,8 +11,9 @@
         <tbody class="space-y-2">
           @each(message in messages)
             <tr class="block border border-gray-300 p-2 space-y-2 md:table-row md:border-0 md:p-0 md:space-y-0">
-              <td class="md:py-3 md:pr-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Gérant">{{ message.firstname }} {{ message.lastname }}</td>
-              <td class="md:p-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Email">{{ message.email }}</td>              
+              <td class="md:py-3 md:pr-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Client">{{ message.firstname }} {{ message.lastname }}</td>
+              <td class="md:p-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Email">{{ message.email }}</td>    
+              <td class="md:p-3 flex justify-between before:content-[attr(data-label)] before:text-gray-600 md:before:content-none md:table-cell" data-label="Établissement">{{ message.establishment.name }}</td>            
               <td class="py-3 flex items-center gap-2 justify-end">
                 <button class="border border-gray-800 text-gray-800 py-2 px-4 rounded flex gap-2 items-center hover:bg-gray-800 hover:text-white transition text-sm" hx-get="{{ route('dashboard.messages.show', [message.id]) }}" hx-target="body" hx-swap="beforeend">
                   @!icons.eye({ class: 'h-5 w-5 '})
