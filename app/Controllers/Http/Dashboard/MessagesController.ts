@@ -6,7 +6,7 @@ export default class MessagesController {
   public async index({ view, bouncer }: HttpContextContract) {
     await bouncer.with('DashboardPolicy').authorize('viewMessages')
 
-    const messages = await Message.all()
+    const messages = await Message.query().preload('establishment').orderBy('created_at', 'desc')
 
     return view.render('dashboard/messages/index', { messages })
   }
