@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, beforeSave, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import Establishment from './Establishment'
+import { string } from '@ioc:Adonis/Core/Helpers'
 
 export default class Message extends BaseModel {
   @column({ isPrimary: true })
@@ -22,4 +24,20 @@ export default class Message extends BaseModel {
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
+
+  @column()
+  public establishmentId: number
+
+  @belongsTo(() => Establishment)
+  public establishment: BelongsTo<typeof Establishment>
+
+  @beforeSave()
+  public static async titleFirstname(message: Message) {
+    message.firstname = string.capitalCase(message.firstname.toLowerCase())
+  }
+
+  @beforeSave()
+  public static async titleLastname(message: Message) {
+    message.lastname = string.capitalCase(message.lastname.toLowerCase())
+  }
 }

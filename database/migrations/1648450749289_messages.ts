@@ -12,6 +12,8 @@ export default class Messages extends BaseSchema {
       table.string('subject').notNullable()
       table.text('message').notNullable()
       table.timestamp('created_at', { useTz: true })
+
+      table.integer('establishment_id').references('establishments.id').notNullable()
     })
   }
 
