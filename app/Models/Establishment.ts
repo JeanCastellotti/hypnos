@@ -16,6 +16,7 @@ import Drive from '@ioc:Adonis/Core/Drive'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import { slugify } from '@ioc:Adonis/Addons/LucidSlugify'
 import EstablishmentsPicture from './EstablishmentsPicture'
+import Message from './Message'
 
 export default class Establishment extends BaseModel {
   @column({ isPrimary: true })
@@ -57,6 +58,9 @@ export default class Establishment extends BaseModel {
     foreignKey: 'establishmentId',
   })
   public picture: HasOne<typeof EstablishmentsPicture>
+
+  @hasMany(() => Message)
+  public messages: HasMany<typeof Message>
 
   @beforeSave()
   public static async titleCase(establishment: Establishment) {
