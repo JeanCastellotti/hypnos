@@ -4,6 +4,7 @@ import Role from 'App/Enums/Roles'
 Route.group(() => {
   Route.group(() => {
     Route.get('/', 'SettingsController.index').as('index')
+    Route.post('/', 'SettingsController.update').as('update')
   })
     .prefix('settings')
     .as('settings')
