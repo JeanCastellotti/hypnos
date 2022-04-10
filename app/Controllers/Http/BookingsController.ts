@@ -7,7 +7,7 @@ import { DateTime, Interval } from 'luxon'
 import Route from '@ioc:Adonis/Core/Route'
 
 export default class BookingsController {
-  public async create({ request, view, session }: HttpContextContract) {
+  public async create({ request, view }: HttpContextContract) {
     // session.forget('booking')
     const { establishment: establishmentQuery, suite: suiteQuery, start, end } = request.qs()
     const establishments = await Establishment.query().select('id', 'name').orderBy('name')
