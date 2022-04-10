@@ -4,11 +4,12 @@ import Establishment from 'App/Models/Establishment'
 import Suite from 'App/Models/Suite'
 import BookingValidator from 'App/Validators/BookingValidator'
 import { DateTime, Interval } from 'luxon'
+import Route from '@ioc:Adonis/Core/Route'
 
 export default class BookingsController {
   public async create({ request, view, session }: HttpContextContract) {
-    session.forget('booking')
-    const { establishment: establishmentQuery, suite: suiteQuery } = request.qs()
+    // session.forget('booking')
+    const { establishment: establishmentQuery, suite: suiteQuery, start, end } = request.qs()
     const establishments = await Establishment.query().select('id', 'name').orderBy('name')
     const establishment = establishmentQuery && (await Establishment.find(establishmentQuery))
     const suites =
@@ -19,14 +20,17 @@ export default class BookingsController {
       suites,
       currentEstablishment: establishment?.id,
       currentSuite: +suiteQuery,
+      start,
+      end,
     })
   }
 
-  public async store({ request, response, session, auth, bouncer }: HttpContextContract) {
+  public async check({ request, response, session }: HttpContextContract) {
     const { establishment, ...data } = await request.validate(BookingValidator)
 
     const suite = await Suite.find(data.suite)
     const bookings = await suite?.related('bookings').query()
+
     const start = DateTime.fromISO(data.start.toString())
     const end = DateTime.fromISO(data.end.toString())
     const bookingPeriod = Interval.fromDateTimes(start, end)
@@ -37,29 +41,34 @@ export default class BookingsController {
     })
 
     if (suiteNotAvailable) {
-      session.flash('formError', "La suite n'est pas disponible aux dates indiquées.")
-      return response.redirect().withQs().back()
-    }
-
-    if (!auth.isLoggedIn) {
+      session.flash('form.error', `La suite n'est pas disponible.`)
+      session.forget('booking')
+    } else {
       session.put('booking', data)
-      return response.header('hx-redirect', '/login')
+      session.flash('form.success', `La suite est disponible.`)
     }
+    return response.redirect().withQs().back()
+  }
+
+  public async store({ response, session, auth, bouncer }: HttpContextContract) {
+    if (!session.has('booking')) return response.redirect().withQs().toRoute('bookings.create')
+
+    if (!auth.isLoggedIn) return response.header('hx-redirect', Route.makeUrl('auth.login'))
 
     try {
       await bouncer.with('DashboardPolicy').authorize('storeBooking')
-      await Booking.create({
-        suiteId: data.suite,
-        userId: auth.user?.id,
-        start: data.start,
-        end: data.end,
-      })
+      const { suite: suiteId, start, end } = session.get('booking')
+      await Booking.create({ suiteId, start, end, userId: auth.user?.id })
+      session.flash('success', 'La réservation a bien été enregistrée.')
     } catch (error) {
-      session.flash('formError', 'Un problème est survenu lors de la création de la réservation')
-      return response.redirect().withQs().back()
+      console.log(error)
+      session.flash('error', 'Un problème est survenu lors de la création de la réservation')
+      return response.header('hx-redirect', Route.makeUrl('bookings.create'))
+    } finally {
+      session.forget('booking')
     }
 
     session.flash('success', 'Votre réservation a bien été enregistrée')
-    return response.header('hx-redirect', '/dashboard/bookings')
+    return response.header('hx-redirect', Route.makeUrl('dashboard.bookings.index'))
   }
 }
