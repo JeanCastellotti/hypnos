@@ -44,6 +44,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('create', 'BookingsController.create').as('create')
+  Route.post('check', 'BookingsController.check').as('check')
   Route.post('create', 'BookingsController.store').as('store')
 })
   .prefix('bookings')
