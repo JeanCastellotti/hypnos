@@ -6,7 +6,7 @@
   @elseif(role === Role.USER)
     <h1 class="text-2xl">Mon compte</h1>
   @else
-    <h1 class="text-2xl">Mon établissement</h1>
+    <h1 class="text-2xl">Mon établissement {{ auth.user.establishment ? `(${auth.user.establishment.name})` : '' }}</h1>
   @endif
   <small>Connecté en tant que {{ auth.user.firstname }} {{ auth.user.lastname }}</small>
 </div>
