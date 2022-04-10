@@ -52,7 +52,10 @@
       light: true
     })
       <option value="" disabled selected>Sélectionnez un gérant</option>
-      <option value="">Pas de gérant</option>
+      @if(establishment.manager)
+        <option value="">Pas de gérant</option>
+        <option value="{{ establishment.manager.id }}" selected>{{ establishment.manager.firstname}} {{ establishment.manager.lastname }}</option>
+      @endif
       @each(manager in managers)
         @if(manager.id === establishment.manager?.id)
           <option value="{{ manager.id }}" selected>{{ manager.firstname}} {{ manager.lastname }}</option>
