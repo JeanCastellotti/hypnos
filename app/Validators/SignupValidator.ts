@@ -11,7 +11,7 @@ export default class SignupValidator {
       rules.email(),
       rules.unique({ table: 'users', column: 'email' }),
     ]),
-    password: schema.string({}, [rules.confirmed()]),
+    password: schema.string({}, [rules.confirmed(), rules.minLength(8)]),
   })
 
   public messages = {
@@ -23,6 +23,7 @@ export default class SignupValidator {
     'email.email': "L'adresse email est incorrecte",
     'email.unique': "L'adresse email n'est pas disponible",
     'password.required': 'Le mot de passe est obligatoire',
+    'password.minLength': 'Le mot de passe doit faire au minimum 8 caractères',
     'confirmed': 'Les mots de passe ne correspondent pas',
   }
 }
