@@ -61,7 +61,6 @@ export default class BookingsController {
       await Booking.create({ suiteId, start, end, userId: auth.user?.id })
       session.flash('success', 'La réservation a bien été enregistrée.')
     } catch (error) {
-      console.log(error)
       session.flash('error', 'Un problème est survenu lors de la création de la réservation')
       return response.header('hx-redirect', Route.makeUrl('bookings.create'))
     } finally {
