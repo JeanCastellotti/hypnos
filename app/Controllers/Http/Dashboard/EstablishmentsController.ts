@@ -61,7 +61,7 @@ export default class EstablishmentsController {
     const establishment = await Establishment.findOrFail(params.id)
     await establishment.load('manager')
 
-    const managers = await User.query().where('roleId', Role.MANAGER)
+    const managers = await User.query().where('roleId', Role.MANAGER).doesntHave('establishment')
     return view.render('dashboard/establishments/edit', { establishment, managers })
   }
 
