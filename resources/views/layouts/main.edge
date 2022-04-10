@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title || 'Hypnos' }}</title>
-  @if(description)
-    <meta name="description" content="{{ description }}">
-  @endif
+  <meta name="description" content="{{ description || 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus unde veniam, tenetur et voluptate eos sunt consequatur laudantium explicabo tempore sint in sapiente? Nostrum ea minima voluptatem! Ex, odit enim!' }}">
   <meta name="robots" content="{{ robots || 'index, follow' }}">
   @entryPointStyles('app')
   @entryPointScripts('app')
+  @if(canonical)
+    <link rel="canonical" href="{{ canonical }}">
+  @endif
   <script src="https://unpkg.com/htmx.org@1.7.0" defer></script>
   <script src="https://unpkg.com/hyperscript.org@0.9.5" defer></script>
 </head>
