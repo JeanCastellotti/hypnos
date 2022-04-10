@@ -124,4 +124,8 @@ export default class DashboardPolicy extends BasePolicy {
   public async viewSettings(user: User) {
     return user.roleId === Role.USER
   }
+
+  public async updateSettings(user: User) {
+    return user.roleId === Role.USER
+  }
 }
