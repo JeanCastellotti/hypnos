@@ -14,29 +14,35 @@ export default class AuthController {
     const { email, password } = await request.validate(LoginValidator)
 
     try {
-      const user = await auth.attempt(email, password)
-
-      if (session.has('booking')) {
-        await bouncer.with('DashboardPolicy').authorize('storeBooking')
-        const { suite: suiteId, start, end } = session.get('booking')
-        await Booking.create({ suiteId, start, end, userId: auth.user?.id })
-        session.flash('success', 'La réservation a bien été enregistrée')
-        session.forget('booking')
-        return response.redirect().toRoute('dashboard.bookings.index')
-      }
-
+      await auth.attempt(email, password)
       session.flash('success', 'Vous êtes connecté')
-
-      let redirect = 'dashboard.settings.index'
-
-      if (user.roleId === Role.ADMIN) redirect = 'dashboard.establishments.index'
-      else if (user.roleId === Role.MANAGER) redirect = 'dashboard.suites.index'
-
-      return response.redirect().toRoute(redirect)
     } catch (error) {
       session.flash('error', 'Email ou mot de passe incorrect')
       return response.redirect().back()
     }
+
+    if (session.has('booking')) {
+      try {
+        await bouncer.with('DashboardPolicy').authorize('storeBooking')
+        const { suite: suiteId, start, end } = session.get('booking')
+        await Booking.create({ suiteId, start, end, userId: auth.user?.id })
+      } catch (error) {
+        session.flash('error', 'Un problème est survenu lors de la création de la réservation')
+        return response.redirect().toRoute('bookings.create')
+      } finally {
+        session.forget('booking')
+      }
+
+      session.flash('success', 'La réservation a bien été enregistrée')
+      return response.redirect().toRoute('dashboard.bookings.index')
+    }
+
+    let redirect = 'dashboard.settings.index'
+
+    if (auth.user!.roleId === Role.ADMIN) redirect = 'dashboard.establishments.index'
+    else if (auth.user!.roleId === Role.MANAGER) redirect = 'dashboard.suites.index'
+
+    return response.redirect().toRoute(redirect)
   }
 
   public async showSignup({ view }: HttpContextContract) {
