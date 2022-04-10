@@ -5,14 +5,21 @@
 @section('content')
   <div class="bg-white p-6 rounded w-full shadow-sm space-y-5 max-w-screen-sm mx-auto" id="booking-form">
     <h1 class="text-gray-800 text-center text-2xl">Réserver une suite</h1>
-    @if(flashMessages.has('formError'))
-      <div class="rounded p-4 bg-red-100 border border-red-200 text-red-500 mb-3 text-sm md:text-base">
-        {{ flashMessages.get('formError') }}
-      </div>
-    @endif  
-    <form method="POST" autocomplete="off" novalidate hx-post hx-trigger="submit" hx-select="#booking-form" hx-target="#booking-form" hx-swap="outerHTML" hx-disinherit="*" x-data="bookingForm">
+    <form 
+        method="POST"
+        action="{{ route('bookings.store') }}" 
+        autocomplete="off" 
+        novalidate 
+        hx-post
+        hx-select="#booking-form" 
+        hx-target="#booking-form" 
+        hx-swap="outerHTML" 
+        x-data="bookingForm"
+        class="space-y-5">
+
       {{ csrfField() }}
-      <div class="space-y-1 mb-5">
+
+      <div class="space-y-1">
         <div class="flex items-center justify-between">
           <label for="establishment" class="text-gray-800">Établissement</label>
           @if(flashMessages.has('errors.establishment'))
@@ -22,7 +29,7 @@
             </div>
           @endif
         </div>
-        <select id="establishment" name="establishment" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" hx-post="/htmx/suites" hx-trigger="change" hx-target="#suite" x-on:change="updateQuery()">
+        <select id="establishment" name="establishment" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" hx-post="{{ route('bookings.check') }}" x-on:change="updateQuery()" hx-params="not suite">
           <option disabled selected value="">Sélectionnez un établissement</option>
           @each(establishment in establishments)
             @if(establishment.id === currentEstablishment)
@@ -39,17 +46,12 @@
           </p>
         @endif
       </div>
-      <div class="space-y-1 mb-5">
+      
+      <div class="space-y-1" id="suite-group">
         <div class="flex items-center justify-between">
           <label for="suite" class="text-gray-800">Suite</label>
-          @if(flashMessages.has('errors.suite'))
-            <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
-              @!icons.exclamationCircle({ class: 'h-5 w-5' })
-              <span>{{ flashMessages.get('errors.suite') }}</span>
-            </div>
-          @endif
         </div>
-        <select id="suite" name="suite" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" x-on:change="updateQuery()">
+        <select id="suite" name="suite" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" x-on:change="updateQuery()" hx-post="{{ route('bookings.check') }}">
           <option disabled value="" selected>Sélectionnez une suite</option>
           @each(suite in suites)
             @if(suite.id === currentSuite)
@@ -59,52 +61,60 @@
             @endif
           @endeach
         </select>
-        @if(flashMessages.has('errors.suite'))
-          <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
-            @!icons.exclamationCircle({ class: 'h-5 w-5' })
-            <span>{{ flashMessages.get('errors.suite') }}</span>
-          </p>
-        @endif
       </div>
-      <div class="space-y-1 mb-5">  
+      
+      <div class="space-y-1">  
         <div class="flex items-center justify-between">
           <label for="start" class="text-gray-800">Début du séjour</label>
-          @if(flashMessages.has('errors.start'))
+          @if(flashMessages.get('start') && flashMessages.has('errors.start'))
             <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.start') }}</span>
             </div>
           @endif
         </div>
-        <input type="date" id="start" name="start" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('start') || '' }}">
-        @if(flashMessages.has('errors.start'))
+        <input type="date" id="start" name="start" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('start') || start || '' }}" x-on:change="updateQuery()" hx-post="{{ route('bookings.check') }}">
+        @if(flashMessages.get('start') && flashMessages.has('errors.start'))
           <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
             @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.start') }}</span>
           </p>
         @endif
       </div>
-      <div class="space-y-1 mb-5">
+      
+      <div class="space-y-1">
         <div class="flex items-center justify-between">
           <label for="end" class="text-gray-800">Fin du séjour</label>
-          @if(flashMessages.has('errors.end'))
+          @if(flashMessages.get('start') && flashMessages.get('end') && flashMessages.has('errors.end'))
             <div class="text-red-500 items-center gap-2 text-sm hidden md:flex">
               @!icons.exclamationCircle({ class: 'h-5 w-5' })
               <span>{{ flashMessages.get('errors.end') }}</span>
             </div>
           @endif
         </div>
-        <input type="date" id="end" name="end" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('end') || '' }}">
-        @if(flashMessages.has('errors.end'))
+        <input type="date" id="end" name="end" class="bg-gray-200 p-4 rounded w-full text-gray-600 focus:outline-none focus:ring focus:ring-offset-2 focus:ring-gray-100" value="{{ flashMessages.get('end') || end || '' }}"  x-on:change="updateQuery()" hx-post="{{ route('bookings.check') }}">
+        @if(flashMessages.get('start') && flashMessages.get('end') && flashMessages.has('errors.end'))
           <p class="text-red-500 flex items-center gap-2 text-sm md:hidden">
             @!icons.exclamationCircle({ class: 'h-5 w-5' })
             <span>{{ flashMessages.get('errors.end') }}</span>
           </p>
         @endif
       </div>
-      <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
-        Réserver
-      </button>
+
+      @if(flashMessages.has('form.error'))
+        <div class="rounded p-4 bg-red-100 border border-red-200 text-red-500 mb-3 text-sm md:text-base flex items-center justify-center gap-2">
+          @!icons.sad({ class: 'h-6 w-6'})
+          <span>{{ flashMessages.get('form.error') }}</span>
+        </div>
+      @elseif(flashMessages.has('form.success'))
+        <div class="rounded p-4 bg-green-100 border border-green-200 text-green-600 mb-3 text-sm md:text-base flex items-center justify-center gap-2">
+          @!icons.smile({ class: 'h-6 w-6'})
+          <span>{{ flashMessages.get('form.success') }}</span>
+        </div>
+        <button class="border border-gray-800 rounded text-gray-800 w-full p-4 text-lg hover:bg-gray-800 hover:text-white transition">
+          Réserver
+        </button>
+      @endif
     </form>
   </div>
 @endsection
