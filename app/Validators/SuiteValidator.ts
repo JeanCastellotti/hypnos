@@ -22,5 +22,6 @@ export default class SuiteValidator {
     'establishment_id.required': "L'établissement est obligatoire",
     'picture1.required': 'La première image est obligatoire',
     'picture2.required': 'La deuxième image est obligatoire',
+    'file.extname': 'Le fichier doit être au format .jpg, .jpeg ou .png',
   }
 }

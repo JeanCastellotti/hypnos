@@ -19,5 +19,6 @@ export default class EstablishmentValidator {
     'address.required': "L'adresse est obligatoire",
     'description.required': 'La description est obligatoire',
     'hero.required': "L'image est obligatoire",
+    'file.extname': 'Le fichier doit être au format .jpg, .jpeg ou .png',
   }
 }
