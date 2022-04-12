@@ -12,6 +12,10 @@ Vous trouverez la charte graphique à la racine du dépôt Github.
 
 Vous trouverez le manuel d'utilisation à la racine du dépôt Github.
 
+## Outil de gestion de projet
+
+Trello : https://trello.com/b/0dCPl19D/hypnos
+
 ## Déploiement en local
 
 ### Prérequis
