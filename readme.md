@@ -4,6 +4,10 @@
 
 Vous trouverez la documentation technique à la racine du dépôt Github.
 
+## Charte graphique
+
+Vous trouverez la charte graphique à la racine du dépôt Github.
+
 ## Manuel d'utilisation
 
 Vous trouverez le manuel d'utilisation à la racine du dépôt Github.
