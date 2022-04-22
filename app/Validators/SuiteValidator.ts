@@ -7,7 +7,7 @@ export default class SuiteValidator {
   public schema = schema.create({
     title: schema.string({ trim: true }),
     description: schema.string({ trim: true }),
-    price: schema.number(),
+    price: schema.number([rules.greaterThan(0)]),
     booking_url: schema.string({ trim: true }, [rules.url()]),
     picture1: schema.file({ extnames: ['jpg', 'jpeg', 'png'] }),
     picture2: schema.file({ extnames: ['jpg', 'jpeg', 'png'] }),
@@ -23,5 +23,6 @@ export default class SuiteValidator {
     'picture1.required': 'La première image est obligatoire',
     'picture2.required': 'La deuxième image est obligatoire',
     'file.extname': 'Le fichier doit être au format .jpg, .jpeg ou .png',
+    'greaterThan': 'Le prix doit être supérieur à {{ options.num }}',
   }
 }

@@ -7,7 +7,7 @@ export default class SuiteUpdateValidator {
   public schema = schema.create({
     title: schema.string({ trim: true }),
     description: schema.string({ trim: true }),
-    price: schema.number(),
+    price: schema.number([rules.greaterThan(0)]),
     booking_url: schema.string({ trim: true }, [rules.url()]),
     picture1: schema.file.optional({ extnames: ['jpg', 'jpeg', 'png'] }),
     picture2: schema.file.optional({ extnames: ['jpg', 'jpeg', 'png'] }),
