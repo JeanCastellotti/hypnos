@@ -20,5 +20,6 @@ export default class SuiteUpdateValidator {
     'booking_url.required': 'Le lien booking est obligatoire',
     'booking_url.url': "Le lien booking n'est pas valide",
     'establishment_id.required': "L'établissement est obligatoire",
+    'greaterThan': 'Le prix doit être supérieur à {{ options.num }}',
   }
 }
